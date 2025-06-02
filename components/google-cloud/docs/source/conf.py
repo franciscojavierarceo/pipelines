@@ -162,7 +162,7 @@ notfound_context = {
 html_theme = 'sphinx_book_theme'
 html_title = 'Google Cloud Pipeline Components Reference Documentation'
 html_static_path = ['_static']
-html_css_files = ['custom.css']
+html_css_files = ['custom.css', 'custom_theme.css']
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

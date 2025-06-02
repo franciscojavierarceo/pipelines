@@ -79,7 +79,7 @@ autodoc_default_options = {
 html_theme = 'sphinx_book_theme'
 html_title = 'KFP SDK kfp-kubernetes API Reference'
 html_static_path = ['_static']
-html_css_files = ['custom.css']
+html_css_files = ['custom.css', 'custom_theme.css']
 html_logo = '_static/kubeflow.png'
 html_favicon = '_static/favicon.ico'
 # Add any paths that contain templates here, relative to this directory.
