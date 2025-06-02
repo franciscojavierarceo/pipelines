@@ -1,15 +1,26 @@
 @import url("theme.css");
 
-.wy-nav-content {
+.bd-main .bd-content {
     max-width: 90%;
 }
 
-.wy-nav-side {
-    background: linear-gradient(90deg, #0867d2, #1b263c);
+.bd-sidebar {
+    background: linear-gradient(90deg, #0867d2, #1b263c) !important;
 }
 
-.wy-side-nav-search {
+.bd-search {
     background-color: transparent !important;
+}
+
+.bd-sidebar::before {
+    content: "Kubeflow Pipelines (KFP)";
+    display: block;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
 }
 
 .hide-title h1 {
