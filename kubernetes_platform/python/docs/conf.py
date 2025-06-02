@@ -23,6 +23,7 @@ import re
 from kfp import dsl
 
 
+
 # preserve function docstrings for components by setting component decorators to passthrough decorators
 # also enables autodoc to document the components as functions without using the autodata directive (https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#directive-autodata)
 def container_component_decorator(func):
@@ -64,7 +65,6 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx_click',
     'm2r2',
-    'sphinx_immaterial',
     'autodocsumm',
 ]
 autodoc_member_order = 'bysource'
@@ -76,120 +76,12 @@ autodoc_default_options = {
     'autosummary': True,
 }
 
-html_theme = 'sphinx_immaterial'
+html_theme = 'sphinx_book_theme'
 html_title = 'KFP SDK kfp-kubernetes API Reference'
 html_static_path = ['_static']
 html_css_files = ['custom.css']
 html_logo = '_static/kubeflow.png'
 html_favicon = '_static/favicon.ico'
-html_theme_options = {
-    'icon': {
-        'repo': 'fontawesome/brands/github',
-    },
-    'repo_url':
-        'https://github.com/kubeflow/pipelines/tree/master/kubernetes_platform',
-    'repo_name':
-        'pipelines',
-    'repo_type':
-        'github',
-    'edit_uri':
-        'blob/master/docs',
-    'globaltoc_collapse':
-        False,
-    'features': [
-        'navigation.expand',
-        # "navigation.tabs",
-        # "toc.integrate",
-        'navigation.sections',
-        # "navigation.instant",
-        # "header.autohide",
-        'navigation.top',
-        # "navigation.tracking",
-        'search.highlight',
-        'search.share',
-        'toc.follow',
-        'toc.sticky',
-    ],
-    'palette': [
-        {
-            'media': '(prefers-color-scheme: dark)',
-            'scheme': 'slate',
-            'primary': 'kfpblue',
-            # "accent": "lime",
-            'toggle': {
-                'icon': 'material/lightbulb',
-                'name': 'Switch to light mode',
-            },
-        },
-        {
-            'media': '(prefers-color-scheme: light)',
-            'scheme': 'default',
-            'primary': 'kfpblue',
-            # "accent": "light-blue",
-            'toggle': {
-                'icon': 'material/lightbulb-outline',
-                'name': 'Switch to dark mode',
-            },
-        },
-    ],
-    'font': {
-        'text': 'Open Sans'
-    },
-    'version_dropdown':
-        True,
-    'version_info': [
-        {
-            'version':
-                'https://kfp-kubernetes.readthedocs.io/en/kfp-kubernetes-1.5.0/',
-            'title':
-                '1.5.0',
-            'aliases': ['stable'],
-        },
-        {
-            'version':
-                'https://kfp-kubernetes.readthedocs.io/en/kfp-kubernetes-1.4.0/',
-            'title':
-                '1.4.0',
-            'aliases': [],
-        },
-        {
-            'version':
-                'https://kfp-kubernetes.readthedocs.io/en/kfp-kubernetes-1.3.0/',
-            'title':
-                '1.3.0',
-            'aliases': [],
-        },
-        {
-            'version':
-                'https://kfp-kubernetes.readthedocs.io/en/kfp-kubernetes-1.2.0/',
-            'title':
-                '1.2.0',
-            'aliases': [],
-        },
-        {
-            'version':
-                'https://kfp-kubernetes.readthedocs.io/en/kfp-kubernetes-1.1.0/',
-            'title':
-                '1.1.0',
-            'aliases': [],
-        },
-        {
-            'version':
-                'https://kfp-kubernetes.readthedocs.io/en/kfp-kubernetes-1.0.0/',
-            'title':
-                '1.0.0',
-            'aliases': [],
-        },
-        {
-            'version':
-                'https://kfp-kubernetes.readthedocs.io/en/kfp-kubernetes-0.0.1/',
-            'title':
-                '0.0.1',
-            'aliases': [],
-        },
-    ],
-    # "toc_title_is_page_title": True,
-}
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

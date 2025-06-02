@@ -26,6 +26,7 @@ from typing import List, Optional
 import sphinx
 from sphinx import application  # noqa
 
+
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -57,7 +58,6 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx_click',
     'm2r2',
-    'sphinx_immaterial',
     'autodocsumm',
 ]
 autodoc_member_order = 'bysource'
@@ -69,71 +69,12 @@ autodoc_default_options = {
     'autosummary': True,
 }
 
-html_theme = 'sphinx_immaterial'
+html_theme = 'sphinx_book_theme'
 html_title = 'Kubeflow Pipelines (KFP)'
 html_static_path = ['_static']
 html_css_files = ['custom.css']
 html_logo = '_static/kubeflow.png'
 html_favicon = '_static/favicon.ico'
-html_theme_options = {
-    'icon': {
-        'repo': 'fontawesome/brands/github',
-    },
-    'repo_url':
-        'https://github.com/kubeflow/pipelines/',
-    'repo_name':
-        'pipelines',
-    'repo_type':
-        'github',
-    'edit_uri':
-        'blob/master/docs',
-    'globaltoc_collapse':
-        False,
-    'features': [
-        'navigation.expand',
-        # "navigation.tabs",
-        # "toc.integrate",
-        'navigation.sections',
-        # "navigation.instant",
-        # "header.autohide",
-        'navigation.top',
-        # "navigation.tracking",
-        'search.highlight',
-        'search.share',
-        'toc.follow',
-        'toc.sticky',
-    ],
-    'palette': [
-        {
-            'media': '(prefers-color-scheme: dark)',
-            'scheme': 'slate',
-            'primary': 'kfpblue',
-            # "accent": "lime",
-            'toggle': {
-                'icon': 'material/lightbulb',
-                'name': 'Switch to light mode',
-            },
-        },
-        {
-            'media': '(prefers-color-scheme: light)',
-            'scheme': 'default',
-            'primary': 'kfpblue',
-            # "accent": "light-blue",
-            'toggle': {
-                'icon': 'material/lightbulb-outline',
-                'name': 'Switch to dark mode',
-            },
-        },
-    ],
-    'font': {
-        'text': 'Open Sans'
-    },
-    'version_dropdown':
-        True,
-    'version_json':
-        'https://raw.githubusercontent.com/kubeflow/pipelines/master/docs/versions.json',
-    # "toc_title_is_page_title": True,
-}
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 

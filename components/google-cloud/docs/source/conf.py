@@ -26,6 +26,7 @@ from kfp import components
 from kfp import dsl
 import yaml
 
+
 # setting this enables the .rst files to use the paths v1.bigquery.Component (etc.) rather than google_cloud_pipeline_components.v1.biquery.Component for shorter, readable representation in docs
 gcpc_root_dir = os.path.abspath(
     os.path.join(
@@ -126,7 +127,6 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.napoleon',
     'm2r2',
-    'sphinx_immaterial',
     'autodocsumm',
     'notfound.extension',
 ]
@@ -159,43 +159,10 @@ notfound_context = {
             """),
 }
 
-html_theme = 'sphinx_immaterial'
+html_theme = 'sphinx_book_theme'
 html_title = 'Google Cloud Pipeline Components Reference Documentation'
 html_static_path = ['_static']
 html_css_files = ['custom.css']
-html_theme_options = {
-    'icon': {
-        'repo': 'fontawesome/brands/github',
-    },
-    'repo_url': 'https://github.com/kubeflow/pipelines/tree/master/components/google-cloud',
-    'repo_name': 'pipelines',
-    'repo_type': 'github',
-    'edit_uri': 'https://github.com/kubeflow/pipelines/tree/master/components/google-cloud/docs/source',
-    'globaltoc_collapse': True,
-    'features': [
-        'navigation.expand',
-        # "navigation.tabs",
-        # "toc.integrate",
-        'navigation.sections',
-        # "navigation.instant",
-        # "header.autohide",
-        'navigation.top',
-        # "navigation.tracking",
-        'search.highlight',
-        'search.share',
-        'toc.follow',
-        'toc.sticky',
-    ],
-    'palette': [{
-        'media': '(prefers-color-scheme: light)',
-        'scheme': 'default',
-        'primary': 'googleblue',
-    }],
-    'font': {'text': 'Open Sans'},
-    'version_dropdown': True,
-    'version_json': 'https://raw.githubusercontent.com/kubeflow/pipelines/master/components/google-cloud/docs/source/versions.json',
-    # "toc_title_is_page_title": True,
-}
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
