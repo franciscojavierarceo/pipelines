@@ -4,14 +4,27 @@
 
 from http.server import BaseHTTPRequestHandler
 from http.server import HTTPServer
+import json
 import mimetypes
 import os
+import time
 from typing import Optional
 import urllib.parse
 import urllib.request
 
 import pkg_resources
+from google.protobuf import json_format
+from kfp import local
+from kfp.pipeline_spec import pipeline_spec_pb2
 
+
+_local_execution_initialized = False
+
+def _ensure_local_execution_initialized():
+    global _local_execution_initialized
+    if not _local_execution_initialized:
+        local.init(runner=local.SubprocessRunner(), pipeline_root='./local_outputs')
+        _local_execution_initialized = True
 
 class UIRequestHandler(BaseHTTPRequestHandler):
 
@@ -26,6 +39,28 @@ class UIRequestHandler(BaseHTTPRequestHandler):
         self._handle_request()
 
     def do_POST(self):
+        if self.path.startswith('/apis/v1beta1/runs'):
+            content_length = int(self.headers.get('Content-Length', 0))
+            body_data = self.rfile.read(content_length).decode('utf-8')
+            
+            use_local = not self.api_server_address or self.api_server_address == 'http://localhost:3001'
+            
+            if use_local:
+                try:
+                    response_data = self._handle_local_run_creation(body_data)
+                    self.send_response(200)
+                    self.send_header('Content-Type', 'application/json')
+                    self.end_headers()
+                    self.wfile.write(response_data)
+                    return
+                except Exception as e:
+                    self.send_response(500)
+                    self.send_header('Content-Type', 'application/json')
+                    self.end_headers()
+                    error_response = json.dumps({'error': str(e)}).encode('utf-8')
+                    self.wfile.write(error_response)
+                    return
+        
         self._handle_request()
 
     def do_PUT(self):
@@ -151,6 +186,64 @@ class UIRequestHandler(BaseHTTPRequestHandler):
             print(f'Error serving static file {path}: {e}')
             self._send_error_response(500, 'Internal server error')
 
+    def _handle_local_run_creation(self, body_data):
+        try:
+            _ensure_local_execution_initialized()
+            
+            api_run = json.loads(body_data)
+            self._validate_local_execution_support(api_run)
+            
+            pipeline_spec_data = api_run.get('pipeline_spec', {})
+            
+            pipeline_spec = None
+            if 'workflow_manifest' in pipeline_spec_data:
+                raise ValueError('Workflow manifest format not yet supported for local execution')
+            elif 'pipeline_manifest' in pipeline_spec_data:
+                pipeline_data = json.loads(pipeline_spec_data['pipeline_manifest'])
+                pipeline_spec = json_format.ParseDict(pipeline_data, pipeline_spec_pb2.PipelineSpec())
+            else:
+                raise ValueError('No pipeline specification found in request')
+            
+            parameters = {}
+            if 'parameters' in pipeline_spec_data:
+                for param in pipeline_spec_data['parameters']:
+                    parameters[param['name']] = param['value']
+            
+            outputs = local.run_local_pipeline(pipeline_spec, parameters)
+            
+            run_id = f'local-run-{int(time.time())}'
+            response = {
+                'id': run_id,
+                'name': api_run.get('name', 'Local Run'),
+                'status': 'Succeeded',
+                'pipeline_spec': pipeline_spec_data,
+                'created_at': time.strftime('%Y-%m-%dT%H:%M:%SZ'),
+                'finished_at': time.strftime('%Y-%m-%dT%H:%M:%SZ'),
+            }
+            
+            return json.dumps(response).encode('utf-8')
+            
+        except Exception as e:
+            error_response = {
+                'error': f'Local execution failed: {str(e)}',
+                'status': 'Failed'
+            }
+            return json.dumps(error_response).encode('utf-8')
+
+    def _validate_local_execution_support(self, api_run):
+        pipeline_spec = api_run.get('pipeline_spec', {})
+        
+        if 'workflow_manifest' in pipeline_spec:
+            raise ValueError('Legacy Argo workflow format not supported for local execution. Please use KFP v2 pipeline format.')
+        
+        if not pipeline_spec.get('pipeline_manifest'):
+            raise ValueError('Pipeline manifest is required for local execution.')
+        
+        if api_run.get('trigger'):
+            raise ValueError('Recurring runs are not supported in local execution mode.')
+        
+        return True
+
     def _send_error_response(self, status_code: int, message: str):
         self.send_response(status_code)
         self.send_header('Content-Type', 'text/plain')
@@ -170,15 +263,21 @@ def start_ui_server(host: str = 'localhost',
                     port: int = 3000,
                     api_server: Optional[str] = None):
     if api_server is None:
-        ml_host = os.environ.get('ML_PIPELINE_SERVICE_HOST', 'localhost')
+        ml_host = os.environ.get('ML_PIPELINE_SERVICE_HOST')
         ml_port = os.environ.get('ML_PIPELINE_SERVICE_PORT', '3001')
-        api_server = f'http://{ml_host}:{ml_port}'
+        if ml_host:
+            api_server = f'http://{ml_host}:{ml_port}'
+        else:
+            api_server = f'http://localhost:{ml_port}'
 
     handler_class = create_handler_class(api_server)
     server = HTTPServer((host, port), handler_class)
 
     print(f'Starting Kubeflow Pipelines UI server at http://{host}:{port}')
-    print(f'API server: {api_server}')
+    if os.environ.get('ML_PIPELINE_SERVICE_HOST'):
+        print(f'API server: {api_server}')
+    else:
+        print('No API server configured - using local execution mode')
 
     try:
         server.serve_forever()
