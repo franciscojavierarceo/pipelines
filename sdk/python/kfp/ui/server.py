@@ -20,7 +20,7 @@ class UIRequestHandler(BaseHTTPRequestHandler):
         super().__init__(*args, **kwargs)
 
     def log_message(self, format, *args):
-        print(f"{self.command} {self.path}")
+        print(f'{self.command} {self.path}')
 
     def do_GET(self):
         self._handle_request()
@@ -62,7 +62,7 @@ class UIRequestHandler(BaseHTTPRequestHandler):
             return
 
         try:
-            url = f"{self.api_server_address}{path}"
+            url = f'{self.api_server_address}{path}'
             if self.path.find('?') != -1:
                 url += '?' + self.path.split('?', 1)[1]
 
@@ -96,8 +96,8 @@ class UIRequestHandler(BaseHTTPRequestHandler):
                     self.wfile.write(chunk)
 
         except Exception as e:
-            print(f"Proxy error: {e}")
-            self._send_error_response(502, f"Proxy error: {str(e)}")
+            print(f'Proxy error: {e}')
+            self._send_error_response(502, f'Proxy error: {str(e)}')
 
     def _proxy_pod_logs(self, path: str):
         self._send_error_response(501, 'Pod logs service not implemented')
@@ -118,7 +118,7 @@ class UIRequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(content.encode('utf-8'))
 
         except Exception as e:
-            print(f"Error serving index.html: {e}")
+            print(f'Error serving index.html: {e}')
             self._send_error_response(500, 'Internal server error')
 
     def _serve_static_file(self, path: str):
@@ -148,7 +148,7 @@ class UIRequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(content)
 
         except Exception as e:
-            print(f"Error serving static file {path}: {e}")
+            print(f'Error serving static file {path}: {e}')
             self._send_error_response(500, 'Internal server error')
 
     def _send_error_response(self, status_code: int, message: str):
@@ -172,13 +172,13 @@ def start_ui_server(host: str = 'localhost',
     if api_server is None:
         ml_host = os.environ.get('ML_PIPELINE_SERVICE_HOST', 'localhost')
         ml_port = os.environ.get('ML_PIPELINE_SERVICE_PORT', '3001')
-        api_server = f"http://{ml_host}:{ml_port}"
+        api_server = f'http://{ml_host}:{ml_port}'
 
     handler_class = create_handler_class(api_server)
     server = HTTPServer((host, port), handler_class)
 
-    print(f"Starting Kubeflow Pipelines UI server at http://{host}:{port}")
-    print(f"API server: {api_server}")
+    print(f'Starting Kubeflow Pipelines UI server at http://{host}:{port}')
+    print(f'API server: {api_server}')
 
     try:
         server.serve_forever()
