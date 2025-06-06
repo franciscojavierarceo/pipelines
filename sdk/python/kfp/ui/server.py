@@ -45,11 +45,11 @@ class UIRequestHandler(BaseHTTPRequestHandler):
                 '/apis/v2beta1/'):
             self._proxy_to_api_server(path)
         elif path.startswith('/ml_metadata'):
-            self._send_error_response(501, "Metadata service not implemented")
+            self._send_error_response(501, 'Metadata service not implemented')
         elif path.startswith('/k8s/pod/logs'):
             self._proxy_pod_logs(path)
         elif path.startswith('/artifacts/'):
-            self._send_error_response(501, "Artifacts service not implemented")
+            self._send_error_response(501, 'Artifacts service not implemented')
         elif path == '/' or path == '/index.html':
             self._serve_index_html()
         elif path.startswith('/static/'):
@@ -59,7 +59,7 @@ class UIRequestHandler(BaseHTTPRequestHandler):
 
     def _proxy_to_api_server(self, path: str):
         if not self.api_server_address:
-            self._send_error_response(502, "API server address not configured")
+            self._send_error_response(502, 'API server address not configured')
             return
 
         try:
@@ -101,7 +101,7 @@ class UIRequestHandler(BaseHTTPRequestHandler):
             self._send_error_response(502, f"Proxy error: {str(e)}")
 
     def _proxy_pod_logs(self, path: str):
-        self._send_error_response(501, "Pod logs service not implemented")
+        self._send_error_response(501, 'Pod logs service not implemented')
 
     def _serve_index_html(self):
         try:
@@ -120,7 +120,7 @@ class UIRequestHandler(BaseHTTPRequestHandler):
 
         except Exception as e:
             print(f"Error serving index.html: {e}")
-            self._send_error_response(500, "Internal server error")
+            self._send_error_response(500, 'Internal server error')
 
     def _serve_static_file(self, path: str):
         try:
@@ -128,11 +128,11 @@ class UIRequestHandler(BaseHTTPRequestHandler):
             file_path = os.path.join(static_dir, path[1:])
 
             if not os.path.exists(file_path) or not os.path.isfile(file_path):
-                self._send_error_response(404, "File not found")
+                self._send_error_response(404, 'File not found')
                 return
 
             if not file_path.startswith(static_dir):
-                self._send_error_response(403, "Forbidden")
+                self._send_error_response(403, 'Forbidden')
                 return
 
             mime_type, _ = mimetypes.guess_type(file_path)
@@ -150,7 +150,7 @@ class UIRequestHandler(BaseHTTPRequestHandler):
 
         except Exception as e:
             print(f"Error serving static file {path}: {e}")
-            self._send_error_response(500, "Internal server error")
+            self._send_error_response(500, 'Internal server error')
 
     def _send_error_response(self, status_code: int, message: str):
         self.send_response(status_code)
@@ -184,6 +184,6 @@ def start_ui_server(host: str = 'localhost',
     try:
         server.serve_forever()
     except KeyboardInterrupt:
-        print("\nShutting down server...")
+        print('\nShutting down server...')
         server.shutdown()
         server.server_close()
