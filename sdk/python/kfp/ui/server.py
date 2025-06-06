@@ -4,7 +4,6 @@
 
 from http.server import BaseHTTPRequestHandler
 from http.server import HTTPServer
-import json
 import mimetypes
 import os
 from typing import Optional
