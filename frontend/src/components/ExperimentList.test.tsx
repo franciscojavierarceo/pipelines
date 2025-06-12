@@ -91,20 +91,20 @@ describe('ExperimentList', () => {
   });
 
   it('renders the empty experience', () => {
-    expect(render(<ExperimentList {...generateProps()} />)).toMatchSnapshot();
+    expect(TestUtils.renderWithRouter(<ExperimentList {...generateProps()} />)).toMatchSnapshot();
   });
 
   it('renders the empty experience in ARCHIVED state', () => {
     const props = generateProps();
     props.storageState = V2beta1ExperimentStorageState.ARCHIVED;
-    expect(render(<ExperimentList {...props} />)).toMatchSnapshot();
+    expect(TestUtils.renderWithRouter(<ExperimentList {...props} />)).toMatchSnapshot();
   });
 
   it('loads experiments whose storage state is not ARCHIVED when storage state equals AVAILABLE', async () => {
     mockNExperiments(1);
     const props = generateProps();
     props.storageState = V2beta1ExperimentStorageState.AVAILABLE;
-    tree = render(<ExperimentList {...props} />);
+    tree = TestUtils.renderWithRouter(<ExperimentList {...props} />);
     await (tree.container.firstChild as any)._loadExperiments({});
     expect(listExperimentsSpy).toHaveBeenLastCalledWith(
       undefined,
@@ -129,7 +129,7 @@ describe('ExperimentList', () => {
     mockNExperiments(1);
     const props = generateProps();
     props.storageState = V2beta1ExperimentStorageState.ARCHIVED;
-    tree = render(<ExperimentList {...props} />);
+    tree = TestUtils.renderWithRouter(<ExperimentList {...props} />);
     await (tree.container.firstChild as any)._loadExperiments({});
     expect(listExperimentsSpy).toHaveBeenLastCalledWith(
       undefined,
@@ -154,7 +154,7 @@ describe('ExperimentList', () => {
     mockNExperiments(1);
     const props = generateProps();
     props.storageState = V2beta1ExperimentStorageState.ARCHIVED;
-    tree = render(<ExperimentList {...props} />);
+    tree = TestUtils.renderWithRouter(<ExperimentList {...props} />);
     await (tree.container.firstChild as any)._loadExperiments({
       filter: encodeURIComponent(
         JSON.stringify({
@@ -189,7 +189,7 @@ describe('ExperimentList', () => {
   it('loads one experiment', async () => {
     mockNExperiments(1);
     const props = generateProps();
-    tree = render(<ExperimentList {...props} />);
+    tree = TestUtils.renderWithRouter(<ExperimentList {...props} />);
     await (tree.container.firstChild as any)._loadExperiments({});
     expect(listExperimentsSpy).toHaveBeenLastCalledWith(
       undefined,
@@ -222,7 +222,7 @@ describe('ExperimentList', () => {
   it('loads multiple experiments', async () => {
     mockNExperiments(5);
     const props = generateProps();
-    tree = render(<ExperimentList {...props} />);
+    tree = TestUtils.renderWithRouter(<ExperimentList {...props} />);
     await (tree.container.firstChild as any)._loadExperiments({});
     expect(props.onError).not.toHaveBeenCalled();
     expect(tree).toMatchSnapshot();
@@ -234,7 +234,7 @@ describe('ExperimentList', () => {
       'bad stuff happened',
     );
     const props = generateProps();
-    tree = render(<ExperimentList {...props} />);
+    tree = TestUtils.renderWithRouter(<ExperimentList {...props} />);
     await (tree.container.firstChild as any)._loadExperiments({});
     expect(props.onError).toHaveBeenLastCalledWith(
       'Error: failed to list experiments: ',

@@ -227,7 +227,7 @@ spec:
     const createGraphSpy = jest.spyOn(StaticGraphParser, 'createGraph');
     TestUtils.makeErrorResponse(createGraphSpy, 'bad graph');
 
-    render(<PipelineDetails {...generateProps()} />);
+    TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
     await TestUtils.flushPromises();
 
     screen.getByTestId('pipeline-detail-v1');
@@ -258,7 +258,7 @@ spec:
     });
     const createGraphSpy = jest.spyOn(StaticGraphParser, 'createGraph');
     TestUtils.makeErrorResponse(createGraphSpy, 'bad graph');
-    render(<PipelineDetails {...generateProps()} />);
+    TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
 
     await waitFor(() => {
       expect(createGraphSpy).toHaveBeenCalled();
@@ -293,7 +293,7 @@ spec:
     });
     const createGraphSpy = jest.spyOn(StaticGraphParser, 'createGraph');
     TestUtils.makeErrorResponse(createGraphSpy, 'bad graph');
-    render(<PipelineDetails {...generateProps()} />);
+    TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
 
     await waitFor(() => {
       expect(createGraphSpy).toHaveBeenCalledTimes(0);
@@ -331,7 +331,7 @@ spec:
       },
     });
 
-    render(<PipelineDetails {...generateProps()} />);
+    TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
     await TestUtils.flushPromises();
 
     screen.getByTestId('pipeline-detail-v1');
@@ -355,7 +355,7 @@ spec:
     const createGraphSpy = jest.spyOn(StaticGraphParser, 'createGraph');
     createGraphSpy.mockImplementation(() => new graphlib.Graph());
 
-    render(<PipelineDetails {...generateProps()} />);
+    TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
     await TestUtils.flushPromises();
 
     screen.getByTestId('pipeline-detail-v1');
@@ -373,7 +373,7 @@ spec:
     const createGraphSpy = jest.spyOn(StaticGraphParser, 'createGraph');
     createGraphSpy.mockImplementation(() => new graphlib.Graph());
 
-    render(<PipelineDetails {...generateProps()} />);
+    TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
     await TestUtils.flushPromises();
 
     screen.getByTestId('pipeline-detail-v2');

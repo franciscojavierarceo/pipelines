@@ -18,7 +18,7 @@ import * as JsYaml from 'js-yaml';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { graphlib } from 'dagre';
 import * as React from 'react';
-import { testBestPractices } from '../TestUtils';
+import TestUtils, { testBestPractices } from '../TestUtils';
 import PipelineDetailsV1, { PipelineDetailsV1Props } from './PipelineDetailsV1';
 import { color } from '../Css';
 import { Constants } from '../lib/Constants';
@@ -124,14 +124,14 @@ spec:
   beforeEach(() => {});
 
   it('shows correct versions in version selector', async () => {
-    render(<PipelineDetailsV1 {...generateProps(new graphlib.Graph(), new graphlib.Graph())} />);
+    TestUtils.renderWithRouter(<PipelineDetailsV1 {...generateProps(new graphlib.Graph(), new graphlib.Graph())} />);
 
     expect(screen.getByText('test-pipeline-version'));
     expect(screen.getByTestId('version_selector').childElementCount).toEqual(1);
   });
 
   it('shows description for pipeline version and pipeline with custom version', async () => {
-    render(
+    TestUtils.renderWithRouter(
       <PipelineDetailsV1
         {...generateProps(
           new graphlib.Graph(),
@@ -150,7 +150,7 @@ spec:
   });
 
   it('shows description for pipeline version and pipeline with default version', async () => {
-    render(
+    TestUtils.renderWithRouter(
       <PipelineDetailsV1
         {...generateProps(
           new graphlib.Graph(),
@@ -170,7 +170,7 @@ spec:
   });
 
   it('shows pipeline description even when not set with default version', async () => {
-    render(
+    TestUtils.renderWithRouter(
       <PipelineDetailsV1
         {...generateProps(
           new graphlib.Graph(),
@@ -189,7 +189,7 @@ spec:
   });
 
   it('shows pipeline description even when not set with custom version', async () => {
-    render(
+    TestUtils.renderWithRouter(
       <PipelineDetailsV1
         {...generateProps(
           new graphlib.Graph(),

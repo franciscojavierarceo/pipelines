@@ -232,7 +232,7 @@ describe('PipelineDetails', () => {
   });
 
   it('shows pipeline name in page name, and breadcrumb to go back to pipelines', async () => {
-    tree = render(<PipelineDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
     await TestUtils.flushPromises();
     expect(updateToolbarSpy).toHaveBeenLastCalledWith(
       expect.objectContaining({
@@ -247,7 +247,7 @@ describe('PipelineDetails', () => {
     'shows all runs breadcrumbs, and "Pipeline details" as page title when the pipeline ' +
       'comes from a run spec that does not have an experiment',
     async () => {
-      tree = render(<PipelineDetails {...generateProps(undefined, true)} />);
+      tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, true)} />);
       await getV1RunSpy;
       await getV2RunSpy;
       await createGraphSpy;
@@ -271,7 +271,7 @@ describe('PipelineDetails', () => {
     'shows all runs breadcrumbs, and "Pipeline details" as page title when the pipeline ' +
       'comes from a recurring run spec that does not have an experiment',
     async () => {
-      tree = render(<PipelineDetails {...generateProps(undefined, false, true)} />);
+      tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, false, true)} />);
       await getV1RecurringRunSpy;
       await getV2RecurringRunSpy;
       await TestUtils.flushPromises();
@@ -298,7 +298,7 @@ describe('PipelineDetails', () => {
       'comes from a run spec that has an experiment',
     async () => {
       testV2Run.experiment_id = 'test-experiment-id';
-      tree = render(<PipelineDetails {...generateProps(undefined, true)} />);
+      tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, true)} />);
       await getV1RunSpy;
       await getV2RunSpy;
       await getExperimentSpy;
@@ -330,7 +330,7 @@ describe('PipelineDetails', () => {
       'comes from a recurring run spec that has an experiment',
     async () => {
       testV2RecurringRun.experiment_id = 'test-experiment-id';
-      tree = render(<PipelineDetails {...generateProps(undefined, false, true)} />);
+      tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, false, true)} />);
       await getV1RecurringRunSpy;
       await getV2RecurringRunSpy;
       await getExperimentSpy;
@@ -369,7 +369,7 @@ describe('PipelineDetails', () => {
         workflow_manifest: '{"spec": {"arguments": {"parameters": [{"name": "output"}]}}}',
       };
 
-      tree = render(<PipelineDetails {...generateProps(undefined, true)} />);
+      tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, true)} />);
       await getV1RunSpy;
       await getV2RunSpy;
       await TestUtils.flushPromises();
@@ -391,7 +391,7 @@ describe('PipelineDetails', () => {
       });
       testV2Run.pipeline_spec = { spec: { arguments: { parameters: [{ name: 'output' }] } } };
 
-      tree = render(<PipelineDetails {...generateProps(undefined, true)} />);
+      tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, true)} />);
       await getV1RunSpy;
       await getV2RunSpy;
       await TestUtils.flushPromises();
@@ -416,7 +416,7 @@ describe('PipelineDetails', () => {
         spec: { arguments: { parameters: [{ name: 'output' }] } },
       };
 
-      tree = render(<PipelineDetails {...generateProps(undefined, false, true)} />);
+      tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, false, true)} />);
       await getV1RecurringRunSpy;
       await getV2RecurringRunSpy;
       await TestUtils.flushPromises();
@@ -437,7 +437,7 @@ describe('PipelineDetails', () => {
     testV2Run.pipeline_version_reference.pipeline_id = 'test-pipeline-id';
     testV2Run.pipeline_version_reference.pipeline_version_id = 'test-pipeline-version-id';
 
-    tree = render(<PipelineDetails {...generateProps(undefined, true)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, true)} />);
     await getV1RunSpy;
     await getV2RunSpy;
     await getV2PipelineVersionSpy;
@@ -454,7 +454,7 @@ describe('PipelineDetails', () => {
         pipeline_versions: [newTestV2PipelineVersion, originalTestV2PipelineVersion],
       }),
     );
-    render(<PipelineDetails {...generateProps()} />);
+    TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
 
     await waitFor(() => {
       expect(listV2PipelineVersionsSpy).toHaveBeenCalled();
@@ -470,7 +470,7 @@ describe('PipelineDetails', () => {
 
   it('renders "No graph to show" if it is empty pipeline', async () => {
     TestUtils.makeErrorResponse(getV2PipelineVersionSpy, 'No pipeline version is found');
-    render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+    TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
 
     await waitFor(() => {
       expect(getV2PipelineVersionSpy).toHaveBeenCalled();
@@ -489,7 +489,7 @@ describe('PipelineDetails', () => {
     testV2RecurringRun.pipeline_version_reference.pipeline_id = 'test-pipeline-id';
     testV2RecurringRun.pipeline_version_reference.pipeline_version_id = 'test-pipeline-version-id';
 
-    tree = render(<PipelineDetails {...generateProps(undefined, false, true)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, false, true)} />);
     await getV1RecurringRunSpy;
     await getV2RecurringRunSpy;
     await getV2PipelineVersionSpy;
@@ -508,7 +508,7 @@ describe('PipelineDetails', () => {
         pipeline_id: 'run-pipeline-id',
         workflow_manifest: 'not valid JSON',
       };
-      render(<PipelineDetails {...generateProps(undefined, true)} />);
+      TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, true)} />);
 
       await waitFor(() => {
         expect(getV1RunSpy).toHaveBeenCalled();
@@ -529,7 +529,7 @@ describe('PipelineDetails', () => {
 
   it('shows load error banner when failing to get run details, when loading from run spec', async () => {
     TestUtils.makeErrorResponseOnce(getV1RunSpy, 'woops');
-    tree = render(<PipelineDetails {...generateProps(undefined, true)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, true)} />);
     await getV1PipelineSpy;
     await TestUtils.flushPromises();
     expect(updateBannerSpy).toHaveBeenCalledTimes(2); // Once to clear banner, once to show error
@@ -548,7 +548,7 @@ describe('PipelineDetails', () => {
     async () => {
       testV2Run.experiment_id = 'test-experiment-id';
       TestUtils.makeErrorResponse(getExperimentSpy, 'woops');
-      tree = render(<PipelineDetails {...generateProps(undefined, true)} />);
+      tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, true)} />);
       await getV1PipelineSpy;
       await TestUtils.flushPromises();
       expect(updateBannerSpy).toHaveBeenCalledTimes(2); // Once to clear banner, once to show error
@@ -564,7 +564,7 @@ describe('PipelineDetails', () => {
 
   it('shows load error banner when failing to get pipeline', async () => {
     TestUtils.makeErrorResponseOnce(getV1PipelineSpy, 'woops');
-    tree = render(<PipelineDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
     await getV1PipelineSpy;
     await TestUtils.flushPromises();
     expect(updateBannerSpy).toHaveBeenCalledTimes(2); // Once to clear banner, once to show error
@@ -579,7 +579,7 @@ describe('PipelineDetails', () => {
 
   it('shows load error banner when failing to get pipeline version', async () => {
     TestUtils.makeErrorResponse(getV2PipelineVersionSpy, 'No pipeline version is found');
-    render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+    TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
 
     await waitFor(() => {
       expect(getV2PipelineVersionSpy).toHaveBeenCalled();
@@ -615,7 +615,7 @@ describe('PipelineDetails', () => {
         pipeline_spec: undefined, // empty pipeline_spec
       });
       getV1PipelineVersionTemplateSpy.mockResolvedValue({ template: '' });
-      render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+      TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
 
       await waitFor(() => {
         expect(getV2PipelineVersionSpy).toHaveBeenCalled();
@@ -648,7 +648,7 @@ describe('PipelineDetails', () => {
         pipeline_spec: undefined, // empty pipeline_spec
       });
       getV1TemplateSpy.mockResolvedValue({ template: '' });
-      render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+      TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
 
       await waitFor(() => {
         expect(getV2PipelineVersionSpy).toHaveBeenCalled();
@@ -679,7 +679,7 @@ describe('PipelineDetails', () => {
         pipeline_version_id: 'test-pipeline-version-id',
         pipeline_spec: {}, // invalid pipeline_spec
       });
-      render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+      TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
 
       await waitFor(() => {
         expect(getV2PipelineVersionSpy).toHaveBeenCalled();
@@ -713,7 +713,7 @@ describe('PipelineDetails', () => {
       },
     });
     TestUtils.makeErrorResponse(createGraphSpy, 'bad graph');
-    render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+    TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
 
     await waitFor(() => {
       expect(getV2PipelineVersionSpy).toHaveBeenCalled();
@@ -731,40 +731,36 @@ describe('PipelineDetails', () => {
   });
 
   it('has a new experiment button if it has a pipeline reference', async () => {
-    tree = render(<PipelineDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
     await TestUtils.flushPromises();
-    const instance = tree.instance() as PipelineDetails;
-    const newExperimentBtn = instance.getInitialToolbarState().actions[ButtonKeys.NEW_EXPERIMENT];
-    expect(newExperimentBtn).toBeDefined();
+    expect(updateToolbarSpy).toHaveBeenCalled();
+    const toolbarCall = updateToolbarSpy.mock.calls[0][0];
+    expect(toolbarCall.actions[ButtonKeys.NEW_EXPERIMENT]).toBeDefined();
   });
 
   it("has 'clone run' toolbar button if viewing an embedded pipeline", async () => {
-    tree = render(<PipelineDetails {...generateProps(undefined, true)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, true)} />);
     await TestUtils.flushPromises();
-    const instance = tree.instance() as PipelineDetails;
-    /* create run and create pipeline version, so 2 */
-    expect(Object.keys(instance.getInitialToolbarState().actions)).toHaveLength(1);
-    const cloneRunBtn = instance.getInitialToolbarState().actions[ButtonKeys.CLONE_RUN];
-    expect(cloneRunBtn).toBeDefined();
+    expect(updateToolbarSpy).toHaveBeenCalled();
+    const toolbarCall = updateToolbarSpy.mock.calls[0][0];
+    expect(Object.keys(toolbarCall.actions)).toHaveLength(1);
+    expect(toolbarCall.actions[ButtonKeys.CLONE_RUN]).toBeDefined();
   });
 
   it("has 'clone recurring run' toolbar button if viewing an embedded pipeline from recurring run", async () => {
-    tree = render(<PipelineDetails {...generateProps(undefined, false, true)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, false, true)} />);
     await TestUtils.flushPromises();
-    const instance = tree.instance() as PipelineDetails;
-    /* create run and create pipeline version, so 2 */
-    expect(Object.keys(instance.getInitialToolbarState().actions)).toHaveLength(1);
-    const cloneRecurringRunBtn = instance.getInitialToolbarState().actions[
-      ButtonKeys.CLONE_RECURRING_RUN
-    ];
-    expect(cloneRecurringRunBtn).toBeDefined();
+    expect(updateToolbarSpy).toHaveBeenCalled();
+    const toolbarCall = updateToolbarSpy.mock.calls[0][0];
+    expect(Object.keys(toolbarCall.actions)).toHaveLength(1);
+    expect(toolbarCall.actions[ButtonKeys.CLONE_RECURRING_RUN]).toBeDefined();
   });
 
   it(
     'clicking clone run button when viewing embedded pipeline navigates to ' +
       'the new run page (clone a run) with run ID',
     async () => {
-      tree = render(<PipelineDetails {...generateProps(undefined, true)} />);
+      tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, true)} />);
       await TestUtils.flushPromises();
       const instance = tree.instance() as PipelineDetails;
       const cloneRunBtn = instance.getInitialToolbarState().actions[ButtonKeys.CLONE_RUN];
@@ -780,7 +776,7 @@ describe('PipelineDetails', () => {
     'clicking clone recurring run button when viewing embedded pipeline from recurring run' +
       'navigates to the new run page (clone a recurring run) with recurring run ID',
     async () => {
-      tree = render(<PipelineDetails {...generateProps(undefined, false, true)} />);
+      tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, false, true)} />);
       await TestUtils.flushPromises();
       const instance = tree.instance() as PipelineDetails;
       const cloneRecurringRunBtn = instance.getInitialToolbarState().actions[
@@ -796,7 +792,7 @@ describe('PipelineDetails', () => {
   );
 
   it("has 'create run' toolbar button if not viewing an embedded pipeline", async () => {
-    tree = render(<PipelineDetails {...generateProps(undefined, false)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(undefined, false)} />);
     await TestUtils.flushPromises();
     const instance = tree.instance() as PipelineDetails;
     /* create run, create pipeline version, create experiment and delete run, so 4 */
@@ -808,7 +804,7 @@ describe('PipelineDetails', () => {
   });
 
   it('uses selected version ID to create run if URL does not contain version ID', async () => {
-    tree = render(<PipelineDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
     await TestUtils.flushPromises();
     const instance = tree.instance() as PipelineDetails;
     const newRunFromPipelineVersionBtn = instance.getInitialToolbarState().actions[
@@ -823,7 +819,7 @@ describe('PipelineDetails', () => {
   });
 
   it('clicking new run button navigates to the new run page', async () => {
-    tree = render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID, false)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID, false)} />);
     await TestUtils.flushPromises();
     const instance = tree.instance() as PipelineDetails;
     const newRunFromPipelineVersionBtn = instance.getInitialToolbarState().actions[
@@ -841,7 +837,7 @@ describe('PipelineDetails', () => {
     'clicking new run button when viewing half-loaded page navigates to ' +
       'the new run page with pipeline ID and version ID',
     async () => {
-      tree = render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID, false)} />);
+      tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID, false)} />);
       // Intentionally don't wait until all network requests finish.
       const instance = tree.instance() as PipelineDetails;
       const newRunFromPipelineVersionBtn = instance.getInitialToolbarState().actions[
@@ -857,7 +853,7 @@ describe('PipelineDetails', () => {
   );
 
   it('clicking new experiment button navigates to new experiment page', async () => {
-    tree = render(<PipelineDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
     await TestUtils.flushPromises();
     const instance = tree.instance() as PipelineDetails;
     const newExperimentBtn = instance.getInitialToolbarState().actions[ButtonKeys.NEW_EXPERIMENT];
@@ -872,7 +868,7 @@ describe('PipelineDetails', () => {
     'clicking new experiment button when viewing half-loaded page navigates to ' +
       'the new experiment page with the pipeline ID',
     async () => {
-      tree = render(<PipelineDetails {...generateProps()} />);
+      tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps()} />);
       // Intentionally don't wait until all network requests finish.
       const instance = tree.instance() as PipelineDetails;
       const newExperimentBtn = instance.getInitialToolbarState().actions[ButtonKeys.NEW_EXPERIMENT];
@@ -885,7 +881,7 @@ describe('PipelineDetails', () => {
   );
 
   it('has a delete button and it is enabled for pipeline version deletion', async () => {
-    tree = render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
     await TestUtils.flushPromises();
     const instance = tree.instance() as PipelineDetails;
     const deleteBtn = instance.getInitialToolbarState().actions[ButtonKeys.DELETE_RUN];
@@ -895,7 +891,7 @@ describe('PipelineDetails', () => {
 
   it('has a delete button, and it is disabled because no version is selected', async () => {
     let pageProps = generateProps();
-    tree = render(<PipelineDetails {...pageProps} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...pageProps} />);
 
     await TestUtils.flushPromises();
     const instance = tree.instance() as PipelineDetails;
@@ -905,7 +901,7 @@ describe('PipelineDetails', () => {
   });
 
   it('shows delete confirmation dialog when delete button is clicked', async () => {
-    tree = render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
     const deleteBtn = (tree.instance() as PipelineDetails).getInitialToolbarState().actions[
       ButtonKeys.DELETE_RUN
     ];
@@ -919,7 +915,7 @@ describe('PipelineDetails', () => {
   });
 
   it('does not call delete API for selected pipeline when delete dialog is canceled', async () => {
-    tree = render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
     const deleteBtn = (tree.instance() as PipelineDetails).getInitialToolbarState().actions[
       ButtonKeys.DELETE_RUN
     ];
@@ -931,7 +927,7 @@ describe('PipelineDetails', () => {
   });
 
   it('calls delete API when delete dialog is confirmed', async () => {
-    tree = render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
     await TestUtils.flushPromises();
     const deleteBtn = (tree.instance() as PipelineDetails).getInitialToolbarState().actions[
       ButtonKeys.DELETE_RUN
@@ -948,7 +944,7 @@ describe('PipelineDetails', () => {
   });
 
   it('calls delete API when delete dialog is confirmed and page is half-loaded', async () => {
-    tree = render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
     // Intentionally don't wait until all network requests finish.
     const deleteBtn = (tree.instance() as PipelineDetails).getInitialToolbarState().actions[
       ButtonKeys.DELETE_RUN
@@ -965,7 +961,7 @@ describe('PipelineDetails', () => {
   });
 
   it('shows error dialog if deletion fails', async () => {
-    tree = render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
     TestUtils.makeErrorResponseOnce(deletePipelineVersionSpy, 'woops');
     await TestUtils.flushPromises();
     const deleteBtn = (tree.instance() as PipelineDetails).getInitialToolbarState().actions[
@@ -985,7 +981,7 @@ describe('PipelineDetails', () => {
   });
 
   it('shows success snackbar if deletion succeeds', async () => {
-    tree = render(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
+    tree = TestUtils.renderWithRouter(<PipelineDetails {...generateProps(PIPELINE_VERSION_ID)} />);
     await TestUtils.flushPromises();
     const deleteBtn = (tree.instance() as PipelineDetails).getInitialToolbarState().actions[
       ButtonKeys.DELETE_RUN
