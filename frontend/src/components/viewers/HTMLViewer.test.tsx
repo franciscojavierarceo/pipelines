@@ -15,13 +15,13 @@
  */
 
 import * as React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import HTMLViewer, { HTMLViewerConfig } from './HTMLViewer';
 import { PlotType } from './Viewer';
 
 describe('HTMLViewer', () => {
   it('does not break on empty data', () => {
-    const tree = mount(<HTMLViewer configs={[]} />);
+    const tree = render(<HTMLViewer configs={[]} />);
     expect(tree).toMatchSnapshot();
   });
 
@@ -32,25 +32,27 @@ describe('HTMLViewer', () => {
   };
 
   it('renders some basic HTML', () => {
-    const tree = mount(<HTMLViewer configs={[config]} />);
+    const tree = render(<HTMLViewer configs={[config]} />);
     expect(tree).toMatchSnapshot();
   });
 
   it('renders a smaller snapshot version', () => {
-    const tree = mount(<HTMLViewer configs={[config]} maxDimension={100} />);
+    const tree = render(<HTMLViewer configs={[config]} maxDimension={100} />);
     expect(tree).toMatchSnapshot();
   });
 
   it('uses srcdoc to insert HTML into the iframe', () => {
-    const tree = mount(<HTMLViewer configs={[config]} />);
-    expect((tree.instance() as any)._iframeRef.current.srcdoc).toEqual(html);
-    expect((tree.instance() as any)._iframeRef.current.src).toEqual('about:blank');
+    const { container } = render(<HTMLViewer configs={[config]} />);
+    const iframe = container.querySelector('iframe');
+    expect(iframe?.srcdoc).toEqual(html);
+    expect(iframe?.src).toEqual('about:blank');
   });
 
   it('cannot be accessed from main frame of the other way around (no allow-same-origin)', () => {
-    const tree = mount(<HTMLViewer configs={[config]} />);
-    expect((tree.instance() as any)._iframeRef.current.window).toBeUndefined();
-    expect((tree.instance() as any)._iframeRef.current.document).toBeUndefined();
+    const { container } = render(<HTMLViewer configs={[config]} />);
+    const iframe = container.querySelector('iframe') as HTMLIFrameElement;
+    expect((iframe as any).window).toBeUndefined();
+    expect((iframe as any).document).toBeUndefined();
   });
 
   it('returns a user friendly display name', () => {

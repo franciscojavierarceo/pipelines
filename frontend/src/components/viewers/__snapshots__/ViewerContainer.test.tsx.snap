@@ -1,6 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ViewerContainer does not break on empty configs 1`] = `""`;
+exports[`ViewerContainer does not break on empty configs 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div />
+  </body>,
+  "container": <div />,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
 
 exports[`ViewerContainer renders a viewer of type CONFUSION_MATRIX 1`] = `
 <ConfusionMatrix
@@ -27,15 +86,1918 @@ exports[`ViewerContainer renders a viewer of type MARKDOWN 1`] = `
 `;
 
 exports[`ViewerContainer renders a viewer of type ROC 1`] = `
-<ROCCurve
-  configs={
-    Array [
-      Object {
-        "type": "roc",
-      },
-    ]
-  }
-/>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div>
+        <div
+          class="rv-xy-plot "
+          style="width: 800px; height: 520px;"
+        >
+          <svg
+            class="rv-xy-plot__inner"
+            height="520"
+            width="800"
+          >
+            <g
+              class="rv-xy-plot__grid-lines"
+              transform="translate(40,10)"
+            >
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="0"
+                x2="0"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="37.87878787878788"
+                x2="37.87878787878788"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="75.75757575757576"
+                x2="75.75757575757576"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="113.63636363636364"
+                x2="113.63636363636364"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="151.51515151515153"
+                x2="151.51515151515153"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="189.3939393939394"
+                x2="189.3939393939394"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="227.27272727272728"
+                x2="227.27272727272728"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="265.1515151515151"
+                x2="265.1515151515151"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="303.03030303030306"
+                x2="303.03030303030306"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="340.90909090909093"
+                x2="340.90909090909093"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="378.7878787878788"
+                x2="378.7878787878788"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="416.6666666666667"
+                x2="416.6666666666667"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="454.54545454545456"
+                x2="454.54545454545456"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="492.42424242424244"
+                x2="492.42424242424244"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="530.3030303030303"
+                x2="530.3030303030303"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="568.1818181818181"
+                x2="568.1818181818181"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="606.0606060606061"
+                x2="606.0606060606061"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="643.9393939393939"
+                x2="643.9393939393939"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="681.8181818181819"
+                x2="681.8181818181819"
+                y1="0"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="719.6969696969696"
+                x2="719.6969696969696"
+                y1="0"
+                y2="470"
+              />
+            </g>
+            <g
+              class="rv-xy-plot__grid-lines"
+              transform="translate(40,10)"
+            >
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="0"
+                x2="750"
+                y1="470"
+                y2="470"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="0"
+                x2="750"
+                y1="422.52525252525254"
+                y2="422.52525252525254"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="0"
+                x2="750"
+                y1="375.050505050505"
+                y2="375.050505050505"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="0"
+                x2="750"
+                y1="327.57575757575756"
+                y2="327.57575757575756"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="0"
+                x2="750"
+                y1="280.10101010101005"
+                y2="280.10101010101005"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="0"
+                x2="750"
+                y1="232.62626262626262"
+                y2="232.62626262626262"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="0"
+                x2="750"
+                y1="185.15151515151513"
+                y2="185.15151515151513"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="0"
+                x2="750"
+                y1="137.67676767676767"
+                y2="137.67676767676767"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="0"
+                x2="750"
+                y1="90.20202020202015"
+                y2="90.20202020202015"
+              />
+              <line
+                class="rv-xy-plot__grid-lines__line"
+                x1="0"
+                x2="750"
+                y1="42.72727272727269"
+                y2="42.72727272727269"
+              />
+            </g>
+            <g
+              class="rv-xy-plot__axis rv-xy-plot__axis--horizontal axis"
+              transform="translate(40,480)"
+            >
+              <line
+                class="rv-xy-plot__axis__line"
+                x1="0"
+                x2="750"
+                y1="0"
+                y2="0"
+              />
+              <g
+                class="rv-xy-plot__axis__ticks"
+                transform="translate(0, 0)"
+              >
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(0, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.00
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(37.87878787878788, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.05
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(75.75757575757576, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.10
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(113.63636363636364, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.15
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(151.51515151515153, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.20
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(189.3939393939394, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.25
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(227.27272727272728, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.30
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(265.1515151515151, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.35
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(303.03030303030306, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.40
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(340.90909090909093, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.45
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(378.7878787878788, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.50
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(416.6666666666667, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.55
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(454.54545454545456, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.60
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(492.42424242424244, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.65
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(530.3030303030303, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.70
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(568.1818181818181, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.75
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(606.0606060606061, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.80
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(643.9393939393939, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.85
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(681.8181818181819, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.90
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(719.6969696969696, 0)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="0"
+                    x2="0"
+                    y1="-6"
+                    y2="6"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.72em"
+                    text-anchor="middle"
+                    transform="translate(0, 14)"
+                  >
+                    0.95
+                  </text>
+                </g>
+              </g>
+              <g
+                class="rv-xy-plot__axis__title"
+                transform="translate(0, 0)"
+              >
+                <g
+                  style="text-anchor: end;"
+                  transform="translate(744, -6) rotate(0)"
+                >
+                  <text>
+                    fpr
+                  </text>
+                </g>
+              </g>
+            </g>
+            <g
+              class="rv-xy-plot__axis rv-xy-plot__axis--vertical axis"
+              transform="translate(0,10)"
+            >
+              <line
+                class="rv-xy-plot__axis__line"
+                x1="40"
+                x2="40"
+                y1="0"
+                y2="470"
+              />
+              <g
+                class="rv-xy-plot__axis__ticks"
+                transform="translate(40, 0)"
+              >
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(0, 470)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="6"
+                    x2="-6"
+                    y1="0"
+                    y2="0"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.32em"
+                    text-anchor="end"
+                    transform="translate(-14, 0)"
+                  >
+                    0.0
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(0, 422.52525252525254)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="6"
+                    x2="-6"
+                    y1="0"
+                    y2="0"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.32em"
+                    text-anchor="end"
+                    transform="translate(-14, 0)"
+                  >
+                    0.1
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(0, 375.050505050505)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="6"
+                    x2="-6"
+                    y1="0"
+                    y2="0"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.32em"
+                    text-anchor="end"
+                    transform="translate(-14, 0)"
+                  >
+                    0.2
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(0, 327.57575757575756)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="6"
+                    x2="-6"
+                    y1="0"
+                    y2="0"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.32em"
+                    text-anchor="end"
+                    transform="translate(-14, 0)"
+                  >
+                    0.3
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(0, 280.10101010101005)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="6"
+                    x2="-6"
+                    y1="0"
+                    y2="0"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.32em"
+                    text-anchor="end"
+                    transform="translate(-14, 0)"
+                  >
+                    0.4
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(0, 232.62626262626262)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="6"
+                    x2="-6"
+                    y1="0"
+                    y2="0"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.32em"
+                    text-anchor="end"
+                    transform="translate(-14, 0)"
+                  >
+                    0.5
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(0, 185.15151515151513)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="6"
+                    x2="-6"
+                    y1="0"
+                    y2="0"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.32em"
+                    text-anchor="end"
+                    transform="translate(-14, 0)"
+                  >
+                    0.6
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(0, 137.67676767676767)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="6"
+                    x2="-6"
+                    y1="0"
+                    y2="0"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.32em"
+                    text-anchor="end"
+                    transform="translate(-14, 0)"
+                  >
+                    0.7
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(0, 90.20202020202015)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="6"
+                    x2="-6"
+                    y1="0"
+                    y2="0"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.32em"
+                    text-anchor="end"
+                    transform="translate(-14, 0)"
+                  >
+                    0.8
+                  </text>
+                </g>
+                <g
+                  class="rv-xy-plot__axis__tick"
+                  transform="translate(0, 42.72727272727269)"
+                >
+                  <line
+                    class="rv-xy-plot__axis__tick__line"
+                    x1="6"
+                    x2="-6"
+                    y1="0"
+                    y2="0"
+                  />
+                  <text
+                    class="rv-xy-plot__axis__tick__text"
+                    dy="0.32em"
+                    text-anchor="end"
+                    transform="translate(-14, 0)"
+                  >
+                    0.9
+                  </text>
+                </g>
+              </g>
+              <g
+                class="rv-xy-plot__axis__title"
+                transform="translate(40, 0)"
+              >
+                <g
+                  style="text-anchor: end;"
+                  transform="translate(16, 6) rotate(-90)"
+                >
+                  <text>
+                    tpr
+                  </text>
+                </g>
+              </g>
+            </g>
+            <path
+              class="rv-xy-plot__series rv-xy-plot__series--line "
+              d="M0,470L7.575757575757576,465.25252525252523L15.151515151515152,460.5050505050505L22.727272727272727,455.75757575757575L30.303030303030305,451.010101010101L37.87878787878788,446.26262626262627L45.45454545454545,441.5151515151515L53.03030303030304,436.7676767676768L60.60606060606061,432.020202020202L68.18181818181819,427.27272727272725L75.75757575757576,422.52525252525254L83.33333333333334,417.77777777777777L90.9090909090909,413.030303030303L98.4848484848485,408.2828282828283L106.06060606060608,403.5353535353535L113.63636363636364,398.78787878787875L121.21212121212122,394.04040404040404L128.7878787878788,389.2929292929293L136.36363636363637,384.54545454545456L143.93939393939394,379.7979797979798L151.51515151515153,375.050505050505L159.0909090909091,370.3030303030303L166.66666666666669,365.55555555555554L174.24242424242425,360.80808080808083L181.8181818181818,356.06060606060606L189.3939393939394,351.3131313131313L196.969696969697,346.5656565656566L204.54545454545456,341.8181818181818L212.12121212121215,337.07070707070704L219.6969696969697,332.32323232323233L227.27272727272728,327.57575757575756L234.84848484848487,322.8282828282828L242.42424242424244,318.0808080808081L250.00000000000003,313.3333333333333L257.5757575757576,308.58585858585855L265.1515151515151,303.83838383838383L272.72727272727275,299.0909090909091L280.3030303030303,294.3434343434343L287.8787878787879,289.5959595959596L295.4545454545455,284.8484848484849L303.03030303030306,280.10101010101005L310.6060606060606,275.35353535353534L318.1818181818182,270.6060606060606L325.75757575757575,265.85858585858585L333.33333333333337,261.1111111111111L340.90909090909093,256.3636363636364L348.4848484848485,251.6161616161616L356.06060606060606,246.86868686868686L363.6363636363636,242.12121212121212L371.21212121212125,237.37373737373736L378.7878787878788,232.62626262626262L386.3636363636364,227.87878787878788L393.939393939394,223.1313131313131L401.5151515151515,218.3838383838384L409.0909090909091,213.63636363636363L416.6666666666667,208.88888888888886L424.2424242424243,204.1414141414141L431.81818181818176,199.39393939393943L439.3939393939394,194.64646464646466L446.96969696969694,189.8989898989899L454.54545454545456,185.15151515151513L462.1212121212121,180.40404040404042L469.69696969696975,175.65656565656565L477.27272727272725,170.90909090909093L484.8484848484849,166.1616161616161L492.42424242424244,161.4141414141414L500.00000000000006,156.66666666666663L507.5757575757576,151.91919191919192L515.1515151515152,147.17171717171715L522.7272727272726,142.42424242424244L530.3030303030303,137.67676767676767L537.8787878787879,132.92929292929296L545.4545454545455,128.1818181818182L553.030303030303,123.43434343434342L560.6060606060606,118.68686868686865L568.1818181818181,113.93939393939394L575.7575757575758,109.19191919191917L583.3333333333334,104.44444444444446L590.909090909091,99.69696969696969L598.4848484848485,94.94949494949492L606.0606060606061,90.20202020202015L613.6363636363636,85.45454545454544L621.2121212121212,80.70707070707073L628.7878787878788,75.95959595959596L636.3636363636364,71.21212121212119L643.9393939393939,66.46464646464648L651.5151515151515,61.71717171717171L659.0909090909091,56.969696969697L666.6666666666667,52.22222222222217L674.2424242424242,47.47474747474746L681.8181818181819,42.72727272727269L689.3939393939394,37.97979797979798L696.969696969697,33.23232323232321L704.5454545454546,28.484848484848442L712.1212121212121,23.73737373737373L719.6969696969696,18.989898989899018L727.2727272727273,14.24242424242425L734.8484848484849,9.49494949494948L742.4242424242425,4.747474747474712L750,0"
+              style="opacity: 1; stroke-dasharray: 6, 2; stroke-width: 1; stroke: #ddd;"
+              transform="translate(40,10)"
+            />
+            <g
+              class=" rv-highlight-container"
+              transform="translate(0, 0)"
+            >
+              <rect
+                class="rv-mouse-target"
+                fill="black"
+                height="520"
+                opacity="0"
+                width="800"
+                x="0"
+                y="0"
+              />
+              <rect
+                class="rv-highlight"
+                fill="rgb(77, 182, 172)"
+                height="0"
+                opacity="0.3"
+                pointer-events="none"
+                width="0"
+                x="0"
+                y="0"
+              />
+            </g>
+          </svg>
+        </div>
+        <div
+          class="flex"
+        />
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div>
+      <div
+        class="rv-xy-plot "
+        style="width: 800px; height: 520px;"
+      >
+        <svg
+          class="rv-xy-plot__inner"
+          height="520"
+          width="800"
+        >
+          <g
+            class="rv-xy-plot__grid-lines"
+            transform="translate(40,10)"
+          >
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="0"
+              x2="0"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="37.87878787878788"
+              x2="37.87878787878788"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="75.75757575757576"
+              x2="75.75757575757576"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="113.63636363636364"
+              x2="113.63636363636364"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="151.51515151515153"
+              x2="151.51515151515153"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="189.3939393939394"
+              x2="189.3939393939394"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="227.27272727272728"
+              x2="227.27272727272728"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="265.1515151515151"
+              x2="265.1515151515151"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="303.03030303030306"
+              x2="303.03030303030306"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="340.90909090909093"
+              x2="340.90909090909093"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="378.7878787878788"
+              x2="378.7878787878788"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="416.6666666666667"
+              x2="416.6666666666667"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="454.54545454545456"
+              x2="454.54545454545456"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="492.42424242424244"
+              x2="492.42424242424244"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="530.3030303030303"
+              x2="530.3030303030303"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="568.1818181818181"
+              x2="568.1818181818181"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="606.0606060606061"
+              x2="606.0606060606061"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="643.9393939393939"
+              x2="643.9393939393939"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="681.8181818181819"
+              x2="681.8181818181819"
+              y1="0"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="719.6969696969696"
+              x2="719.6969696969696"
+              y1="0"
+              y2="470"
+            />
+          </g>
+          <g
+            class="rv-xy-plot__grid-lines"
+            transform="translate(40,10)"
+          >
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="0"
+              x2="750"
+              y1="470"
+              y2="470"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="0"
+              x2="750"
+              y1="422.52525252525254"
+              y2="422.52525252525254"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="0"
+              x2="750"
+              y1="375.050505050505"
+              y2="375.050505050505"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="0"
+              x2="750"
+              y1="327.57575757575756"
+              y2="327.57575757575756"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="0"
+              x2="750"
+              y1="280.10101010101005"
+              y2="280.10101010101005"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="0"
+              x2="750"
+              y1="232.62626262626262"
+              y2="232.62626262626262"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="0"
+              x2="750"
+              y1="185.15151515151513"
+              y2="185.15151515151513"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="0"
+              x2="750"
+              y1="137.67676767676767"
+              y2="137.67676767676767"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="0"
+              x2="750"
+              y1="90.20202020202015"
+              y2="90.20202020202015"
+            />
+            <line
+              class="rv-xy-plot__grid-lines__line"
+              x1="0"
+              x2="750"
+              y1="42.72727272727269"
+              y2="42.72727272727269"
+            />
+          </g>
+          <g
+            class="rv-xy-plot__axis rv-xy-plot__axis--horizontal axis"
+            transform="translate(40,480)"
+          >
+            <line
+              class="rv-xy-plot__axis__line"
+              x1="0"
+              x2="750"
+              y1="0"
+              y2="0"
+            />
+            <g
+              class="rv-xy-plot__axis__ticks"
+              transform="translate(0, 0)"
+            >
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(0, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.00
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(37.87878787878788, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.05
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(75.75757575757576, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.10
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(113.63636363636364, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.15
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(151.51515151515153, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.20
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(189.3939393939394, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.25
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(227.27272727272728, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.30
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(265.1515151515151, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.35
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(303.03030303030306, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.40
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(340.90909090909093, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.45
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(378.7878787878788, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.50
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(416.6666666666667, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.55
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(454.54545454545456, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.60
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(492.42424242424244, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.65
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(530.3030303030303, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.70
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(568.1818181818181, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.75
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(606.0606060606061, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.80
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(643.9393939393939, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.85
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(681.8181818181819, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.90
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(719.6969696969696, 0)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="0"
+                  x2="0"
+                  y1="-6"
+                  y2="6"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.72em"
+                  text-anchor="middle"
+                  transform="translate(0, 14)"
+                >
+                  0.95
+                </text>
+              </g>
+            </g>
+            <g
+              class="rv-xy-plot__axis__title"
+              transform="translate(0, 0)"
+            >
+              <g
+                style="text-anchor: end;"
+                transform="translate(744, -6) rotate(0)"
+              >
+                <text>
+                  fpr
+                </text>
+              </g>
+            </g>
+          </g>
+          <g
+            class="rv-xy-plot__axis rv-xy-plot__axis--vertical axis"
+            transform="translate(0,10)"
+          >
+            <line
+              class="rv-xy-plot__axis__line"
+              x1="40"
+              x2="40"
+              y1="0"
+              y2="470"
+            />
+            <g
+              class="rv-xy-plot__axis__ticks"
+              transform="translate(40, 0)"
+            >
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(0, 470)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="6"
+                  x2="-6"
+                  y1="0"
+                  y2="0"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.32em"
+                  text-anchor="end"
+                  transform="translate(-14, 0)"
+                >
+                  0.0
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(0, 422.52525252525254)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="6"
+                  x2="-6"
+                  y1="0"
+                  y2="0"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.32em"
+                  text-anchor="end"
+                  transform="translate(-14, 0)"
+                >
+                  0.1
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(0, 375.050505050505)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="6"
+                  x2="-6"
+                  y1="0"
+                  y2="0"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.32em"
+                  text-anchor="end"
+                  transform="translate(-14, 0)"
+                >
+                  0.2
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(0, 327.57575757575756)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="6"
+                  x2="-6"
+                  y1="0"
+                  y2="0"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.32em"
+                  text-anchor="end"
+                  transform="translate(-14, 0)"
+                >
+                  0.3
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(0, 280.10101010101005)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="6"
+                  x2="-6"
+                  y1="0"
+                  y2="0"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.32em"
+                  text-anchor="end"
+                  transform="translate(-14, 0)"
+                >
+                  0.4
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(0, 232.62626262626262)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="6"
+                  x2="-6"
+                  y1="0"
+                  y2="0"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.32em"
+                  text-anchor="end"
+                  transform="translate(-14, 0)"
+                >
+                  0.5
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(0, 185.15151515151513)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="6"
+                  x2="-6"
+                  y1="0"
+                  y2="0"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.32em"
+                  text-anchor="end"
+                  transform="translate(-14, 0)"
+                >
+                  0.6
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(0, 137.67676767676767)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="6"
+                  x2="-6"
+                  y1="0"
+                  y2="0"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.32em"
+                  text-anchor="end"
+                  transform="translate(-14, 0)"
+                >
+                  0.7
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(0, 90.20202020202015)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="6"
+                  x2="-6"
+                  y1="0"
+                  y2="0"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.32em"
+                  text-anchor="end"
+                  transform="translate(-14, 0)"
+                >
+                  0.8
+                </text>
+              </g>
+              <g
+                class="rv-xy-plot__axis__tick"
+                transform="translate(0, 42.72727272727269)"
+              >
+                <line
+                  class="rv-xy-plot__axis__tick__line"
+                  x1="6"
+                  x2="-6"
+                  y1="0"
+                  y2="0"
+                />
+                <text
+                  class="rv-xy-plot__axis__tick__text"
+                  dy="0.32em"
+                  text-anchor="end"
+                  transform="translate(-14, 0)"
+                >
+                  0.9
+                </text>
+              </g>
+            </g>
+            <g
+              class="rv-xy-plot__axis__title"
+              transform="translate(40, 0)"
+            >
+              <g
+                style="text-anchor: end;"
+                transform="translate(16, 6) rotate(-90)"
+              >
+                <text>
+                  tpr
+                </text>
+              </g>
+            </g>
+          </g>
+          <path
+            class="rv-xy-plot__series rv-xy-plot__series--line "
+            d="M0,470L7.575757575757576,465.25252525252523L15.151515151515152,460.5050505050505L22.727272727272727,455.75757575757575L30.303030303030305,451.010101010101L37.87878787878788,446.26262626262627L45.45454545454545,441.5151515151515L53.03030303030304,436.7676767676768L60.60606060606061,432.020202020202L68.18181818181819,427.27272727272725L75.75757575757576,422.52525252525254L83.33333333333334,417.77777777777777L90.9090909090909,413.030303030303L98.4848484848485,408.2828282828283L106.06060606060608,403.5353535353535L113.63636363636364,398.78787878787875L121.21212121212122,394.04040404040404L128.7878787878788,389.2929292929293L136.36363636363637,384.54545454545456L143.93939393939394,379.7979797979798L151.51515151515153,375.050505050505L159.0909090909091,370.3030303030303L166.66666666666669,365.55555555555554L174.24242424242425,360.80808080808083L181.8181818181818,356.06060606060606L189.3939393939394,351.3131313131313L196.969696969697,346.5656565656566L204.54545454545456,341.8181818181818L212.12121212121215,337.07070707070704L219.6969696969697,332.32323232323233L227.27272727272728,327.57575757575756L234.84848484848487,322.8282828282828L242.42424242424244,318.0808080808081L250.00000000000003,313.3333333333333L257.5757575757576,308.58585858585855L265.1515151515151,303.83838383838383L272.72727272727275,299.0909090909091L280.3030303030303,294.3434343434343L287.8787878787879,289.5959595959596L295.4545454545455,284.8484848484849L303.03030303030306,280.10101010101005L310.6060606060606,275.35353535353534L318.1818181818182,270.6060606060606L325.75757575757575,265.85858585858585L333.33333333333337,261.1111111111111L340.90909090909093,256.3636363636364L348.4848484848485,251.6161616161616L356.06060606060606,246.86868686868686L363.6363636363636,242.12121212121212L371.21212121212125,237.37373737373736L378.7878787878788,232.62626262626262L386.3636363636364,227.87878787878788L393.939393939394,223.1313131313131L401.5151515151515,218.3838383838384L409.0909090909091,213.63636363636363L416.6666666666667,208.88888888888886L424.2424242424243,204.1414141414141L431.81818181818176,199.39393939393943L439.3939393939394,194.64646464646466L446.96969696969694,189.8989898989899L454.54545454545456,185.15151515151513L462.1212121212121,180.40404040404042L469.69696969696975,175.65656565656565L477.27272727272725,170.90909090909093L484.8484848484849,166.1616161616161L492.42424242424244,161.4141414141414L500.00000000000006,156.66666666666663L507.5757575757576,151.91919191919192L515.1515151515152,147.17171717171715L522.7272727272726,142.42424242424244L530.3030303030303,137.67676767676767L537.8787878787879,132.92929292929296L545.4545454545455,128.1818181818182L553.030303030303,123.43434343434342L560.6060606060606,118.68686868686865L568.1818181818181,113.93939393939394L575.7575757575758,109.19191919191917L583.3333333333334,104.44444444444446L590.909090909091,99.69696969696969L598.4848484848485,94.94949494949492L606.0606060606061,90.20202020202015L613.6363636363636,85.45454545454544L621.2121212121212,80.70707070707073L628.7878787878788,75.95959595959596L636.3636363636364,71.21212121212119L643.9393939393939,66.46464646464648L651.5151515151515,61.71717171717171L659.0909090909091,56.969696969697L666.6666666666667,52.22222222222217L674.2424242424242,47.47474747474746L681.8181818181819,42.72727272727269L689.3939393939394,37.97979797979798L696.969696969697,33.23232323232321L704.5454545454546,28.484848484848442L712.1212121212121,23.73737373737373L719.6969696969696,18.989898989899018L727.2727272727273,14.24242424242425L734.8484848484849,9.49494949494948L742.4242424242425,4.747474747474712L750,0"
+            style="opacity: 1; stroke-dasharray: 6, 2; stroke-width: 1; stroke: #ddd;"
+            transform="translate(40,10)"
+          />
+          <g
+            class=" rv-highlight-container"
+            transform="translate(0, 0)"
+          >
+            <rect
+              class="rv-mouse-target"
+              fill="black"
+              height="520"
+              opacity="0"
+              width="800"
+              x="0"
+              y="0"
+            />
+            <rect
+              class="rv-highlight"
+              fill="rgb(77, 182, 172)"
+              height="0"
+              opacity="0.3"
+              pointer-events="none"
+              width="0"
+              x="0"
+              y="0"
+            />
+          </g>
+        </svg>
+      </div>
+      <div
+        class="flex"
+      />
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`ViewerContainer renders a viewer of type TABLE 1`] = `
@@ -51,37 +2013,588 @@ exports[`ViewerContainer renders a viewer of type TABLE 1`] = `
 `;
 
 exports[`ViewerContainer renders a viewer of type TENSORBOARD 1`] = `
-<TensorboardViewer
-  configs={
-    Array [
-      Object {
-        "type": "tensorboard",
-      },
-    ]
-  }
-/>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div>
+        
+        <div>
+          <div
+            class=""
+          >
+            <div
+              class="MuiFormControl-root-1 formControl"
+            >
+              <label
+                class="MuiFormLabel-root-16 MuiFormLabel-filled-20 MuiInputLabel-root-5 MuiInputLabel-formControl-10 MuiInputLabel-animated-13 MuiInputLabel-shrink-12"
+                data-shrink="true"
+                for="viewer-tb-image-select"
+              >
+                TF Image
+              </label>
+              <div
+                class="MuiInputBase-root-43 MuiInput-root-30 MuiInput-underline-34 MuiInputBase-formControl-44 MuiInput-formControl-31 select"
+              >
+                <div
+                  class="MuiSelect-root-23"
+                >
+                  <div
+                    aria-haspopup="true"
+                    aria-pressed="false"
+                    class="MuiSelect-select-24 MuiSelect-selectMenu-27 MuiInputBase-input-53 MuiInput-input-38"
+                    role="button"
+                    tabindex="0"
+                  >
+                    TensorFlow 2.2.2
+                  </div>
+                  <input
+                    id="viewer-tb-image-select"
+                    type="hidden"
+                    value="tensorflow/tensorflow:2.2.2"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root-60 MuiSelect-icon-29"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M7 10l5 5 5-5z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button
+              class="MuiButtonBase-root-99 MuiButtonBase-disabled-100 MuiButton-root-73 MuiButton-text-75 MuiButton-textSecondary-77 MuiButton-flat-78 MuiButton-flatSecondary-80 MuiButton-disabled-93 root rootBusy buttonAction"
+              disabled=""
+              tabindex="-1"
+              type="button"
+            >
+              <span
+                class="MuiButton-label-74"
+              >
+                <span>
+                  Start Tensorboard
+                </span>
+                <div
+                  class="MuiCircularProgress-root-102 MuiCircularProgress-colorPrimary-105 MuiCircularProgress-indeterminate-104 spinner spinnerBusy"
+                  role="progressbar"
+                  style="width: 15px; height: 15px;"
+                >
+                  <svg
+                    class="MuiCircularProgress-svg-107"
+                    viewBox="22 22 44 44"
+                  >
+                    <circle
+                      class="MuiCircularProgress-circle-108 MuiCircularProgress-circleIndeterminate-110"
+                      cx="44"
+                      cy="44"
+                      fill="none"
+                      r="20.2"
+                      stroke-width="3.6"
+                    />
+                  </svg>
+                </div>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div>
+      
+      <div>
+        <div
+          class=""
+        >
+          <div
+            class="MuiFormControl-root-1 formControl"
+          >
+            <label
+              class="MuiFormLabel-root-16 MuiFormLabel-filled-20 MuiInputLabel-root-5 MuiInputLabel-formControl-10 MuiInputLabel-animated-13 MuiInputLabel-shrink-12"
+              data-shrink="true"
+              for="viewer-tb-image-select"
+            >
+              TF Image
+            </label>
+            <div
+              class="MuiInputBase-root-43 MuiInput-root-30 MuiInput-underline-34 MuiInputBase-formControl-44 MuiInput-formControl-31 select"
+            >
+              <div
+                class="MuiSelect-root-23"
+              >
+                <div
+                  aria-haspopup="true"
+                  aria-pressed="false"
+                  class="MuiSelect-select-24 MuiSelect-selectMenu-27 MuiInputBase-input-53 MuiInput-input-38"
+                  role="button"
+                  tabindex="0"
+                >
+                  TensorFlow 2.2.2
+                </div>
+                <input
+                  id="viewer-tb-image-select"
+                  type="hidden"
+                  value="tensorflow/tensorflow:2.2.2"
+                />
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root-60 MuiSelect-icon-29"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M7 10l5 5 5-5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button
+            class="MuiButtonBase-root-99 MuiButtonBase-disabled-100 MuiButton-root-73 MuiButton-text-75 MuiButton-textSecondary-77 MuiButton-flat-78 MuiButton-flatSecondary-80 MuiButton-disabled-93 root rootBusy buttonAction"
+            disabled=""
+            tabindex="-1"
+            type="button"
+          >
+            <span
+              class="MuiButton-label-74"
+            >
+              <span>
+                Start Tensorboard
+              </span>
+              <div
+                class="MuiCircularProgress-root-102 MuiCircularProgress-colorPrimary-105 MuiCircularProgress-indeterminate-104 spinner spinnerBusy"
+                role="progressbar"
+                style="width: 15px; height: 15px;"
+              >
+                <svg
+                  class="MuiCircularProgress-svg-107"
+                  viewBox="22 22 44 44"
+                >
+                  <circle
+                    class="MuiCircularProgress-circle-108 MuiCircularProgress-circleIndeterminate-110"
+                    cx="44"
+                    cy="44"
+                    fill="none"
+                    r="20.2"
+                    stroke-width="3.6"
+                  />
+                </svg>
+              </div>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`ViewerContainer renders a viewer of type VISUALIZATION_CREATOR 1`] = `
-<VisualizationCreator
-  configs={
-    Array [
-      Object {
-        "type": "visualization-creator",
-      },
-    ]
-  }
-/>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        style="width: 600px;"
+      >
+        <div
+          class="MuiFormControl-root-112"
+          style="width: 100%;"
+        >
+          <label
+            class="MuiFormLabel-root-127 MuiInputLabel-root-116 MuiInputLabel-formControl-121 MuiInputLabel-animated-124"
+            data-shrink="false"
+            for="visualization-type-selector"
+          >
+            Type
+          </label>
+          <div
+            class="MuiInputBase-root-154 MuiInput-root-141 MuiInput-underline-145 MuiInputBase-formControl-155 MuiInput-formControl-142"
+            style="min-height: 60px; width: 100%;"
+          >
+            <div
+              class="MuiSelect-root-134"
+            >
+              <div
+                aria-haspopup="true"
+                aria-pressed="false"
+                class="MuiSelect-select-135 MuiSelect-selectMenu-138 MuiInputBase-input-164 MuiInput-input-149"
+                id="select-Visualization Type"
+                role="button"
+                tabindex="0"
+              >
+                <span>
+                  ​
+                </span>
+              </div>
+              <input
+                id="visualization-type-selector"
+                name="Visualization Type"
+                type="hidden"
+                value=""
+              />
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root-171 MuiSelect-icon-140"
+                focusable="false"
+                role="presentation"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M7 10l5 5 5-5z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiFormControl-root-112 textField"
+          spellcheck="false"
+          style="height: 40px; max-width: 600px; width: 100%;"
+        >
+          <label
+            class="MuiFormLabel-root-127 MuiInputLabel-root-116 MuiInputLabel-formControl-121 MuiInputLabel-animated-124 MuiInputLabel-outlined-126"
+            data-shrink="false"
+          >
+            Source
+          </label>
+          <div
+            class="MuiInputBase-root-154 MuiOutlinedInput-root-184 MuiInputBase-formControl-155"
+          >
+            <fieldset
+              aria-hidden="true"
+              class="MuiPrivateNotchedOutline-root-197 MuiOutlinedInput-notchedOutline-191"
+              style="padding-left: 8px;"
+            >
+              <legend
+                class="MuiPrivateNotchedOutline-legend-198"
+                style="width: 0.01px;"
+              >
+                <span>
+                  ​
+                </span>
+              </legend>
+            </fieldset>
+            <input
+              aria-invalid="false"
+              class="MuiInputBase-input-164 MuiOutlinedInput-input-192"
+              placeholder="File path or path pattern of data within GCS."
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+        <button
+          class="MuiButtonBase-root-225 MuiButtonBase-disabled-226 MuiButton-root-199 MuiButton-text-201 MuiButton-textSecondary-203 MuiButton-flat-204 MuiButton-flatSecondary-206 MuiButton-disabled-219 root"
+          disabled=""
+          tabindex="-1"
+          type="button"
+        >
+          <span
+            class="MuiButton-label-200"
+          >
+            <span>
+              Generate Visualization
+            </span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      style="width: 600px;"
+    >
+      <div
+        class="MuiFormControl-root-112"
+        style="width: 100%;"
+      >
+        <label
+          class="MuiFormLabel-root-127 MuiInputLabel-root-116 MuiInputLabel-formControl-121 MuiInputLabel-animated-124"
+          data-shrink="false"
+          for="visualization-type-selector"
+        >
+          Type
+        </label>
+        <div
+          class="MuiInputBase-root-154 MuiInput-root-141 MuiInput-underline-145 MuiInputBase-formControl-155 MuiInput-formControl-142"
+          style="min-height: 60px; width: 100%;"
+        >
+          <div
+            class="MuiSelect-root-134"
+          >
+            <div
+              aria-haspopup="true"
+              aria-pressed="false"
+              class="MuiSelect-select-135 MuiSelect-selectMenu-138 MuiInputBase-input-164 MuiInput-input-149"
+              id="select-Visualization Type"
+              role="button"
+              tabindex="0"
+            >
+              <span>
+                ​
+              </span>
+            </div>
+            <input
+              id="visualization-type-selector"
+              name="Visualization Type"
+              type="hidden"
+              value=""
+            />
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root-171 MuiSelect-icon-140"
+              focusable="false"
+              role="presentation"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7 10l5 5 5-5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiFormControl-root-112 textField"
+        spellcheck="false"
+        style="height: 40px; max-width: 600px; width: 100%;"
+      >
+        <label
+          class="MuiFormLabel-root-127 MuiInputLabel-root-116 MuiInputLabel-formControl-121 MuiInputLabel-animated-124 MuiInputLabel-outlined-126"
+          data-shrink="false"
+        >
+          Source
+        </label>
+        <div
+          class="MuiInputBase-root-154 MuiOutlinedInput-root-184 MuiInputBase-formControl-155"
+        >
+          <fieldset
+            aria-hidden="true"
+            class="MuiPrivateNotchedOutline-root-197 MuiOutlinedInput-notchedOutline-191"
+            style="padding-left: 8px;"
+          >
+            <legend
+              class="MuiPrivateNotchedOutline-legend-198"
+              style="width: 0.01px;"
+            >
+              <span>
+                ​
+              </span>
+            </legend>
+          </fieldset>
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input-164 MuiOutlinedInput-input-192"
+            placeholder="File path or path pattern of data within GCS."
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+      <button
+        class="MuiButtonBase-root-225 MuiButtonBase-disabled-226 MuiButton-root-199 MuiButton-text-201 MuiButton-textSecondary-203 MuiButton-flat-204 MuiButton-flatSecondary-206 MuiButton-disabled-219 root"
+        disabled=""
+        tabindex="-1"
+        type="button"
+      >
+        <span
+          class="MuiButton-label-200"
+        >
+          <span>
+            Generate Visualization
+          </span>
+        </span>
+      </button>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;
 
 exports[`ViewerContainer renders a viewer of type WEB_APP 1`] = `
-<HTMLViewer
-  configs={
-    Array [
-      Object {
-        "type": "web-app",
-      },
-    ]
-  }
-/>
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <iframe
+        class="iframe"
+        sandbox="allow-scripts"
+        src="about:blank"
+        srcdoc="undefined"
+      />
+    </div>
+  </body>,
+  "container": <div>
+    <iframe
+      class="iframe"
+      sandbox="allow-scripts"
+      src="about:blank"
+      srcdoc="undefined"
+    />
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
 `;

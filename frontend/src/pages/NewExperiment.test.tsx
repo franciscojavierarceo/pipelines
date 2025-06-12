@@ -17,14 +17,14 @@
 import * as React from 'react';
 import { NewExperiment } from './NewExperiment';
 import TestUtils from '../TestUtils';
-import { shallow, ReactWrapper, ShallowWrapper } from 'enzyme';
+import { render, screen, fireEvent, RenderResult } from '@testing-library/react';
 import { PageProps } from './Page';
 import { Apis } from '../lib/Apis';
 import { RoutePage, QUERY_PARAMS } from '../components/Router';
 import { ApiResourceType, ApiRelationship } from 'src/apis/experiment';
 
 describe('NewExperiment', () => {
-  let tree: ReactWrapper | ShallowWrapper;
+  let renderResult: RenderResult;
   const createExperimentSpy = jest.spyOn(Apis.experimentServiceApiV2, 'createExperiment');
   const historyPushSpy = jest.fn();
   const updateDialogSpy = jest.fn();
@@ -46,7 +46,8 @@ describe('NewExperiment', () => {
 
   // Used by tests that don't care about exact experiment name
   function fillAnyExperimentName() {
-    (tree.instance() as any).handleChange('experimentName')({
+    const nameInput = screen.getByDisplayValue('') as HTMLInputElement;
+    fireEvent.change(nameInput, {
       target: { value: 'a-random-experiment-name-DO-NOT-VERIFY-THIS' },
     });
   }
@@ -62,15 +63,15 @@ describe('NewExperiment', () => {
     createExperimentSpy.mockImplementation(() => ({ experiment_id: 'new-experiment-id' }));
   });
 
-  afterEach(() => tree.unmount());
+  afterEach(() => renderResult?.unmount());
 
   it('renders the new experiment page', () => {
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('does not include any action buttons in the toolbar', () => {
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
 
     expect(updateToolbarSpy).toHaveBeenCalledWith({
       actions: {},
@@ -80,82 +81,82 @@ describe('NewExperiment', () => {
   });
 
   it("enables the 'Next' button when an experiment name is entered", () => {
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
-    expect(tree.find('#createExperimentBtn').props()).toHaveProperty('disabled', true);
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
+    const createBtn = screen.getByTestId('createExperimentBtn');
+    expect(createBtn).toBeDisabled();
 
-    (tree.instance() as any).handleChange('experimentName')({
+    const nameInput = screen.getByDisplayValue('') as HTMLInputElement;
+    fireEvent.change(nameInput, {
       target: { value: 'experiment name' },
     });
 
-    expect(tree.find('#createExperimentBtn').props()).toHaveProperty('disabled', false);
-    expect(tree).toMatchSnapshot();
+    expect(createBtn).not.toBeDisabled();
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it("re-disables the 'Next' button when an experiment name is cleared after having been entered", () => {
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
-    expect(tree.find('#createExperimentBtn').props()).toHaveProperty('disabled', true);
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
+    const createBtn = screen.getByTestId('createExperimentBtn');
+    expect(createBtn).toBeDisabled();
 
-    (tree.instance() as any).handleChange('experimentName')({
+    const nameInput = screen.getByDisplayValue('') as HTMLInputElement;
+    fireEvent.change(nameInput, {
       target: { value: 'experiment name' },
     });
-    expect(tree.find('#createExperimentBtn').props()).toHaveProperty('disabled', false);
+    expect(createBtn).not.toBeDisabled();
 
-    (tree.instance() as any).handleChange('experimentName')({ target: { value: '' } });
-    expect(tree.find('#createExperimentBtn').props()).toHaveProperty('disabled', true);
-    expect(tree).toMatchSnapshot();
+    fireEvent.change(nameInput, { target: { value: '' } });
+    expect(createBtn).toBeDisabled();
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('updates the experiment name', () => {
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
-    (tree.instance() as any).handleChange('experimentName')({
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
+    const nameInput = screen.getByDisplayValue('') as HTMLInputElement;
+    fireEvent.change(nameInput, {
       target: { value: 'experiment name' },
     });
 
-    expect(tree.state()).toEqual({
-      description: '',
-      experimentName: 'experiment name',
-      isbeingCreated: false,
-      validationError: '',
-    });
+    expect(nameInput.value).toBe('experiment name');
   });
 
   it('updates the experiment description', () => {
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
-    (tree.instance() as any).handleChange('description')({ target: { value: 'a description!' } });
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
+    const descriptionInput = screen.getByLabelText(/description/i) as HTMLTextAreaElement;
+    fireEvent.change(descriptionInput, { target: { value: 'a description!' } });
 
-    expect(tree.state()).toEqual({
-      description: 'a description!',
-      experimentName: '',
-      isbeingCreated: false,
-      validationError: 'Experiment name is required',
-    });
+    expect(descriptionInput.value).toBe('a description!');
   });
 
   it("sets the page to a busy state upon clicking 'Next'", async () => {
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
 
-    (tree.instance() as any).handleChange('experimentName')({
+    const nameInput = screen.getByDisplayValue('') as HTMLInputElement;
+    fireEvent.change(nameInput, {
       target: { value: 'experiment-name' },
     });
 
-    tree.find('#createExperimentBtn').simulate('click');
+    const createBtn = screen.getByTestId('createExperimentBtn');
+    fireEvent.click(createBtn);
     await TestUtils.flushPromises();
 
-    expect(tree.state()).toHaveProperty('isbeingCreated', true);
-    expect(tree.find('#createExperimentBtn').props()).toHaveProperty('busy', true);
+    expect(createBtn).toHaveAttribute('busy');
   });
 
   it("calls the createExperiment API with the new experiment upon clicking 'Next'", async () => {
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
 
-    (tree.instance() as any).handleChange('experimentName')({
+    const nameInput = screen.getByDisplayValue('') as HTMLInputElement;
+    fireEvent.change(nameInput, {
       target: { value: 'experiment name' },
     });
-    (tree.instance() as any).handleChange('description')({
+    const descriptionInput = screen.getByLabelText(/description/i) as HTMLTextAreaElement;
+    fireEvent.change(descriptionInput, {
       target: { value: 'experiment description' },
     });
 
-    tree.find('#createExperimentBtn').simulate('click');
+    const createBtn = screen.getByTestId('createExperimentBtn');
+    fireEvent.click(createBtn);
     await TestUtils.flushPromises();
 
     expect(createExperimentSpy).toHaveBeenCalledWith({
@@ -165,10 +166,11 @@ describe('NewExperiment', () => {
   });
 
   it('calls the createExperimentAPI with namespace when it is provided', async () => {
-    tree = shallow(<NewExperiment {...(generateProps() as any)} namespace='test-ns' />);
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} namespace='test-ns' />);
 
     fillAnyExperimentName();
-    tree.find('#createExperimentBtn').simulate('click');
+    const createBtn = screen.getByTestId('createExperimentBtn');
+    fireEvent.click(createBtn);
     await TestUtils.flushPromises();
 
     expect(createExperimentSpy).toHaveBeenCalledWith(
@@ -181,13 +183,15 @@ describe('NewExperiment', () => {
   it('navigates to NewRun page upon successful creation', async () => {
     const experimentId = 'test-exp-id-1';
     createExperimentSpy.mockImplementation(() => ({ experiment_id: experimentId }));
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
 
-    (tree.instance() as any).handleChange('experimentName')({
+    const nameInput = screen.getByDisplayValue('') as HTMLInputElement;
+    fireEvent.change(nameInput, {
       target: { value: 'experiment-name' },
     });
 
-    tree.find('#createExperimentBtn').simulate('click');
+    const createBtn = screen.getByTestId('createExperimentBtn');
+    fireEvent.click(createBtn);
     await createExperimentSpy;
     await TestUtils.flushPromises();
 
@@ -215,7 +219,8 @@ describe('NewExperiment', () => {
       target: { value: 'experiment-name' },
     });
 
-    tree.find('#createExperimentBtn').simulate('click');
+    const createBtn = screen.getByTestId('createExperimentBtn');
+    fireEvent.click(createBtn);
     await createExperimentSpy;
     await listPipelineVersionsSpy;
     await TestUtils.flushPromises();
@@ -236,7 +241,8 @@ describe('NewExperiment', () => {
       target: { value: 'experiment-name' },
     });
 
-    tree.find('#createExperimentBtn').simulate('click');
+    const createBtn = screen.getByTestId('createExperimentBtn');
+    fireEvent.click(createBtn);
     await TestUtils.flushPromises();
 
     expect(updateSnackbarSpy).toHaveBeenLastCalledWith({
@@ -258,7 +264,8 @@ describe('NewExperiment', () => {
     });
 
     TestUtils.makeErrorResponseOnce(createExperimentSpy, 'test error!');
-    tree.find('#createExperimentBtn').simulate('click');
+    const createBtn = screen.getByTestId('createExperimentBtn');
+    fireEvent.click(createBtn);
     await createExperimentSpy;
     await TestUtils.flushPromises();
 
@@ -277,7 +284,8 @@ describe('NewExperiment', () => {
     });
 
     TestUtils.makeErrorResponseOnce(createExperimentSpy, 'test error!');
-    tree.find('#createExperimentBtn').simulate('click');
+    const createBtn = screen.getByTestId('createExperimentBtn');
+    fireEvent.click(createBtn);
     await createExperimentSpy;
     await TestUtils.flushPromises();
 
@@ -287,8 +295,9 @@ describe('NewExperiment', () => {
   });
 
   it('navigates to experiment list page upon cancellation', async () => {
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
-    tree.find('#cancelNewExperimentBtn').simulate('click');
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
+    const cancelBtn = screen.getByTestId('cancelNewExperimentBtn');
+    fireEvent.click(cancelBtn);
     await TestUtils.flushPromises();
 
     expect(historyPushSpy).toHaveBeenCalledWith(RoutePage.EXPERIMENTS);

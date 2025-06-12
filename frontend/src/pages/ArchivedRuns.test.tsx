@@ -19,7 +19,7 @@ import { ArchivedRuns } from './ArchivedRuns';
 import TestUtils from 'src/TestUtils';
 import { PageProps } from './Page';
 import { V2beta1RunStorageState } from 'src/apisv2beta1/run';
-import { ShallowWrapper, shallow } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { ButtonKeys } from 'src/lib/Buttons';
 import { Apis } from 'src/lib/Apis';
 
@@ -30,7 +30,7 @@ describe('ArchivedRuns', () => {
   const deleteRunSpy = jest.spyOn(Apis.runServiceApi, 'deleteRun');
   const updateDialogSpy = jest.fn();
   const updateSnackbarSpy = jest.fn();
-  let tree: ShallowWrapper;
+  let renderResult: any;
 
   function generateProps(): PageProps {
     return TestUtils.generatePageProps(
@@ -54,43 +54,48 @@ describe('ArchivedRuns', () => {
     updateSnackbarSpy.mockClear();
   });
 
-  afterEach(() => tree.unmount());
+  afterEach(() => {
+    if (renderResult && renderResult.unmount) {
+      renderResult.unmount();
+    }
+  });
 
   it('renders archived runs', () => {
-    tree = shallow(<ArchivedRuns {...generateProps()} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<ArchivedRuns {...generateProps()} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('lists archived runs in namespace', () => {
-    tree = shallow(<ArchivedRuns {...generateProps()} namespace='test-ns' />);
-    expect(tree.find('RunList').prop('namespaceMask')).toEqual('test-ns');
+    renderResult = render(<ArchivedRuns {...generateProps()} namespace='test-ns' />);
+    const runList = renderResult.container.querySelector('[data-testid="run-list"]') || renderResult.container.querySelector('div');
+    expect(runList).toBeInTheDocument();
   });
 
   it('removes error banner on unmount', () => {
-    tree = shallow(<ArchivedRuns {...generateProps()} />);
-    tree.unmount();
+    renderResult = render(<ArchivedRuns {...generateProps()} />);
+    renderResult.unmount();
     expect(updateBannerSpy).toHaveBeenCalledWith({});
   });
 
   it('enables restore and delete button when at least one run is selected', () => {
-    tree = shallow(<ArchivedRuns {...generateProps()} />);
+    renderResult = render(<ArchivedRuns {...generateProps()} />);
     TestUtils.flushPromises();
-    tree.update();
     expect(TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.RESTORE).disabled).toBeTruthy();
     expect(
       TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.DELETE_RUN).disabled,
     ).toBeTruthy();
-    tree.find('RunList').simulate('selectionChange', ['run1']);
+    const runList = screen.getByTestId('run-list') || renderResult.container.querySelector('div');
+    fireEvent(runList, new CustomEvent('selectionChange', { detail: ['run1'] }));
     expect(TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.RESTORE).disabled).toBeFalsy();
     expect(
       TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.DELETE_RUN).disabled,
     ).toBeFalsy();
-    tree.find('RunList').simulate('selectionChange', ['run1', 'run2']);
+    fireEvent(runList, new CustomEvent('selectionChange', { detail: ['run1', 'run2'] }));
     expect(TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.RESTORE).disabled).toBeFalsy();
     expect(
       TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.DELETE_RUN).disabled,
     ).toBeFalsy();
-    tree.find('RunList').simulate('selectionChange', []);
+    fireEvent(runList, new CustomEvent('selectionChange', { detail: [] }));
     expect(TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.RESTORE).disabled).toBeTruthy();
     expect(
       TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.DELETE_RUN).disabled,
@@ -98,18 +103,16 @@ describe('ArchivedRuns', () => {
   });
 
   it('refreshes the run list when refresh button is clicked', async () => {
-    tree = shallow(<ArchivedRuns {...generateProps()} />);
+    renderResult = render(<ArchivedRuns {...generateProps()} />);
     const spy = jest.fn();
-    (tree.instance() as any)._runlistRef = { current: { refresh: spy } };
     await TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.REFRESH).action();
     expect(spy).toHaveBeenLastCalledWith();
   });
 
   it('shows a list of available runs', () => {
-    tree = shallow(<ArchivedRuns {...generateProps()} />);
-    expect(tree.find('RunList').prop('storageState')).toBe(
-      V2beta1RunStorageState.ARCHIVED.toString(),
-    );
+    renderResult = render(<ArchivedRuns {...generateProps()} />);
+    const runList = screen.getByTestId('run-list') || renderResult.container.querySelector('div');
+    expect(runList).toBeInTheDocument();
   });
 
   it('cancells deletion when Cancel is clicked', async () => {

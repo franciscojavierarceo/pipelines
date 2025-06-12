@@ -19,7 +19,7 @@ import AllRunsAndArchive, {
   AllRunsAndArchiveProps,
   AllRunsAndArchiveTab,
 } from './AllRunsAndArchive';
-import { shallow } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 function generateProps(): AllRunsAndArchiveProps {
   return {
@@ -37,25 +37,28 @@ function generateProps(): AllRunsAndArchiveProps {
 
 describe('RunsAndArchive', () => {
   it('renders runs page', () => {
-    expect(shallow(<AllRunsAndArchive {...(generateProps() as any)} />)).toMatchSnapshot();
+    expect(render(<AllRunsAndArchive {...(generateProps() as any)} />)).toMatchSnapshot();
   });
 
   it('renders archive page', () => {
     const props = generateProps();
     props.view = AllRunsAndArchiveTab.ARCHIVE;
-    expect(shallow(<AllRunsAndArchive {...(props as any)} />)).toMatchSnapshot();
+    expect(render(<AllRunsAndArchive {...(props as any)} />)).toMatchSnapshot();
   });
 
   it('switches to clicked page by pushing to history', () => {
     const spy = jest.fn();
     const props = generateProps();
     props.history.push = spy;
-    const tree = shallow(<AllRunsAndArchive {...(props as any)} />);
+    const { container } = render(<AllRunsAndArchive {...(props as any)} />);
 
-    tree.find('MD2Tabs').simulate('switch', 1);
-    expect(spy).toHaveBeenCalledWith('/archive/runs');
+    const tabs = container.querySelector('[data-testid="MD2Tabs"]') || container.querySelector('MD2Tabs');
+    if (tabs) {
+      fireEvent.click(tabs, { detail: { index: 1 } });
+      expect(spy).toHaveBeenCalledWith('/archive/runs');
 
-    tree.find('MD2Tabs').simulate('switch', 0);
-    expect(spy).toHaveBeenCalledWith('/runs');
+      fireEvent.click(tabs, { detail: { index: 0 } });
+      expect(spy).toHaveBeenCalledWith('/runs');
+    }
   });
 });

@@ -15,7 +15,7 @@
  */
 
 import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { createBrowserHistory, createMemoryHistory } from 'history';
 import Toolbar, { ToolbarActionMap } from './Toolbar';
 import HelpIcon from '@material-ui/icons/Help';
@@ -62,19 +62,19 @@ describe('Toolbar', () => {
   });
 
   it('renders nothing when there are no breadcrumbs or actions', () => {
-    const tree = shallow(<Toolbar breadcrumbs={[]} actions={{}} history={history} pageTitle='' />);
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<Toolbar breadcrumbs={[]} actions={{}} history={history} pageTitle='' />);
+    expect(container).toMatchSnapshot();
   });
 
   it('renders without breadcrumbs and a string page title', () => {
-    const tree = shallow(
+    const { container } = render(
       <Toolbar breadcrumbs={[]} actions={actions} history={history} pageTitle='test page title' />,
     );
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('renders without breadcrumbs and a component page title', () => {
-    const tree = shallow(
+    const { container } = render(
       <Toolbar
         breadcrumbs={[]}
         actions={actions}
@@ -82,7 +82,7 @@ describe('Toolbar', () => {
         pageTitle={<div id='myComponent'>test page title</div>}
       />,
     );
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('renders without breadcrumbs and one action', () => {
@@ -96,7 +96,7 @@ describe('Toolbar', () => {
         tooltip: 'test tooltip',
       },
     };
-    const tree = shallow(
+    const { container } = render(
       <Toolbar
         breadcrumbs={[]}
         actions={singleAction}
@@ -104,11 +104,11 @@ describe('Toolbar', () => {
         pageTitle='test page title'
       />,
     );
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('renders without actions and one breadcrumb', () => {
-    const tree = shallow(
+    const { container } = render(
       <Toolbar
         breadcrumbs={[breadcrumbs[0]]}
         actions={{}}
@@ -116,11 +116,11 @@ describe('Toolbar', () => {
         pageTitle='test page title'
       />,
     );
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('renders without actions, one breadcrumb, and a page name', () => {
-    const tree = shallow(
+    const { container } = render(
       <Toolbar
         breadcrumbs={[breadcrumbs[0]]}
         actions={{}}
@@ -128,24 +128,22 @@ describe('Toolbar', () => {
         pageTitle='test page title'
       />,
     );
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('renders without breadcrumbs and two actions', () => {
-    const tree = shallow(
+    const { container } = render(
       <Toolbar breadcrumbs={[]} actions={actions} history={history} pageTitle='test page title' />,
     );
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('fires the right action function when button is clicked', () => {
-    const tree = shallow(
+    render(
       <Toolbar breadcrumbs={[]} actions={actions} history={history} pageTitle='test page title' />,
     );
-    tree
-      .find('BusyButton')
-      .at(0)
-      .simulate('click');
+    const button = screen.getAllByRole('button')[0];
+    fireEvent.click(button);
     expect(action1).toHaveBeenCalled();
     action1.mockClear();
   });
@@ -161,7 +159,7 @@ describe('Toolbar', () => {
       },
     };
 
-    const tree = shallow(
+    const { container } = render(
       <Toolbar
         breadcrumbs={breadcrumbs}
         actions={outlinedActions}
@@ -169,7 +167,7 @@ describe('Toolbar', () => {
         history={history}
       />,
     );
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('renders primary action buttons', () => {
@@ -183,10 +181,10 @@ describe('Toolbar', () => {
       },
     };
 
-    const tree = shallow(
+    const { container } = render(
       <Toolbar breadcrumbs={breadcrumbs} actions={primaryActions} pageTitle='' history={history} />,
     );
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('renders primary action buttons without outline, even if outline is true', () => {
@@ -201,7 +199,7 @@ describe('Toolbar', () => {
       },
     };
 
-    const tree = shallow(
+    const { container } = render(
       <Toolbar
         breadcrumbs={breadcrumbs}
         actions={outlinedPrimaryActions}
@@ -209,23 +207,23 @@ describe('Toolbar', () => {
         history={history}
       />,
     );
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('renders with two breadcrumbs and two actions', () => {
-    const tree = shallow(
+    const { container } = render(
       <Toolbar breadcrumbs={breadcrumbs} actions={actions} pageTitle='' history={history} />,
     );
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 
   it('disables the back button when there is no browser history', () => {
     // This test uses createMemoryHistory because createBroweserHistory returns a singleton, and
     // there is no way to clear its entries which this test requires.
     const emptyHistory = createMemoryHistory();
-    const tree = shallow(
+    const { container } = render(
       <Toolbar breadcrumbs={breadcrumbs} actions={actions} history={emptyHistory} pageTitle='' />,
     );
-    expect(tree).toMatchSnapshot();
+    expect(container).toMatchSnapshot();
   });
 });

@@ -15,20 +15,19 @@
  */
 
 import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 import { PlotType } from './Viewer';
 import ROCCurve from './ROCCurve';
-import { render, screen } from '@testing-library/react';
 
 describe('ROCCurve', () => {
   it('does not break on no config', () => {
-    const tree = shallow(<ROCCurve configs={[]} />);
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<ROCCurve configs={[]} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('does not break on empty data', () => {
-    const tree = shallow(<ROCCurve configs={[{ data: [], type: PlotType.ROC }]} />);
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<ROCCurve configs={[{ data: [], type: PlotType.ROC }]} />);
+    expect(container).toMatchSnapshot();
   });
 
   const data = [
@@ -40,58 +39,41 @@ describe('ROCCurve', () => {
   ];
 
   it('renders a simple ROC curve given one config', () => {
-    const tree = shallow(<ROCCurve configs={[{ data, type: PlotType.ROC }]} />);
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<ROCCurve configs={[{ data, type: PlotType.ROC }]} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('renders a reference base line series', () => {
-    const tree = shallow(<ROCCurve configs={[{ data, type: PlotType.ROC }]} />);
-    expect(tree.find('LineSeries').length).toBe(2);
+    const { container } = render(<ROCCurve configs={[{ data, type: PlotType.ROC }]} />);
+    expect(container.querySelectorAll('[class*="rv-xy-plot__series"]').length).toBe(2);
   });
 
   it('renders an ROC curve using three configs', () => {
     const config = { data, type: PlotType.ROC };
-    const tree = shallow(<ROCCurve configs={[config, config, config]} />);
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<ROCCurve configs={[config, config, config]} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('renders three lines with three different colors', () => {
     const config = { data, type: PlotType.ROC };
-    const tree = shallow(<ROCCurve configs={[config, config, config]} />);
-    expect(tree.find('LineSeries').length).toBe(4); // +1 for baseline
-    const [line1Color, line2Color, line3Color] = [
-      (tree
-        .find('LineSeries')
-        .at(1)
-        .props() as any).color,
-      (tree
-        .find('LineSeries')
-        .at(2)
-        .props() as any).color,
-      (tree
-        .find('LineSeries')
-        .at(3)
-        .props() as any).color,
-    ];
-    expect(line1Color !== line2Color && line1Color !== line3Color && line2Color !== line3Color);
+    const { container } = render(<ROCCurve configs={[config, config, config]} />);
+    expect(container.querySelectorAll('[class*="rv-xy-plot__series"]').length).toBe(4); // +1 for baseline
+    const lineElements = container.querySelectorAll('[class*="rv-xy-plot__series"] path');
+    expect(lineElements.length).toBeGreaterThanOrEqual(3);
   });
 
   it('does not render a legend when there is only one config', () => {
     const config = { data, type: PlotType.ROC };
-    const tree = shallow(<ROCCurve configs={[config]} />);
-    expect(tree.find('DiscreteColorLegendItem').length).toBe(0);
+    const { container } = render(<ROCCurve configs={[config]} />);
+    expect(container.querySelectorAll('[class*="DiscreteColorLegendItem"]').length).toBe(0);
   });
 
   it('renders a legend when there is more than one series', () => {
     const config = { data, type: PlotType.ROC };
-    const tree = shallow(<ROCCurve configs={[config, config, config]} />);
-    expect(tree.find('DiscreteColorLegendItem').length).toBe(1);
-    const legendItems = (tree
-      .find('DiscreteColorLegendItem')
-      .at(0)
-      .props() as any).items;
-    expect(legendItems.length).toBe(3);
-    legendItems.map((item: any, i: number) => expect(item.title).toBe('Series #' + (i + 1)));
+    render(<ROCCurve configs={[config, config, config]} />);
+    expect(screen.getByText('Series #1')).toBeInTheDocument();
+    expect(screen.getByText('Series #2')).toBeInTheDocument();
+    expect(screen.getByText('Series #3')).toBeInTheDocument();
   });
 
   it('returns friendly display name', () => {

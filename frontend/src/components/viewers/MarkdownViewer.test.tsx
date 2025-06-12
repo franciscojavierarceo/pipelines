@@ -15,15 +15,14 @@
  */
 
 import { render } from '@testing-library/react';
-import { mount } from 'enzyme';
 import * as React from 'react';
 import MarkdownViewer, { MarkdownViewerConfig } from './MarkdownViewer';
 import { PlotType } from './Viewer';
 
 describe('MarkdownViewer', () => {
   it('does not break on empty data', () => {
-    const tree = mount(<MarkdownViewer configs={[]} />).getDOMNode();
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<MarkdownViewer configs={[]} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('renders some basic markdown', () => {

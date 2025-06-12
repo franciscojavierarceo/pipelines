@@ -18,7 +18,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
 import { ImportMethod, NewPipelineVersion } from './NewPipelineVersion';
 import TestUtils from 'src/TestUtils';
-import { shallow, ShallowWrapper, ReactWrapper } from 'enzyme';
+
 import { PageProps } from './Page';
 import { Apis } from 'src/lib/Apis';
 import { RoutePage, QUERY_PARAMS } from 'src/components/Router';
@@ -29,7 +29,7 @@ class TestNewPipelineVersion extends NewPipelineVersion {
 }
 
 describe('NewPipelineVersion', () => {
-  let tree: ReactWrapper | ShallowWrapper;
+  let tree: any;
 
   const historyPushSpy = jest.fn();
   const historyReplaceSpy = jest.fn();
@@ -87,10 +87,10 @@ describe('NewPipelineVersion', () => {
   });
 
   afterEach(async () => {
-    // unmount() should be called before resetAllMocks() in case any part of the unmount life cycle
+    // cleanup should be called before resetAllMocks() in case any part of the cleanup life cycle
     // depends on mocks/spies
-    if (tree) {
-      await tree.unmount();
+    if (tree && tree.unmount) {
+      tree.unmount();
     }
     jest.resetAllMocks();
     jest.restoreAllMocks();
@@ -101,22 +101,22 @@ describe('NewPipelineVersion', () => {
 
   describe('switching between creating pipeline and creating pipeline version', () => {
     it('creates pipeline is default when landing from pipeline list page', () => {
-      tree = shallow(<TestNewPipelineVersion {...generateProps()} />);
+      tree = render(<TestNewPipelineVersion {...generateProps()} />);
 
       // When landing from pipeline list page, the default is to create pipeline
       expect(tree.state('newPipeline')).toBe(true);
 
       // Switch to create pipeline version
-      tree.find('#createPipelineVersionUnderExistingPipelineBtn').simulate('change');
+      fireEvent.change(screen.getByTestId('createPipelineVersionUnderExistingPipelineBtn'));
       expect(tree.state('newPipeline')).toBe(false);
 
       // Switch back
-      tree.find('#createNewPipelineBtn').simulate('change');
+      fireEvent.change(screen.getByTestId('createNewPipelineBtn'));
       expect(tree.state('newPipeline')).toBe(true);
     });
 
     it('creates pipeline version is default when landing from pipeline details page', () => {
-      tree = shallow(
+      tree = render(
         <TestNewPipelineVersion
           {...generateProps(`?${QUERY_PARAMS.pipelineId}=${MOCK_PIPELINE.pipeline_id}`)}
         />,
@@ -126,18 +126,18 @@ describe('NewPipelineVersion', () => {
       expect(tree.state('newPipeline')).toBe(false);
 
       // Switch to create pipeline version
-      tree.find('#createNewPipelineBtn').simulate('change');
+      fireEvent.change(screen.getByTestId('createNewPipelineBtn'));
       expect(tree.state('newPipeline')).toBe(true);
 
       // Switch back
-      tree.find('#createPipelineVersionUnderExistingPipelineBtn').simulate('change');
+      fireEvent.change(screen.getByTestId('createPipelineVersionUnderExistingPipelineBtn'));
       expect(tree.state('newPipeline')).toBe(false);
     });
   });
 
   describe('creating version under an existing pipeline', () => {
     it('does not include any action buttons in the toolbar', async () => {
-      tree = shallow(
+      tree = render(
         <TestNewPipelineVersion
           {...generateProps(`?${QUERY_PARAMS.pipelineId}=${MOCK_PIPELINE.pipeline_id}`)}
         />,
@@ -153,7 +153,7 @@ describe('NewPipelineVersion', () => {
     });
 
     it('allows updating pipeline version name', async () => {
-      tree = shallow(
+      tree = render(
         <TestNewPipelineVersion
           {...generateProps(`?${QUERY_PARAMS.pipelineId}=${MOCK_PIPELINE.pipeline_id}`)}
         />,
@@ -169,7 +169,7 @@ describe('NewPipelineVersion', () => {
     });
 
     it('allows updating pipeline version description', async () => {
-      tree = shallow(
+      tree = render(
         <TestNewPipelineVersion
           {...generateProps(`?${QUERY_PARAMS.pipelineId}=${MOCK_PIPELINE.pipeline_id}`)}
         />,
@@ -185,7 +185,7 @@ describe('NewPipelineVersion', () => {
     });
 
     it('allows updating package url', async () => {
-      tree = shallow(
+      tree = render(
         <TestNewPipelineVersion
           {...generateProps(`?${QUERY_PARAMS.pipelineId}=${MOCK_PIPELINE.pipeline_id}`)}
         />,
@@ -201,7 +201,7 @@ describe('NewPipelineVersion', () => {
     });
 
     it('allows updating code source', async () => {
-      tree = shallow(
+      tree = render(
         <TestNewPipelineVersion
           {...generateProps(`?${QUERY_PARAMS.pipelineId}=${MOCK_PIPELINE.pipeline_id}`)}
         />,
@@ -236,7 +236,7 @@ describe('NewPipelineVersion', () => {
 
       await TestUtils.flushPromises();
 
-      tree.find('#createNewPipelineOrVersionBtn').simulate('click');
+      fireEvent.click(screen.getByTestId('createNewPipelineOrVersionBtn'));
 
       // The APIs are called in a callback triggered by clicking 'Create', so we wait again
       await TestUtils.flushPromises();
@@ -269,11 +269,11 @@ describe('NewPipelineVersion', () => {
       expect(tree.state('importMethod')).toBe(ImportMethod.URL);
 
       // Click to import by local
-      tree.find('#localPackageBtn').simulate('change');
+      fireEvent.change(screen.getByTestId('localPackageBtn'));
       expect(tree.state('importMethod')).toBe(ImportMethod.LOCAL);
 
       // Click back to URL
-      tree.find('#remotePackageBtn').simulate('change');
+      fireEvent.change(screen.getByTestId('remotePackageBtn'));
       expect(tree.state('importMethod')).toBe(ImportMethod.URL);
     });
 
@@ -293,7 +293,7 @@ describe('NewPipelineVersion', () => {
       });
       await TestUtils.flushPromises();
 
-      tree.find('#createNewPipelineOrVersionBtn').simulate('click');
+      fireEvent.click(screen.getByTestId('createNewPipelineOrVersionBtn'));
       // The APIs are called in a callback triggered by clicking 'Create', so we wait again
       await TestUtils.flushPromises();
 
@@ -326,7 +326,7 @@ describe('NewPipelineVersion', () => {
         target: { value: 'https://dummy_package_url' },
       });
       await TestUtils.flushPromises();
-      tree.find('#createNewPipelineOrVersionBtn').simulate('click');
+      fireEvent.click(screen.getByTestId('createNewPipelineOrVersionBtn'));
       await TestUtils.flushPromises();
 
       expect(tree.state()).toHaveProperty('isPrivate', true);
@@ -360,7 +360,7 @@ describe('NewPipelineVersion', () => {
       });
       tree.setState({ isPrivate: false });
       await TestUtils.flushPromises();
-      tree.find('#createNewPipelineOrVersionBtn').simulate('click');
+      fireEvent.click(screen.getByTestId('createNewPipelineOrVersionBtn'));
       await TestUtils.flushPromises();
 
       expect(tree.state()).toHaveProperty('isPrivate', false);
@@ -379,7 +379,7 @@ describe('NewPipelineVersion', () => {
       );
 
       // Set local file, pipeline name, pipeline description and click create
-      tree.find('#localPackageBtn').simulate('change');
+      fireEvent.change(screen.getByTestId('localPackageBtn'));
       (tree.instance() as TestNewPipelineVersion).handleChange('pipelineName')({
         target: { value: 'test pipeline name' },
       });
@@ -388,7 +388,7 @@ describe('NewPipelineVersion', () => {
       });
       const file = new File(['file contents'], 'file_name', { type: 'text/plain' });
       (tree.instance() as TestNewPipelineVersion)._onDropForTest([file]);
-      tree.find('#createNewPipelineOrVersionBtn').simulate('click');
+      fireEvent.click(screen.getByTestId('createNewPipelineOrVersionBtn'));
 
       tree.update();
       await TestUtils.flushPromises();
@@ -414,7 +414,7 @@ describe('NewPipelineVersion', () => {
       );
 
       // Set local file, pipeline name, pipeline description and click create
-      tree.find('#localPackageBtn').simulate('change');
+      fireEvent.change(screen.getByTestId('localPackageBtn'));
       (tree.instance() as TestNewPipelineVersion).handleChange('pipelineName')({
         target: { value: 'test pipeline name' },
       });
@@ -424,7 +424,7 @@ describe('NewPipelineVersion', () => {
       const file = new File(['file contents'], 'file_name', { type: 'text/plain' });
       (tree.instance() as TestNewPipelineVersion)._onDropForTest([file]);
 
-      tree.find('#createNewPipelineOrVersionBtn').simulate('click');
+      fireEvent.click(screen.getByTestId('createNewPipelineOrVersionBtn'));
 
       tree.update();
       await TestUtils.flushPromises();
@@ -450,7 +450,7 @@ describe('NewPipelineVersion', () => {
       );
 
       // Set local file, pipeline name, pipeline description and click create
-      tree.find('#localPackageBtn').simulate('change');
+      fireEvent.change(screen.getByTestId('localPackageBtn'));
       (tree.instance() as TestNewPipelineVersion).handleChange('pipelineName')({
         target: { value: 'test pipeline name' },
       });
@@ -460,7 +460,7 @@ describe('NewPipelineVersion', () => {
       const file = new File(['file contents'], 'file_name', { type: 'text/plain' });
       (tree.instance() as TestNewPipelineVersion)._onDropForTest([file]);
       tree.setState({ isPrivate: false });
-      tree.find('#createNewPipelineOrVersionBtn').simulate('click');
+      fireEvent.click(screen.getByTestId('createNewPipelineOrVersionBtn'));
 
       tree.update();
       await TestUtils.flushPromises();

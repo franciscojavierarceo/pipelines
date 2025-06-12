@@ -114,7 +114,7 @@ exports[`Toolbar disables the back button when there is no browser history 1`] =
 </div>
 `;
 
-exports[`Toolbar renders nothing when there are no breadcrumbs or actions 1`] = `""`;
+exports[`Toolbar renders nothing when there are no breadcrumbs or actions 1`] = `<div />`;
 
 exports[`Toolbar renders outlined action buttons 1`] = `
 <div
@@ -637,262 +637,378 @@ exports[`Toolbar renders without actions, one breadcrumb, and a page name 1`] = 
 `;
 
 exports[`Toolbar renders without breadcrumbs and a component page title 1`] = `
-<div
-  className="root topLevelToolbar"
->
+<div>
   <div
-    style={
-      Object {
-        "minWidth": 100,
-      }
-    }
+    class="root topLevelToolbar"
   >
     <div
-      className="breadcrumbs flex"
-    />
-    <div
-      className="flex"
+      style="min-width: 100px;"
     >
-      <span
-        className="pageName ellipsis"
-        data-testid="page-title"
+      <div
+        class="breadcrumbs flex"
+      />
+      <div
+        class="flex"
       >
-        <div
-          id="myComponent"
+        <span
+          class="pageName ellipsis"
+          data-testid="page-title"
         >
-          test page title
-        </div>
-      </span>
+          <div
+            id="myComponent"
+          >
+            test page title
+          </div>
+        </span>
+      </div>
     </div>
-  </div>
-  <div
-    className="actions"
-  >
-    <WithStyles(Tooltip)
-      enterDelay={300}
-      key="0"
-      title="test tooltip"
+    <div
+      class="actions"
     >
-      <div>
-        <BusyButton
-          busy={false}
-          className=""
-          color="secondary"
-          icon={[Function]}
+      <div
+        class=""
+        title="test tooltip"
+      >
+        <button
+          class="MuiButtonBase-root-88 MuiButton-root-62 MuiButton-text-64 MuiButton-textSecondary-66 MuiButton-flat-67 MuiButton-flatSecondary-69 root"
           id="test id"
-          onClick={[MockFunction]}
-          outlined={false}
-          title="test title"
-        />
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiButton-label-63"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root-91 icon"
+              focusable="false"
+              role="presentation"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
+              />
+            </svg>
+            <span>
+              test title
+            </span>
+          </span>
+          <span
+            class="MuiTouchRipple-root-100"
+          />
+        </button>
       </div>
-    </WithStyles(Tooltip)>
-    <WithStyles(Tooltip)
-      enterDelay={300}
-      key="1"
-      title="test disabled title2"
-    >
-      <div>
-        <BusyButton
-          busy={false}
-          className=""
-          color="secondary"
-          disabled={true}
-          icon={[Function]}
+      <div
+        class=""
+        title="test disabled title2"
+      >
+        <button
+          class="MuiButtonBase-root-88 MuiButtonBase-disabled-89 MuiButton-root-62 MuiButton-text-64 MuiButton-textSecondary-66 MuiButton-flat-67 MuiButton-flatSecondary-69 MuiButton-disabled-82 root"
+          disabled=""
           id="test id2"
-          onClick={[MockFunction]}
-          outlined={false}
-          title="test title2"
-        />
+          tabindex="-1"
+          type="button"
+        >
+          <span
+            class="MuiButton-label-63"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root-91 icon"
+              focusable="false"
+              role="presentation"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+              />
+            </svg>
+            <span>
+              test title2
+            </span>
+          </span>
+        </button>
       </div>
-    </WithStyles(Tooltip)>
+    </div>
   </div>
 </div>
 `;
 
 exports[`Toolbar renders without breadcrumbs and a string page title 1`] = `
-<div
-  className="root topLevelToolbar"
->
+<div>
   <div
-    style={
-      Object {
-        "minWidth": 100,
-      }
-    }
+    class="root topLevelToolbar"
   >
     <div
-      className="breadcrumbs flex"
-    />
-    <div
-      className="flex"
+      style="min-width: 100px;"
     >
-      <span
-        className="pageName ellipsis"
-        data-testid="page-title"
+      <div
+        class="breadcrumbs flex"
+      />
+      <div
+        class="flex"
       >
-        test page title
-      </span>
+        <span
+          class="pageName ellipsis"
+          data-testid="page-title"
+        >
+          test page title
+        </span>
+      </div>
     </div>
-  </div>
-  <div
-    className="actions"
-  >
-    <WithStyles(Tooltip)
-      enterDelay={300}
-      key="0"
-      title="test tooltip"
+    <div
+      class="actions"
     >
-      <div>
-        <BusyButton
-          busy={false}
-          className=""
-          color="secondary"
-          icon={[Function]}
+      <div
+        class=""
+        title="test tooltip"
+      >
+        <button
+          class="MuiButtonBase-root-35 MuiButton-root-9 MuiButton-text-11 MuiButton-textSecondary-13 MuiButton-flat-14 MuiButton-flatSecondary-16 root"
           id="test id"
-          onClick={[MockFunction]}
-          outlined={false}
-          title="test title"
-        />
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiButton-label-10"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root-38 icon"
+              focusable="false"
+              role="presentation"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
+              />
+            </svg>
+            <span>
+              test title
+            </span>
+          </span>
+          <span
+            class="MuiTouchRipple-root-47"
+          />
+        </button>
       </div>
-    </WithStyles(Tooltip)>
-    <WithStyles(Tooltip)
-      enterDelay={300}
-      key="1"
-      title="test disabled title2"
-    >
-      <div>
-        <BusyButton
-          busy={false}
-          className=""
-          color="secondary"
-          disabled={true}
-          icon={[Function]}
+      <div
+        class=""
+        title="test disabled title2"
+      >
+        <button
+          class="MuiButtonBase-root-35 MuiButtonBase-disabled-36 MuiButton-root-9 MuiButton-text-11 MuiButton-textSecondary-13 MuiButton-flat-14 MuiButton-flatSecondary-16 MuiButton-disabled-29 root"
+          disabled=""
           id="test id2"
-          onClick={[MockFunction]}
-          outlined={false}
-          title="test title2"
-        />
+          tabindex="-1"
+          type="button"
+        >
+          <span
+            class="MuiButton-label-10"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root-38 icon"
+              focusable="false"
+              role="presentation"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+              />
+            </svg>
+            <span>
+              test title2
+            </span>
+          </span>
+        </button>
       </div>
-    </WithStyles(Tooltip)>
+    </div>
   </div>
 </div>
 `;
 
 exports[`Toolbar renders without breadcrumbs and one action 1`] = `
-<div
-  className="root topLevelToolbar"
->
+<div>
   <div
-    style={
-      Object {
-        "minWidth": 100,
-      }
-    }
+    class="root topLevelToolbar"
   >
     <div
-      className="breadcrumbs flex"
-    />
-    <div
-      className="flex"
+      style="min-width: 100px;"
     >
-      <span
-        className="pageName ellipsis"
-        data-testid="page-title"
+      <div
+        class="breadcrumbs flex"
+      />
+      <div
+        class="flex"
       >
-        test page title
-      </span>
-    </div>
-  </div>
-  <div
-    className="actions"
-  >
-    <WithStyles(Tooltip)
-      enterDelay={300}
-      key="0"
-      title="test tooltip"
-    >
-      <div>
-        <BusyButton
-          busy={false}
-          className=""
-          color="secondary"
-          icon={[Function]}
-          id="test id"
-          onClick={[MockFunction]}
-          outlined={false}
-          title="test title"
-        />
+        <span
+          class="pageName ellipsis"
+          data-testid="page-title"
+        >
+          test page title
+        </span>
       </div>
-    </WithStyles(Tooltip)>
+    </div>
+    <div
+      class="actions"
+    >
+      <div
+        class=""
+        title="test tooltip"
+      >
+        <button
+          class="MuiButtonBase-root-141 MuiButton-root-115 MuiButton-text-117 MuiButton-textSecondary-119 MuiButton-flat-120 MuiButton-flatSecondary-122 root"
+          id="test id"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiButton-label-116"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root-144 icon"
+              focusable="false"
+              role="presentation"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
+              />
+            </svg>
+            <span>
+              test title
+            </span>
+          </span>
+          <span
+            class="MuiTouchRipple-root-153"
+          />
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 `;
 
 exports[`Toolbar renders without breadcrumbs and two actions 1`] = `
-<div
-  className="root topLevelToolbar"
->
+<div>
   <div
-    style={
-      Object {
-        "minWidth": 100,
-      }
-    }
+    class="root topLevelToolbar"
   >
     <div
-      className="breadcrumbs flex"
-    />
-    <div
-      className="flex"
+      style="min-width: 100px;"
     >
-      <span
-        className="pageName ellipsis"
-        data-testid="page-title"
+      <div
+        class="breadcrumbs flex"
+      />
+      <div
+        class="flex"
       >
-        test page title
-      </span>
+        <span
+          class="pageName ellipsis"
+          data-testid="page-title"
+        >
+          test page title
+        </span>
+      </div>
     </div>
-  </div>
-  <div
-    className="actions"
-  >
-    <WithStyles(Tooltip)
-      enterDelay={300}
-      key="0"
-      title="test tooltip"
+    <div
+      class="actions"
     >
-      <div>
-        <BusyButton
-          busy={false}
-          className=""
-          color="secondary"
-          icon={[Function]}
+      <div
+        class=""
+        title="test tooltip"
+      >
+        <button
+          class="MuiButtonBase-root-174 MuiButton-root-186 MuiButton-text-188 MuiButton-textSecondary-190 MuiButton-flat-191 MuiButton-flatSecondary-193 root"
           id="test id"
-          onClick={[MockFunction]}
-          outlined={false}
-          title="test title"
-        />
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiButton-label-187"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root-177 icon"
+              focusable="false"
+              role="presentation"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"
+              />
+            </svg>
+            <span>
+              test title
+            </span>
+          </span>
+          <span
+            class="MuiTouchRipple-root-212"
+          />
+        </button>
       </div>
-    </WithStyles(Tooltip)>
-    <WithStyles(Tooltip)
-      enterDelay={300}
-      key="1"
-      title="test disabled title2"
-    >
-      <div>
-        <BusyButton
-          busy={false}
-          className=""
-          color="secondary"
-          disabled={true}
-          icon={[Function]}
+      <div
+        class=""
+        title="test disabled title2"
+      >
+        <button
+          class="MuiButtonBase-root-174 MuiButtonBase-disabled-175 MuiButton-root-186 MuiButton-text-188 MuiButton-textSecondary-190 MuiButton-flat-191 MuiButton-flatSecondary-193 MuiButton-disabled-206 root"
+          disabled=""
           id="test id2"
-          onClick={[MockFunction]}
-          outlined={false}
-          title="test title2"
-        />
+          tabindex="-1"
+          type="button"
+        >
+          <span
+            class="MuiButton-label-187"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root-177 icon"
+              focusable="false"
+              role="presentation"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+              />
+            </svg>
+            <span>
+              test title2
+            </span>
+          </span>
+        </button>
       </div>
-    </WithStyles(Tooltip)>
+    </div>
   </div>
 </div>
 `;

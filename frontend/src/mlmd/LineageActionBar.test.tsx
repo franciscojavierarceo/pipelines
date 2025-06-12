@@ -15,7 +15,7 @@
  */
 
 import * as React from 'react';
-import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { LineageActionBar, LineageActionBarProps, LineageActionBarState } from './LineageActionBar';
 import { buildTestModel, testModel } from './TestUtils';
 import { Artifact } from 'src/third_party/mlmd';
@@ -24,12 +24,8 @@ describe('LineageActionBar', () => {
   let tree: ShallowWrapper;
   const setLineageViewTarget = jest.fn();
 
-  const mountActionBar = (): ReactWrapper<
-    LineageActionBarProps,
-    LineageActionBarState,
-    LineageActionBar
-  > =>
-    mount(
+  const mountActionBar = () =>
+    render(
       <LineageActionBar initialTarget={testModel} setLineageViewTarget={setLineageViewTarget} />,
     );
 
@@ -39,8 +35,8 @@ describe('LineageActionBar', () => {
   });
 
   it('Renders correctly for a given initial target', () => {
-    tree = shallow(<LineageActionBar initialTarget={testModel} setLineageViewTarget={jest.fn()} />);
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<LineageActionBar initialTarget={testModel} setLineageViewTarget={jest.fn()} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('Does not update the LineageView target when the current breadcrumb is clicked', () => {

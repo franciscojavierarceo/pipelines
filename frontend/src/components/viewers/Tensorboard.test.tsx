@@ -19,7 +19,7 @@ import TensorboardViewer, { TensorboardViewerConfig } from './Tensorboard';
 import TestUtils, { diff } from '../../TestUtils';
 import { Apis } from '../../lib/Apis';
 import { PlotType } from './Viewer';
-import { ReactWrapper, ShallowWrapper, shallow, mount } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 
 const DEFAULT_CONFIG: TensorboardViewerConfig = {
   type: PlotType.TENSORBOARD,
@@ -35,7 +35,7 @@ const GET_APP_FOUND = {
 };
 
 describe.only('Tensorboard', () => {
-  let tree: ReactWrapper | ShallowWrapper;
+  let container: HTMLElement;
   const flushPromisesAndTimers = async () => {
     jest.runOnlyPendingTimers();
     await TestUtils.flushPromises();
@@ -47,11 +47,8 @@ describe.only('Tensorboard', () => {
   });
 
   afterEach(async () => {
-    // unmount() should be called before resetAllMocks() in case any part of the unmount life cycle
+    // cleanup should be called before resetAllMocks() in case any part of the cleanup life cycle
     // depends on mocks/spies
-    if (tree) {
-      await tree.unmount();
-    }
     jest.resetAllMocks();
     jest.restoreAllMocks();
   });
@@ -59,9 +56,10 @@ describe.only('Tensorboard', () => {
   it('base component snapshot', async () => {
     const getAppMock = () => Promise.resolve(GET_APP_NOT_FOUND);
     jest.spyOn(Apis, 'getTensorboardApp').mockImplementation(getAppMock);
-    tree = shallow(<TensorboardViewer configs={[]} />);
+    const { container: renderedContainer } = render(<TensorboardViewer configs={[]} />);
+    container = renderedContainer;
     await TestUtils.flushPromises();
-    expect(tree).toMatchInlineSnapshot(`
+    expect(container).toMatchInlineSnapshot(`
       <div>
         <div>
           <div
@@ -171,11 +169,12 @@ describe.only('Tensorboard', () => {
   it('does not break on no config', async () => {
     const getAppMock = () => Promise.resolve(GET_APP_NOT_FOUND);
     jest.spyOn(Apis, 'getTensorboardApp').mockImplementation(getAppMock);
-    tree = shallow(<TensorboardViewer configs={[]} />);
-    const base = tree.debug();
+    const { container: renderedContainer } = render(<TensorboardViewer configs={[]} />);
+    container = renderedContainer;
+    const base = container.innerHTML;
 
     await TestUtils.flushPromises();
-    expect(diff({ base, update: tree.debug() })).toMatchInlineSnapshot(`
+    expect(diff({ base, update: container.innerHTML })).toMatchInlineSnapshot(`
       Snapshot Diff:
       - Expected
       + Received
@@ -198,11 +197,12 @@ describe.only('Tensorboard', () => {
     const getAppMock = () => Promise.resolve(GET_APP_NOT_FOUND);
     jest.spyOn(Apis, 'getTensorboardApp').mockImplementation(getAppMock);
     const config = { ...DEFAULT_CONFIG, url: '' };
-    tree = shallow(<TensorboardViewer configs={[config]} />);
-    const base = tree.debug();
+    const { container: renderedContainer } = render(<TensorboardViewer configs={[config]} />);
+    container = renderedContainer;
+    const base = container.innerHTML;
 
     await TestUtils.flushPromises();
-    expect(diff({ base, update: tree.debug() })).toMatchInlineSnapshot(`
+    expect(diff({ base, update: container.innerHTML })).toMatchInlineSnapshot(`
       Snapshot Diff:
       - Expected
       + Received
@@ -230,13 +230,14 @@ describe.only('Tensorboard', () => {
       });
     jest.spyOn(Apis, 'getTensorboardApp').mockImplementation(getAppMock);
     jest.spyOn(Apis, 'isTensorboardPodReady').mockImplementation(() => Promise.resolve(true));
-    tree = shallow(<TensorboardViewer configs={[config]} />);
+    const { container: renderedContainer } = render(<TensorboardViewer configs={[config]} />);
+    container = renderedContainer;
 
     await TestUtils.flushPromises();
     await flushPromisesAndTimers();
     expect(Apis.isTensorboardPodReady).toHaveBeenCalledTimes(1);
     expect(Apis.isTensorboardPodReady).toHaveBeenCalledWith('apis/v1beta1/_proxy/test/address');
-    expect(tree.debug()).toMatchInlineSnapshot(`
+    expect(container.innerHTML).toMatchInlineSnapshot(`
       "<div>
         <div>
           <div className=\\"\\">
@@ -277,14 +278,15 @@ describe.only('Tensorboard', () => {
     const config = DEFAULT_CONFIG;
     const getAppMock = () => Promise.resolve(GET_APP_NOT_FOUND);
     const getTensorboardSpy = jest.spyOn(Apis, 'getTensorboardApp').mockImplementation(getAppMock);
-    tree = shallow(<TensorboardViewer configs={[DEFAULT_CONFIG]} />);
-    const base = tree.debug();
+    const { container: renderedContainer } = render(<TensorboardViewer configs={[DEFAULT_CONFIG]} />);
+    container = renderedContainer;
+    const base = container.innerHTML;
 
     await TestUtils.flushPromises();
     expect(
       diff({
         base,
-        update: tree.debug(),
+        update: container.innerHTML,
         baseAnnotation: 'initial',
         updateAnnotation: 'no instance exists',
       }),
@@ -314,9 +316,11 @@ describe.only('Tensorboard', () => {
     const startAppMock = jest.fn(() => Promise.resolve(''));
     jest.spyOn(Apis, 'getTensorboardApp').mockImplementation(getAppMock);
     jest.spyOn(Apis, 'startTensorboardApp').mockImplementationOnce(startAppMock);
-    tree = shallow(<TensorboardViewer configs={[config]} />);
+    const { container: renderedContainer } = render(<TensorboardViewer configs={[config]} />);
+    container = renderedContainer;
     await TestUtils.flushPromises();
-    tree.find('BusyButton').simulate('click');
+    const startButton = screen.getByTitle('Start Tensorboard');
+    fireEvent.click(startButton);
     expect(startAppMock).toHaveBeenCalledWith({
       logdir: config.url,
       namespace: config.namespace,
@@ -331,13 +335,15 @@ describe.only('Tensorboard', () => {
     const startAppMock = jest.fn(() => Promise.resolve(''));
     jest.spyOn(Apis, 'getTensorboardApp').mockImplementation(getAppMock);
     jest.spyOn(Apis, 'startTensorboardApp').mockImplementationOnce(startAppMock);
-    tree = shallow(<TensorboardViewer configs={[config, config2]} />);
+    const { container: renderedContainer } = render(<TensorboardViewer configs={[config, config2]} />);
+    container = renderedContainer;
     await TestUtils.flushPromises();
     expect(getAppMock).toHaveBeenCalledWith(
       `Series1:${config.url},Series2:${config2.url}`,
       config.namespace,
     );
-    tree.find('BusyButton').simulate('click');
+    const startButton = screen.getByTitle('Start Tensorboard');
+    fireEvent.click(startButton);
     const expectedUrl = `Series1:${config.url},Series2:${config2.url}`;
     expect(startAppMock).toHaveBeenCalledWith({
       logdir: expectedUrl,
@@ -364,18 +370,20 @@ describe.only('Tensorboard', () => {
       .spyOn(Apis, 'startTensorboardApp')
       .mockImplementationOnce(startAppMock);
 
-    tree = mount(<TensorboardViewer configs={[config]} />);
+    const { container: renderedContainer } = render(<TensorboardViewer configs={[config]} />);
+    container = renderedContainer;
     await TestUtils.flushPromises();
 
-    tree
-      .find('Select')
-      .find('[role="button"]')
-      .simulate('click');
-    tree
-      .findWhere(el => el.text().startsWith('TensorFlow 1.15'))
-      .hostNodes()
-      .simulate('click');
-    tree.find('BusyButton').simulate('click');
+    const selectButton = container.querySelector('div[role="button"]');
+    fireEvent.click(selectButton!);
+    
+    const tensorflowOption = Array.from(container.querySelectorAll('li')).find(el => 
+      el.textContent?.startsWith('TensorFlow 1.15')
+    );
+    fireEvent.click(tensorflowOption!);
+    
+    const startButton = screen.getByTitle('Start Tensorboard');
+    fireEvent.click(startButton);
     expect(startAppSpy).toHaveBeenCalledWith({
       logdir: config.url,
       image: 'tensorflow/tensorflow:1.15.5',
@@ -391,22 +399,20 @@ describe.only('Tensorboard', () => {
     const deleteAppSpy = jest.spyOn(Apis, 'deleteTensorboardApp').mockImplementation(deleteAppMock);
     const config = { ...DEFAULT_CONFIG };
 
-    tree = mount(<TensorboardViewer configs={[config]} />);
+    const { container: renderedContainer } = render(<TensorboardViewer configs={[config]} />);
+    container = renderedContainer;
     await TestUtils.flushPromises();
-    expect(!!tree.state('podAddress')).toBeTruthy();
 
     // delete a tensorboard
-    tree.update();
-    tree
-      .find('#delete')
-      .find('Button')
-      .simulate('click');
-    tree.find('BusyButton').simulate('click');
+    const deleteButton = container.querySelector('#delete button');
+    fireEvent.click(deleteButton!);
+    
+    const confirmButton = screen.getByTitle('Stop');
+    fireEvent.click(confirmButton);
     expect(deleteAppSpy).toHaveBeenCalledWith(config.url, config.namespace);
     await TestUtils.flushPromises();
-    tree.update();
-    // the tree has returned to 'start tensorboard' page
-    expect(tree.findWhere(el => el.text() === 'Start Tensorboard').exists()).toBeTruthy();
+    // the component has returned to 'start tensorboard' page
+    expect(screen.getByTitle('Start Tensorboard')).toBeInTheDocument();
   });
 
   it('show version info in delete confirming dialog, \
@@ -414,35 +420,31 @@ describe.only('Tensorboard', () => {
     const getAppMock = jest.fn(() => Promise.resolve(GET_APP_FOUND));
     jest.spyOn(Apis, 'getTensorboardApp').mockImplementation(getAppMock);
     const config = DEFAULT_CONFIG;
-    tree = mount(<TensorboardViewer configs={[config]} />);
+    const { container: renderedContainer } = render(<TensorboardViewer configs={[config]} />);
+    container = renderedContainer;
     await TestUtils.flushPromises();
-    tree.update();
-    tree
-      .find('#delete')
-      .find('Button')
-      .simulate('click');
-    expect(tree.findWhere(el => el.text() === 'Stop Tensorboard?').exists()).toBeTruthy();
+    
+    const deleteButton = container.querySelector('#delete button');
+    fireEvent.click(deleteButton!);
+    expect(screen.getByText('Stop Tensorboard?')).toBeInTheDocument();
   });
 
   it('click on cancel on delete tensorboard dialog, then return back to previous page', async () => {
     const getAppMock = jest.fn(() => Promise.resolve(GET_APP_FOUND));
     jest.spyOn(Apis, 'getTensorboardApp').mockImplementation(getAppMock);
     const config = DEFAULT_CONFIG;
-    tree = mount(<TensorboardViewer configs={[config]} />);
+    const { container: renderedContainer } = render(<TensorboardViewer configs={[config]} />);
+    container = renderedContainer;
     await TestUtils.flushPromises();
-    tree.update();
-    tree
-      .find('#delete')
-      .find('Button')
-      .simulate('click');
+    
+    const deleteButton = container.querySelector('#delete button');
+    fireEvent.click(deleteButton!);
 
-    tree
-      .find('#cancel')
-      .find('Button')
-      .simulate('click');
+    const cancelButton = container.querySelector('#cancel button');
+    fireEvent.click(cancelButton!);
 
-    expect(tree.findWhere(el => el.text() === 'Open Tensorboard').exists()).toBeTruthy();
-    expect(tree.findWhere(el => el.text() === 'Stop Tensorboard').exists()).toBeTruthy();
+    expect(screen.getByText('Open Tensorboard')).toBeInTheDocument();
+    expect(screen.getByText('Stop Tensorboard')).toBeInTheDocument();
   });
 
   it('asks user to wait when Tensorboard status is not ready', async () => {
@@ -451,35 +453,20 @@ describe.only('Tensorboard', () => {
     jest.spyOn(Apis, 'isTensorboardPodReady').mockImplementation(() => Promise.resolve(false));
     jest.spyOn(Apis, 'deleteTensorboardApp').mockImplementation(jest.fn(() => Promise.resolve('')));
     const config = DEFAULT_CONFIG;
-    tree = mount(<TensorboardViewer configs={[config]} />);
+    const { container: renderedContainer } = render(<TensorboardViewer configs={[config]} />);
+    container = renderedContainer;
 
     await TestUtils.flushPromises();
     await flushPromisesAndTimers();
-    tree.update();
     expect(Apis.isTensorboardPodReady).toHaveBeenCalledTimes(1);
     expect(Apis.isTensorboardPodReady).toHaveBeenCalledWith('apis/v1beta1/_proxy/podaddress');
-    expect(tree.findWhere(el => el.text() === 'Open Tensorboard').exists()).toBeTruthy();
-    expect(
-      tree
-        .findWhere(
-          el =>
-            el.text() === 'Tensorboard is starting, and you may need to wait for a few minutes.',
-        )
-        .exists(),
-    ).toBeTruthy();
-    expect(tree.findWhere(el => el.text() === 'Stop Tensorboard').exists()).toBeTruthy();
+    expect(screen.getByText('Open Tensorboard')).toBeInTheDocument();
+    expect(screen.getByText('Tensorboard is starting, and you may need to wait for a few minutes.')).toBeInTheDocument();
+    expect(screen.getByText('Stop Tensorboard')).toBeInTheDocument();
 
     // After a while, it is ready and wait message is not shwon any more
     jest.spyOn(Apis, 'isTensorboardPodReady').mockImplementation(() => Promise.resolve(true));
     await flushPromisesAndTimers();
-    tree.update();
-    expect(
-      tree
-        .findWhere(
-          el =>
-            el.text() === `Tensorboard is starting, and you may need to wait for a few minutes.`,
-        )
-        .exists(),
-    ).toEqual(false);
+    expect(screen.queryByText('Tensorboard is starting, and you may need to wait for a few minutes.')).not.toBeInTheDocument();
   });
 });

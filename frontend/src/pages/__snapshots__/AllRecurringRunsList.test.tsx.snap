@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AllRunsList renders all runs 1`] = `
+exports[`AllRecurringRunsList renders all recurring runs 1`] = `
 <div>
   <div
     class="page"
@@ -20,7 +20,7 @@ exports[`AllRunsList renders all runs 1`] = `
               data-shrink="true"
               for="tableFilterBox"
             >
-              Filter runs
+              Filter recurring runs
             </label>
             <div
               class="MuiInputBase-root-36 MuiOutlinedInput-root-23 noLeftPadding MuiInputBase-formControl-37 MuiInputBase-adornedStart-40 MuiOutlinedInput-adornedStart-26"
@@ -106,8 +106,8 @@ exports[`AllRunsList renders all runs 1`] = `
           </div>
           <div
             class="columnName"
-            style="width: 25%;"
-            title="Run name"
+            style="width: 30%;"
+            title="Recurring Run Name"
           >
             <span
               class="MuiButtonBase-root-85 MuiTableSortLabel-root-96 ellipsis"
@@ -115,7 +115,7 @@ exports[`AllRunsList renders all runs 1`] = `
               tabindex="0"
               title="Sort"
             >
-              Run name
+              Recurring Run Name
               <svg
                 aria-hidden="true"
                 class="MuiSvgIcon-root-60 MuiTableSortLabel-icon-98 MuiTableSortLabel-iconDirectionDesc-99"
@@ -131,7 +131,7 @@ exports[`AllRunsList renders all runs 1`] = `
           </div>
           <div
             class="columnName"
-            style="width: 8.333333333333332%;"
+            style="width: 10%;"
             title="Status"
           >
             <span
@@ -156,8 +156,8 @@ exports[`AllRunsList renders all runs 1`] = `
           </div>
           <div
             class="columnName"
-            style="width: 8.333333333333332%;"
-            title="Duration"
+            style="width: 20%;"
+            title="Trigger"
           >
             <span
               class="MuiButtonBase-root-85 MuiTableSortLabel-root-96 ellipsis"
@@ -165,7 +165,7 @@ exports[`AllRunsList renders all runs 1`] = `
               tabindex="0"
               title="Cannot sort by this column"
             >
-              Duration
+              Trigger
               <svg
                 aria-hidden="true"
                 class="MuiSvgIcon-root-60 MuiTableSortLabel-icon-98 MuiTableSortLabel-iconDirectionDesc-99"
@@ -181,7 +181,7 @@ exports[`AllRunsList renders all runs 1`] = `
           </div>
           <div
             class="columnName"
-            style="width: 16.666666666666664%;"
+            style="width: 20%;"
             title="Experiment"
           >
             <span
@@ -206,58 +206,8 @@ exports[`AllRunsList renders all runs 1`] = `
           </div>
           <div
             class="columnName"
-            style="width: 16.666666666666664%;"
-            title="Pipeline Version"
-          >
-            <span
-              class="MuiButtonBase-root-85 MuiTableSortLabel-root-96 ellipsis"
-              role="button"
-              tabindex="0"
-              title="Cannot sort by this column"
-            >
-              Pipeline Version
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root-60 MuiTableSortLabel-icon-98 MuiTableSortLabel-iconDirectionDesc-99"
-                focusable="false"
-                role="presentation"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
-                />
-              </svg>
-            </span>
-          </div>
-          <div
-            class="columnName"
-            style="width: 8.333333333333332%;"
-            title="Recurring Run"
-          >
-            <span
-              class="MuiButtonBase-root-85 MuiTableSortLabel-root-96 ellipsis"
-              role="button"
-              tabindex="0"
-              title="Cannot sort by this column"
-            >
-              Recurring Run
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root-60 MuiTableSortLabel-icon-98 MuiTableSortLabel-iconDirectionDesc-99"
-                focusable="false"
-                role="presentation"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
-                />
-              </svg>
-            </span>
-          </div>
-          <div
-            class="columnName"
-            style="width: 16.666666666666664%;"
-            title="Start time"
+            style="width: 20%;"
+            title="Created at"
           >
             <span
               class="MuiButtonBase-root-85 MuiTableSortLabel-root-96 MuiTableSortLabel-active-97 ellipsis"
@@ -265,7 +215,7 @@ exports[`AllRunsList renders all runs 1`] = `
               tabindex="0"
               title="Sort"
             >
-              Start time
+              Created at
               <svg
                 aria-hidden="true"
                 class="MuiSvgIcon-root-60 MuiTableSortLabel-icon-98 MuiTableSortLabel-iconDirectionDesc-99"

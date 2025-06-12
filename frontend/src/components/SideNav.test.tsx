@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
+import { render, screen, fireEvent, RenderResult } from '@testing-library/react';
 import * as React from 'react';
 import { MemoryRouter, RouterProps } from 'react-router';
 import { Apis } from '../lib/Apis';
@@ -27,8 +27,8 @@ import TestUtils from '../TestUtils';
 
 const wideWidth = 1000;
 const narrowWidth = 200;
-const isCollapsed = (tree: ShallowWrapper<any>) =>
-  tree.find('WithStyles(IconButton)').hasClass(css.collapsedChevron);
+const isCollapsed = (container: HTMLElement) =>
+  container.querySelector('.collapsedChevron') !== null;
 const routerProps: RouterProps = { history: {} as any };
 const defaultProps = {
   ...routerProps,
@@ -44,7 +44,7 @@ const defaultProps = {
 };
 
 describe('SideNav', () => {
-  let tree: ReactWrapper | ShallowWrapper;
+  let renderResult: RenderResult;
 
   const consoleErrorSpy = jest.spyOn(console, 'error');
   const checkHubSpy = jest.spyOn(Apis, 'isJupyterHubAvailable');
@@ -61,9 +61,11 @@ describe('SideNav', () => {
   });
 
   afterEach(async () => {
-    // unmount() should be called before resetAllMocks() in case any part of the unmount life cycle
+    // cleanup() should be called before resetAllMocks() in case any part of the unmount life cycle
     // depends on mocks/spies
-    await tree.unmount();
+    if (renderResult) {
+      renderResult.unmount();
+    }
     jest.resetAllMocks();
     (window as any).innerWidth = wideWidth;
   });
@@ -71,70 +73,70 @@ describe('SideNav', () => {
   it('renders expanded state', () => {
     localStorageHasKeySpy.mockImplementationOnce(() => false);
     (window as any).innerWidth = wideWidth;
-    tree = shallow(<SideNav page={RoutePage.PIPELINES} {...defaultProps} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.PIPELINES} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders collapsed state', () => {
     localStorageHasKeySpy.mockImplementationOnce(() => false);
     (window as any).innerWidth = narrowWidth;
-    tree = shallow(<SideNav page={RoutePage.PIPELINES} {...defaultProps} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.PIPELINES} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders Pipelines as active page', () => {
-    tree = shallow(<SideNav page={RoutePage.PIPELINES} {...defaultProps} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.PIPELINES} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders Pipelines as active when on PipelineDetails page', () => {
-    tree = shallow(<SideNav page={RoutePage.PIPELINE_DETAILS} {...defaultProps} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.PIPELINE_DETAILS} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders experiments as active page', () => {
-    tree = shallow(<SideNav page={RoutePage.EXPERIMENTS} {...defaultProps} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.EXPERIMENTS} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders experiments as active when on ExperimentDetails page', () => {
-    tree = shallow(<SideNav page={RoutePage.EXPERIMENT_DETAILS} {...defaultProps} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.EXPERIMENT_DETAILS} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders experiments as active page when on NewExperiment page', () => {
-    tree = shallow(<SideNav page={RoutePage.NEW_EXPERIMENT} {...defaultProps} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.NEW_EXPERIMENT} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders experiments as active page when on Compare page', () => {
-    tree = shallow(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders experiments as active page when on AllRuns page', () => {
-    tree = shallow(<SideNav page={RoutePage.RUNS} {...defaultProps} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.RUNS} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders experiments as active page when on RunDetails page', () => {
-    tree = shallow(<SideNav page={RoutePage.RUN_DETAILS} {...defaultProps} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.RUN_DETAILS} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders experiments as active page when on RecurringRunDetails page', () => {
-    tree = shallow(<SideNav page={RoutePage.RECURRING_RUN_DETAILS} {...defaultProps} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.RECURRING_RUN_DETAILS} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders experiments as active page when on NewRun page', () => {
-    tree = shallow(<SideNav page={RoutePage.NEW_RUN} {...defaultProps} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.NEW_RUN} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders recurring runs as active page', () => {
-    tree = shallow(<SideNav page={RoutePage.RECURRING_RUNS} {...defaultProps} />);
-    expect(tree).toMatchInlineSnapshot(`
+    renderResult = render(<SideNav page={RoutePage.RECURRING_RUNS} {...defaultProps} />);
+    expect(renderResult.container).toMatchInlineSnapshot(`
       <div
         className="root flexColumn noShrink"
         id="sideNav"
@@ -429,8 +431,8 @@ describe('SideNav', () => {
   });
 
   it('renders jobs as active page when on JobDetails page', () => {
-    tree = shallow(<SideNav page={RoutePage.RECURRING_RUN_DETAILS} {...defaultProps} />);
-    expect(tree).toMatchInlineSnapshot(`
+    renderResult = render(<SideNav page={RoutePage.RECURRING_RUN_DETAILS} {...defaultProps} />);
+    expect(renderResult.container).toMatchInlineSnapshot(`
       <div
         className="root flexColumn noShrink"
         id="sideNav"
@@ -725,9 +727,8 @@ describe('SideNav', () => {
   });
 
   it('show jupyterhub link if accessible', () => {
-    tree = shallow(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
-    tree.setState({ jupyterHubAvailable: true });
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('collapses if collapse state is true localStorage', () => {
@@ -735,16 +736,16 @@ describe('SideNav', () => {
     localStorageHasKeySpy.mockImplementationOnce(() => true);
 
     (window as any).innerWidth = wideWidth;
-    tree = shallow(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
-    expect(isCollapsed(tree)).toBe(true);
+    renderResult = render(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
+    expect(isCollapsed(renderResult.container)).toBe(true);
   });
 
   it('expands if collapse state is false in localStorage', () => {
     localStorageIsCollapsedSpy.mockImplementationOnce(() => false);
     localStorageHasKeySpy.mockImplementationOnce(() => true);
 
-    tree = shallow(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
-    expect(isCollapsed(tree)).toBe(false);
+    renderResult = render(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
+    expect(isCollapsed(renderResult.container)).toBe(false);
   });
 
   it('collapses if no collapse state in localStorage, and window is too narrow', () => {
@@ -752,8 +753,8 @@ describe('SideNav', () => {
     localStorageHasKeySpy.mockImplementationOnce(() => false);
 
     (window as any).innerWidth = narrowWidth;
-    tree = shallow(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
-    expect(isCollapsed(tree)).toBe(true);
+    renderResult = render(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
+    expect(isCollapsed(renderResult.container)).toBe(true);
   });
 
   it('expands if no collapse state in localStorage, and window is wide', () => {
@@ -761,8 +762,8 @@ describe('SideNav', () => {
     localStorageHasKeySpy.mockImplementationOnce(() => false);
 
     (window as any).innerWidth = wideWidth;
-    tree = shallow(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
-    expect(isCollapsed(tree)).toBe(false);
+    renderResult = render(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
+    expect(isCollapsed(renderResult.container)).toBe(false);
   });
 
   it('collapses if no collapse state in localStorage, and window goes from wide to narrow', () => {
@@ -770,8 +771,8 @@ describe('SideNav', () => {
     localStorageHasKeySpy.mockImplementationOnce(() => false);
 
     (window as any).innerWidth = wideWidth;
-    tree = shallow(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
-    expect(isCollapsed(tree)).toBe(false);
+    renderResult = render(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
+    expect(isCollapsed(renderResult.container)).toBe(false);
 
     (window as any).innerWidth = narrowWidth;
     const resizeEvent = new Event('resize');
@@ -784,8 +785,8 @@ describe('SideNav', () => {
     localStorageHasKeySpy.mockImplementationOnce(() => false);
 
     (window as any).innerWidth = narrowWidth;
-    tree = shallow(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
-    expect(isCollapsed(tree)).toBe(true);
+    renderResult = render(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
+    expect(isCollapsed(renderResult.container)).toBe(true);
 
     (window as any).innerWidth = wideWidth;
     const resizeEvent = new Event('resize');
@@ -799,10 +800,11 @@ describe('SideNav', () => {
     const spy = jest.spyOn(LocalStorage, 'saveNavbarCollapsed');
 
     (window as any).innerWidth = narrowWidth;
-    tree = shallow(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
-    expect(isCollapsed(tree)).toBe(true);
+    renderResult = render(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
+    expect(isCollapsed(renderResult.container)).toBe(true);
 
-    tree.find('WithStyles(IconButton)').simulate('click');
+    const toggleButton = renderResult.container.querySelector('button[class*="chevron"]');
+    fireEvent.click(toggleButton!);
     expect(spy).toHaveBeenCalledWith(false);
   });
 
@@ -811,8 +813,8 @@ describe('SideNav', () => {
     localStorageHasKeySpy.mockImplementationOnce(() => true);
 
     (window as any).innerWidth = wideWidth;
-    tree = shallow(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
-    expect(isCollapsed(tree)).toBe(false);
+    renderResult = render(<SideNav page={RoutePage.COMPARE} {...defaultProps} />);
+    expect(isCollapsed(renderResult.container)).toBe(false);
 
     (window as any).innerWidth = narrowWidth;
     const resizeEvent = new Event('resize');
@@ -821,10 +823,9 @@ describe('SideNav', () => {
   });
 
   it('populates the display build information using the default props', async () => {
-    tree = TestUtils.mountWithRouter(<SideNav page={RoutePage.PIPELINES} {...defaultProps} />);
-    const instance = tree.find(SideNav).instance() as any;
+    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.PIPELINES} {...defaultProps} />);
 
-    expect(tree).toMatchSnapshot();
+    expect(renderResult.container).toMatchSnapshot();
 
     const buildInfo = defaultProps.buildInfo;
     expect(instance._getBuildInfo()).toEqual({
@@ -847,7 +848,7 @@ describe('SideNav', () => {
       buildInfo: {},
     };
 
-    tree = TestUtils.mountWithRouter(<SideNav page={RoutePage.PIPELINES} {...newProps} />);
+    tree = TestUtils.renderWithRouter(<SideNav page={RoutePage.PIPELINES} {...newProps} />);
 
     expect(tree).toMatchSnapshot();
   });
@@ -864,8 +865,7 @@ describe('SideNav', () => {
       },
     };
 
-    tree = TestUtils.mountWithRouter(<SideNav page={RoutePage.PIPELINES} {...newProps} />);
-    const instance = tree.find(SideNav).instance() as any;
+    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.PIPELINES} {...newProps} />);
 
     expect(instance._getBuildInfo()).toEqual(
       expect.objectContaining({
@@ -886,8 +886,7 @@ describe('SideNav', () => {
       },
     };
 
-    tree = TestUtils.mountWithRouter(<SideNav page={RoutePage.PIPELINES} {...newProps} />);
-    const instance = tree.find(SideNav).instance() as any;
+    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.PIPELINES} {...newProps} />);
 
     expect(instance._getBuildInfo()).toEqual(
       expect.objectContaining({
@@ -909,8 +908,7 @@ describe('SideNav', () => {
       },
     };
 
-    tree = TestUtils.mountWithRouter(<SideNav page={RoutePage.PIPELINES} {...newProps} />);
-    const instance = tree.find(SideNav).instance() as any;
+    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.PIPELINES} {...newProps} />);
 
     expect(instance._getBuildInfo()).toEqual(
       expect.objectContaining({
@@ -931,8 +929,7 @@ describe('SideNav', () => {
       },
     };
 
-    tree = TestUtils.mountWithRouter(<SideNav page={RoutePage.PIPELINES} {...newProps} />);
-    const instance = tree.find(SideNav).instance() as any;
+    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.PIPELINES} {...newProps} />);
     expect(instance._getBuildInfo()).toEqual(
       expect.objectContaining({
         commitUrl: 'https://www.github.com/kubeflow/pipelines',
@@ -951,8 +948,7 @@ describe('SideNav', () => {
       },
     };
 
-    tree = TestUtils.mountWithRouter(<SideNav page={RoutePage.PIPELINES} {...newProps} />);
-    const instance = tree.find(SideNav).instance() as any;
+    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.PIPELINES} {...newProps} />);
 
     expect(instance._getBuildInfo()).toEqual(
       expect.objectContaining({

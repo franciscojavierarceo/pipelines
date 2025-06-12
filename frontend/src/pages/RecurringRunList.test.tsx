@@ -20,7 +20,7 @@ import RecurringRunList, { RecurringRunListProps } from './RecurringRunList';
 import TestUtils from 'src/TestUtils';
 import produce from 'immer';
 import { Apis, JobSortKeys, ListRequest } from 'src/lib/Apis';
-import { ReactWrapper, ShallowWrapper, shallow } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { range } from 'lodash';
 import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from 'src/apisv2beta1/recurringrun';
 
@@ -31,7 +31,7 @@ class RecurringRunListTest extends RecurringRunList {
 }
 
 describe('RecurringRunList', () => {
-  let tree: ShallowWrapper | ReactWrapper;
+  let tree: any;
 
   const onErrorSpy = jest.fn();
   const listRecurringRunsSpy = jest.spyOn(Apis.recurringRunServiceApi, 'listRecurringRuns');
@@ -82,8 +82,8 @@ describe('RecurringRunList', () => {
   }
 
   function getMountedInstance(): RecurringRunList {
-    tree = TestUtils.mountWithRouter(<RecurringRunList {...generateProps()} />);
-    return tree.instance() as RecurringRunList;
+    tree = TestUtils.renderWithRouter(<RecurringRunList {...generateProps()} />);
+    return tree.container.querySelector('RecurringRunList') as any;
   }
 
   beforeEach(() => {
@@ -97,16 +97,14 @@ describe('RecurringRunList', () => {
   });
 
   afterEach(async () => {
-    // unmount() should be called before resetAllMocks() in case any part of the unmount life cycle
+    // cleanup should be called before resetAllMocks() in case any part of the cleanup life cycle
     // depends on mocks/spies
-    if (tree) {
-      await tree.unmount();
-    }
     jest.resetAllMocks();
   });
 
   it('renders the empty experience', () => {
-    expect(shallow(<RecurringRunList {...generateProps()} />)).toMatchInlineSnapshot(`
+    const { container } = render(<RecurringRunList {...generateProps()} />);
+    expect(container.firstChild).toMatchInlineSnapshot(`
       <div>
         <CustomTable
           columns={
@@ -152,8 +150,9 @@ describe('RecurringRunList', () => {
   it('loads one recurring run', async () => {
     mockNRecurringRuns(1, {});
     const props = generateProps();
-    tree = shallow(<RecurringRunList {...props} />);
-    await (tree.instance() as RecurringRunListTest)._loadRecurringRuns({});
+    const { container } = render(<RecurringRunList {...props} />);
+    tree = container;
+    await (container.querySelector('RecurringRunList') as any)._loadRecurringRuns({});
     expect(Apis.recurringRunServiceApi.listRecurringRuns).toHaveBeenLastCalledWith(
       undefined,
       undefined,
@@ -163,7 +162,7 @@ describe('RecurringRunList', () => {
       undefined,
     );
     expect(props.onError).not.toHaveBeenCalled();
-    expect(tree).toMatchInlineSnapshot(`
+    expect(container.firstChild).toMatchInlineSnapshot(`
       <div>
         <CustomTable
           columns={
@@ -223,9 +222,8 @@ describe('RecurringRunList', () => {
   it('reloads the recurring run when refresh is called', async () => {
     mockNRecurringRuns(0, {});
     const props = generateProps();
-    tree = TestUtils.mountWithRouter(<RecurringRunList {...props} />);
-    await (tree.instance() as RecurringRunList).refresh();
-    tree.update();
+    tree = TestUtils.renderWithRouter(<RecurringRunList {...props} />);
+    await (tree.container.querySelector('RecurringRunList') as any).refresh();
     expect(Apis.recurringRunServiceApi.listRecurringRuns).toHaveBeenCalledTimes(2);
     expect(Apis.recurringRunServiceApi.listRecurringRuns).toHaveBeenLastCalledWith(
       '',
@@ -241,10 +239,11 @@ describe('RecurringRunList', () => {
   it('loads multiple recurring runs', async () => {
     mockNRecurringRuns(5, {});
     const props = generateProps();
-    tree = shallow(<RecurringRunList {...props} />);
-    await (tree.instance() as RecurringRunListTest)._loadRecurringRuns({});
+    const { container } = render(<RecurringRunList {...props} />);
+    tree = container;
+    await (container.querySelector('RecurringRunList') as any)._loadRecurringRuns({});
     expect(props.onError).not.toHaveBeenCalled();
-    expect(tree).toMatchInlineSnapshot(`
+    expect(container.firstChild).toMatchInlineSnapshot(`
       <div>
         <CustomTable
           columns={
@@ -351,8 +350,9 @@ describe('RecurringRunList', () => {
       'bad stuff happened',
     );
     const props = generateProps();
-    tree = shallow(<RecurringRunList {...props} />);
-    await (tree.instance() as RecurringRunListTest)._loadRecurringRuns({});
+    const { container } = render(<RecurringRunList {...props} />);
+    tree = container;
+    await (container.querySelector('RecurringRunList') as any)._loadRecurringRuns({});
     expect(props.onError).toHaveBeenLastCalledWith(
       'Error: failed to fetch recurring runs.',
       new Error('bad stuff happened'),
@@ -363,8 +363,9 @@ describe('RecurringRunList', () => {
     mockNRecurringRuns(1, {});
     const props = generateProps();
     props.experimentIdMask = 'experiment1';
-    tree = shallow(<RecurringRunList {...props} />);
-    await (tree.instance() as RecurringRunListTest)._loadRecurringRuns({});
+    const { container } = render(<RecurringRunList {...props} />);
+    tree = container;
+    await (container.querySelector('RecurringRunList') as any)._loadRecurringRuns({});
     expect(props.onError).not.toHaveBeenCalled();
     expect(Apis.recurringRunServiceApi.listRecurringRuns).toHaveBeenLastCalledWith(
       undefined,
@@ -380,8 +381,9 @@ describe('RecurringRunList', () => {
     mockNRecurringRuns(1, {});
     const props = generateProps();
     props.namespaceMask = 'namespace1';
-    tree = shallow(<RecurringRunList {...props} />);
-    await (tree.instance() as RecurringRunListTest)._loadRecurringRuns({});
+    const { container } = render(<RecurringRunList {...props} />);
+    tree = container;
+    await (container.querySelector('RecurringRunList') as any)._loadRecurringRuns({});
     expect(props.onError).not.toHaveBeenCalled();
     expect(Apis.recurringRunServiceApi.listRecurringRuns).toHaveBeenLastCalledWith(
       undefined,
@@ -397,8 +399,9 @@ describe('RecurringRunList', () => {
     mockNRecurringRuns(5, {});
     const props = generateProps();
     props.recurringRunIdListMask = ['recurring run1', 'recurring run2'];
-    tree = shallow(<RecurringRunList {...props} />);
-    await (tree.instance() as RecurringRunListTest)._loadRecurringRuns({});
+    const { container } = render(<RecurringRunList {...props} />);
+    tree = container;
+    await (container.querySelector('RecurringRunList') as any)._loadRecurringRuns({});
     expect(props.onError).not.toHaveBeenCalled();
     expect(Apis.recurringRunServiceApi.listRecurringRuns).not.toHaveBeenCalled();
     expect(Apis.recurringRunServiceApi.getRecurringRun).toHaveBeenCalledTimes(2);
@@ -411,10 +414,11 @@ describe('RecurringRunList', () => {
       status: V2beta1RecurringRunStatus.ENABLED,
     });
     const props = generateProps();
-    tree = shallow(<RecurringRunList {...props} />);
-    await (tree.instance() as RecurringRunListTest)._loadRecurringRuns({});
+    const { container } = render(<RecurringRunList {...props} />);
+    tree = container;
+    await (container.querySelector('RecurringRunList') as any)._loadRecurringRuns({});
     expect(props.onError).not.toHaveBeenCalled();
-    expect(tree).toMatchInlineSnapshot(`
+    expect(container.firstChild).toMatchInlineSnapshot(`
       <div>
         <CustomTable
           columns={
@@ -476,10 +480,11 @@ describe('RecurringRunList', () => {
       trigger: { periodic_schedule: { interval_second: '3600' } },
     });
     const props = generateProps();
-    tree = shallow(<RecurringRunList {...props} />);
-    await (tree.instance() as RecurringRunListTest)._loadRecurringRuns({});
+    const { container } = render(<RecurringRunList {...props} />);
+    tree = container;
+    await (container.querySelector('RecurringRunList') as any)._loadRecurringRuns({});
     expect(props.onError).not.toHaveBeenCalled();
-    expect(tree).toMatchInlineSnapshot(`
+    expect(container.firstChild).toMatchInlineSnapshot(`
       <div>
         <CustomTable
           columns={
@@ -545,10 +550,11 @@ describe('RecurringRunList', () => {
       trigger: { cron_schedule: { cron: '0 * * * * ?' } },
     });
     const props = generateProps();
-    tree = shallow(<RecurringRunList {...props} />);
-    await (tree.instance() as RecurringRunListTest)._loadRecurringRuns({});
+    const { container } = render(<RecurringRunList {...props} />);
+    tree = container;
+    await (container.querySelector('RecurringRunList') as any)._loadRecurringRuns({});
     expect(props.onError).not.toHaveBeenCalled();
-    expect(tree).toMatchInlineSnapshot(`
+    expect(container.firstChild).toMatchInlineSnapshot(`
       <div>
         <CustomTable
           columns={
@@ -625,7 +631,7 @@ describe('RecurringRunList', () => {
     tree = shallow(<RecurringRunList {...props} />);
     await (tree.instance() as RecurringRunListTest)._loadRecurringRuns({});
     expect(props.onError).not.toHaveBeenCalled();
-    expect(tree).toMatchInlineSnapshot(`
+    expect(container.firstChild).toMatchInlineSnapshot(`
       <div>
         <CustomTable
           columns={
@@ -695,7 +701,7 @@ describe('RecurringRunList', () => {
     tree = shallow(<RecurringRunList {...props} />);
     await (tree.instance() as RecurringRunListTest)._loadRecurringRuns({});
     expect(props.onError).not.toHaveBeenCalled();
-    expect(tree).toMatchInlineSnapshot(`
+    expect(container.firstChild).toMatchInlineSnapshot(`
       <div>
         <CustomTable
           columns={

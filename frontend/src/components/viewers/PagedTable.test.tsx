@@ -15,19 +15,19 @@
  */
 
 import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import PagedTable from './PagedTable';
 import { PlotType } from './Viewer';
 
 describe('PagedTable', () => {
   it('does not break on no config', () => {
-    const tree = shallow(<PagedTable configs={[]} />);
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<PagedTable configs={[]} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('does not break on empty data', () => {
-    const tree = shallow(<PagedTable configs={[{ data: [], labels: [], type: PlotType.TABLE }]} />);
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<PagedTable configs={[{ data: [], labels: [], type: PlotType.TABLE }]} />);
+    expect(container).toMatchSnapshot();
   });
 
   const data = [
@@ -37,37 +37,30 @@ describe('PagedTable', () => {
   const labels = ['field1', 'field2', 'field3'];
 
   it('renders simple data', () => {
-    const tree = shallow(<PagedTable configs={[{ data, labels, type: PlotType.TABLE }]} />);
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<PagedTable configs={[{ data, labels, type: PlotType.TABLE }]} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('renders simple data without labels', () => {
-    const tree = shallow(<PagedTable configs={[{ data, labels: [], type: PlotType.TABLE }]} />);
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<PagedTable configs={[{ data, labels: [], type: PlotType.TABLE }]} />);
+    expect(container).toMatchSnapshot();
   });
 
   it('sorts on first column descending', () => {
-    const tree = shallow(<PagedTable configs={[{ data, labels, type: PlotType.TABLE }]} />);
-    tree
-      .find('WithStyles(TableSortLabel)')
-      .at(0)
-      .simulate('click');
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<PagedTable configs={[{ data, labels, type: PlotType.TABLE }]} />);
+    const sortButton = screen.getAllByRole('button')[0];
+    fireEvent.click(sortButton);
+    expect(container).toMatchSnapshot();
   });
 
   it('sorts on first column ascending', () => {
-    const tree = shallow(<PagedTable configs={[{ data, labels, type: PlotType.TABLE }]} />);
+    const { container } = render(<PagedTable configs={[{ data, labels, type: PlotType.TABLE }]} />);
+    const sortButton = screen.getAllByRole('button')[0];
     // Once for descending
-    tree
-      .find('WithStyles(TableSortLabel)')
-      .at(0)
-      .simulate('click');
+    fireEvent.click(sortButton);
     // Once for ascending
-    tree
-      .find('WithStyles(TableSortLabel)')
-      .at(0)
-      .simulate('click');
-    expect(tree).toMatchSnapshot();
+    fireEvent.click(sortButton);
+    expect(container).toMatchSnapshot();
   });
 
   it('returns a user friendly display name', () => {

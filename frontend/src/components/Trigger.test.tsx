@@ -16,7 +16,6 @@
 
 import * as React from 'react';
 import Trigger from './Trigger';
-import { shallow } from 'enzyme';
 import { TriggerType, PeriodicInterval } from '../lib/TriggerUtils';
 import { fireEvent, render, screen } from '@testing-library/react';
 
@@ -58,8 +57,8 @@ describe('Trigger', () => {
   const oneWeekLater = new Date(2018, 11, 28, 7, 53);
 
   it('renders periodic schedule controls for initial render', () => {
-    const tree = shallow(<Trigger />);
-    expect(tree).toMatchSnapshot();
+    const { container } = render(<Trigger />);
+    expect(container).toMatchSnapshot();
   });
 
   it('renders periodic schedule controls if the trigger type is CRON', () => {
@@ -260,15 +259,13 @@ describe('Trigger', () => {
       (tree.instance() as Trigger).handleChange('startDate')({
         target: { value: 'this_is_not_valid_date_format' },
       });
-      var messageBox = tree.find({ 'data-testid': 'startTimeMessage' });
-      expect(messageBox.text()).toEqual("Invalid start date or time, start time won't be set");
+      expect(screen.getByTestId('startTimeMessage')).toHaveTextContent("Invalid start date or time, start time won't be set");
 
       // Message is removed if the format is correct.
       (tree.instance() as Trigger).handleChange('startDate')({
         target: { value: '2021-01-01' },
       });
-      messageBox = tree.find({ 'data-testid': 'startTimeMessage' });
-      expect(messageBox.text()).toEqual('');
+      expect(screen.getByTestId('startTimeMessage')).toHaveTextContent('');
     });
 
     it('Hide invalid start date/time format message if start time checkbox is not selected.', () => {
@@ -285,15 +282,13 @@ describe('Trigger', () => {
       (tree.instance() as Trigger).handleChange('startDate')({
         target: { value: 'this_is_not_valid_date_format' },
       });
-      var messageBox = tree.find({ 'data-testid': 'startTimeMessage' });
-      expect(messageBox.text()).toEqual("Invalid start date or time, start time won't be set");
+      expect(screen.getByTestId('startTimeMessage')).toHaveTextContent("Invalid start date or time, start time won't be set");
 
       // Message is removed if checkbox is not selected.
       (tree.instance() as Trigger).handleChange('hasStartDate')({
         target: { type: 'checkbox', checked: false },
       });
-      messageBox = tree.find({ 'data-testid': 'startTimeMessage' });
-      expect(messageBox.text()).toEqual('');
+      expect(screen.getByTestId('startTimeMessage')).toHaveTextContent('');
     });
 
     it('Show invalid end date/time format message if date has wrong format.', () => {
@@ -310,15 +305,13 @@ describe('Trigger', () => {
       (tree.instance() as Trigger).handleChange('endTime')({
         target: { value: 'this_is_not_valid_time_format' },
       });
-      var messageBox = tree.find({ 'data-testid': 'endTimeMessage' });
-      expect(messageBox.text()).toEqual("Invalid end date or time, end time won't be set");
+      expect(screen.getByTestId('endTimeMessage')).toHaveTextContent("Invalid end date or time, end time won't be set");
 
       // Message is removed if the format is correct.
       (tree.instance() as Trigger).handleChange('endTime')({
         target: { value: '11:22' },
       });
-      messageBox = tree.find({ 'data-testid': 'endTimeMessage' });
-      expect(messageBox.text()).toEqual('');
+      expect(screen.getByTestId('endTimeMessage')).toHaveTextContent('');
     });
 
     it('Hide invalid end date/time format message if start time checkbox is not selected.', () => {
@@ -335,15 +328,13 @@ describe('Trigger', () => {
       (tree.instance() as Trigger).handleChange('endTime')({
         target: { value: 'this_is_not_valid_date_format' },
       });
-      var messageBox = tree.find({ 'data-testid': 'endTimeMessage' });
-      expect(messageBox.text()).toEqual("Invalid end date or time, end time won't be set");
+      expect(screen.getByTestId('endTimeMessage')).toHaveTextContent("Invalid end date or time, end time won't be set");
 
       // Message is removed if checkbox is not selected.
       (tree.instance() as Trigger).handleChange('hasEndDate')({
         target: { type: 'checkbox', checked: false },
       });
-      messageBox = tree.find({ 'data-testid': 'endTimeMessage' });
-      expect(messageBox.text()).toEqual('');
+      expect(screen.getByTestId('endTimeMessage')).toHaveTextContent('');
     });
 
     it('builds trigger with a weekly interval', () => {
@@ -424,7 +415,7 @@ describe('Trigger', () => {
     it('inits with cloned initial props', () => {
       const spy = jest.fn();
       const startTime = new Date('2020-01-01T23:53:00.000Z');
-      shallow(
+      render(
         <Trigger
           onChange={spy}
           initialProps={{

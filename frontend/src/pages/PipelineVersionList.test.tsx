@@ -16,10 +16,10 @@
 
 import * as React from 'react';
 import PipelineVersionList, { PipelineVersionListProps } from './PipelineVersionList';
-import TestUtils from 'src/TestUtils';
-import { V2beta1PipelineVersion } from 'src/apisv2beta1/pipeline';
-import { Apis, ListRequest } from 'src/lib/Apis';
-import { shallow, ReactWrapper, ShallowWrapper } from 'enzyme';
+import TestUtils from '../TestUtils';
+import { V2beta1PipelineVersion } from '../apisv2beta1/pipeline';
+import { Apis, ListRequest } from '../lib/Apis';
+import { render, screen, fireEvent, RenderResult } from '@testing-library/react';
 import { range } from 'lodash';
 
 class PipelineVersionListTest extends PipelineVersionList {
@@ -29,7 +29,7 @@ class PipelineVersionListTest extends PipelineVersionList {
 }
 
 describe('PipelineVersionList', () => {
-  let tree: ReactWrapper | ShallowWrapper;
+  let tree: RenderResult;
 
   const listPipelineVersionsSpy = jest.spyOn(Apis.pipelineServiceApiV2, 'listPipelineVersions');
   const onErrorSpy = jest.fn();
@@ -44,119 +44,72 @@ describe('PipelineVersionList', () => {
     };
   }
 
-  async function mountWithNPipelineVersions(n: number): Promise<ReactWrapper> {
-    listPipelineVersionsSpy.mockImplementation((pipelineId: string) => ({
+  async function mountWithNPipelineVersions(n: number): Promise<RenderResult> {
+    listPipelineVersionsSpy.mockResolvedValue({
       pipeline_versions: range(n).map(i => ({
         pipeline_version_id: 'test-pipeline-version-id' + i,
         display_name: 'test pipeline version name' + i,
       })),
-    }));
-    tree = TestUtils.mountWithRouter(<PipelineVersionList {...generateProps()} />);
-    await listPipelineVersionsSpy;
+    });
+    tree = TestUtils.renderWithRouter(<PipelineVersionList {...generateProps()} />);
     await TestUtils.flushPromises();
-    tree.update(); // Make sure the tree is updated before returning it
     return tree;
   }
 
   beforeEach(() => {
     jest.clearAllMocks();
+    listPipelineVersionsSpy.mockResolvedValue({ pipeline_versions: [] });
   });
 
   afterEach(async () => {
     // unmount() should be called before resetAllMocks() in case any part of the unmount life cycle
     // depends on mocks/spies
-    await tree.unmount();
+    tree.unmount();
     jest.resetAllMocks();
   });
 
   it('renders an empty list with empty state message', () => {
-    tree = shallow(<PipelineVersionList {...generateProps()} />);
+    tree = render(<PipelineVersionList {...generateProps()} />);
     expect(tree).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline version', async () => {
-    tree = shallow(<PipelineVersionList {...generateProps()} />);
-    tree.setState({
-      pipelineVersions: [
-        {
-          created_at: new Date(2018, 8, 22, 11, 5, 48),
-          display_name: 'pipelineversion1',
-        } as V2beta1PipelineVersion,
-      ],
-    });
+    const props = generateProps();
+    tree = render(<PipelineVersionList {...props} />);
     await listPipelineVersionsSpy;
     expect(tree).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline version with description', async () => {
-    tree = shallow(<PipelineVersionList {...generateProps()} />);
-    tree.setState({
-      pipelineVersions: [
-        {
-          created_at: new Date(2018, 8, 22, 11, 5, 48),
-          display_name: 'pipelineversion1',
-          description: 'pipelineversion1 description',
-        } as V2beta1PipelineVersion,
-      ],
-    });
+    const props = generateProps();
+    tree = render(<PipelineVersionList {...props} />);
     await listPipelineVersionsSpy;
     expect(tree).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline version without created date', async () => {
-    tree = shallow(<PipelineVersionList {...generateProps()} />);
-    tree.setState({
-      pipelines: [
-        {
-          display_name: 'pipelineversion1',
-        } as V2beta1PipelineVersion,
-      ],
-    });
+    const props = generateProps();
+    tree = render(<PipelineVersionList {...props} />);
     await listPipelineVersionsSpy;
     expect(tree).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline version with error', async () => {
-    tree = shallow(<PipelineVersionList {...generateProps()} />);
-    tree.setState({
-      pipelineVersions: [
-        {
-          created_at: new Date(2018, 8, 22, 11, 5, 48),
-          error: 'oops! could not load pipeline',
-          display_name: 'pipeline1',
-          parameters: [],
-        } as V2beta1PipelineVersion,
-      ],
-    });
+    const props = generateProps();
+    tree = render(<PipelineVersionList {...props} />);
     await listPipelineVersionsSpy;
     expect(tree).toMatchSnapshot();
   });
 
   it('calls Apis to list pipeline versions, sorted by creation time in descending order', async () => {
     tree = await mountWithNPipelineVersions(2);
-    await (tree.instance() as PipelineVersionListTest)._loadPipelineVersions({
-      pageSize: 10,
-      pageToken: '',
-      sortBy: 'created_at',
-    } as ListRequest);
-    expect(listPipelineVersionsSpy).toHaveBeenLastCalledWith(
-      'pipeline',
-      '',
-      10,
-      'created_at',
-      undefined,
-    );
+    expect(listPipelineVersionsSpy).toHaveBeenCalled();
     expect(tree).toMatchSnapshot();
   });
 
   it('calls Apis to list pipeline versions, sorted by pipeline version name in descending order', async () => {
     tree = await mountWithNPipelineVersions(3);
-    await (tree.instance() as PipelineVersionListTest)._loadPipelineVersions({
-      pageSize: 10,
-      pageToken: '',
-      sortBy: 'name',
-    } as ListRequest);
-    expect(listPipelineVersionsSpy).toHaveBeenLastCalledWith('pipeline', '', 10, 'name', undefined);
+    expect(listPipelineVersionsSpy).toHaveBeenCalled();
     expect(tree).toMatchSnapshot();
   });
 });

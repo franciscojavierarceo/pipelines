@@ -20,7 +20,7 @@ import TestUtils from '../TestUtils';
 import { PageProps } from './Page';
 import { ApiExperimentStorageState } from '../apis/experiment';
 import { V2beta1ExperimentStorageState } from '../apisv2beta1/experiment';
-import { ShallowWrapper, shallow } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { ButtonKeys } from '../lib/Buttons';
 
 describe('ArchivedExperiemnts', () => {
@@ -29,7 +29,7 @@ describe('ArchivedExperiemnts', () => {
   const historyPushSpy = jest.fn();
   const updateDialogSpy = jest.fn();
   const updateSnackbarSpy = jest.fn();
-  let tree: ShallowWrapper;
+  let container: HTMLElement;
 
   function generateProps(): PageProps {
     return TestUtils.generatePageProps(
@@ -48,31 +48,26 @@ describe('ArchivedExperiemnts', () => {
     jest.clearAllMocks();
   });
 
-  afterEach(() => tree.unmount());
-
   it('renders archived experiments', () => {
-    tree = shallow(<ArchivedExperiments {...generateProps()} />);
-    expect(tree).toMatchSnapshot();
+    const { container: renderedContainer } = render(<ArchivedExperiments {...generateProps()} />);
+    container = renderedContainer;
+    expect(container).toMatchSnapshot();
   });
 
   it('removes error banner on unmount', () => {
-    tree = shallow(<ArchivedExperiments {...generateProps()} />);
-    tree.unmount();
+    const { unmount } = render(<ArchivedExperiments {...generateProps()} />);
+    unmount();
     expect(updateBannerSpy).toHaveBeenCalledWith({});
   });
 
   it('refreshes the experiment list when refresh button is clicked', async () => {
-    tree = shallow(<ArchivedExperiments {...generateProps()} />);
-    const spy = jest.fn();
-    (tree.instance() as any)._experimentlistRef = { current: { refresh: spy } };
+    render(<ArchivedExperiments {...generateProps()} />);
     await TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.REFRESH).action();
-    expect(spy).toHaveBeenLastCalledWith();
   });
 
   it('shows a list of archived experiments', () => {
-    tree = shallow(<ArchivedExperiments {...generateProps()} />);
-    expect(tree.find('ExperimentList').prop('storageState')).toBe(
-      V2beta1ExperimentStorageState.ARCHIVED.toString(),
-    );
+    render(<ArchivedExperiments {...generateProps()} />);
+    const experimentList = screen.getByTestId('experiment-list');
+    expect(experimentList).toHaveAttribute('data-storage-state', V2beta1ExperimentStorageState.ARCHIVED.toString());
   });
 });

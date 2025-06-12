@@ -18,14 +18,13 @@
 // Because this is test utils.
 
 import 'src/build/tailwind.output.css';
-import { mount, ReactWrapper } from 'enzyme';
+import { render, RenderResult } from '@testing-library/react';
 import { format } from 'prettier';
 import { object } from 'prop-types';
 import * as React from 'react';
 import { QueryClient } from 'react-query';
 import { match } from 'react-router';
-// @ts-ignore
-import createRouterContext from 'react-router-test-context';
+import { MemoryRouter } from 'react-router-dom';
 import snapshotDiff from 'snapshot-diff';
 import { ToolbarActionConfig } from './components/Toolbar';
 import { Feature } from './features';
@@ -34,16 +33,15 @@ import { Page, PageProps } from './pages/Page';
 
 export default class TestUtils {
   /**
-   * Mounts the given component with a fake router and returns the mounted tree
+   * Renders the given component with a fake router and returns the render result
    */
   // tslint:disable-next-line:variable-name
-  public static mountWithRouter(component: React.ReactElement<any>): ReactWrapper {
-    const childContextTypes = {
-      router: object,
-    };
-    const context = createRouterContext();
-    const tree = mount(component, { context, childContextTypes });
-    return tree;
+  public static renderWithRouter(component: React.ReactElement<any>): RenderResult {
+    return render(
+      <MemoryRouter>
+        {component}
+      </MemoryRouter>
+    );
   }
 
   /**

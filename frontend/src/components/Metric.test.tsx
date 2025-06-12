@@ -16,11 +16,11 @@
 
 import * as React from 'react';
 import Metric from './Metric';
-import { ReactWrapper, ShallowWrapper, shallow } from 'enzyme';
+import { render, RenderResult } from '@testing-library/react';
 import { RunMetricFormat } from '../apis/run';
 
 describe('Metric', () => {
-  let tree: ShallowWrapper | ReactWrapper;
+  let renderResult: RenderResult;
 
   const onErrorSpy = jest.fn();
 
@@ -29,82 +29,82 @@ describe('Metric', () => {
   });
 
   afterEach(async () => {
-    // unmount() should be called before resetAllMocks() in case any part of the unmount life cycle
+    // cleanup() should be called before resetAllMocks() in case any part of the cleanup life cycle
     // depends on mocks/spies
-    if (tree) {
-      await tree.unmount();
+    if (renderResult) {
+      renderResult.unmount();
     }
     jest.resetAllMocks();
   });
 
   it('renders an empty metric when there is no metric', () => {
-    tree = shallow(<Metric />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<Metric />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders an empty metric when metric has no value', () => {
-    tree = shallow(<Metric metric={{}} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<Metric metric={{}} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders a metric when metric has value and percentage format', () => {
-    tree = shallow(<Metric metric={{ format: RunMetricFormat.PERCENTAGE, number_value: 0.54 }} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<Metric metric={{ format: RunMetricFormat.PERCENTAGE, number_value: 0.54 }} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders an empty metric when metric has no metadata and unspecified format', () => {
-    tree = shallow(<Metric metric={{ format: RunMetricFormat.UNSPECIFIED, number_value: 0.54 }} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<Metric metric={{ format: RunMetricFormat.UNSPECIFIED, number_value: 0.54 }} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders an empty metric when metric has no metadata and raw format', () => {
-    tree = shallow(<Metric metric={{ format: RunMetricFormat.RAW, number_value: 0.54 }} />);
-    expect(tree).toMatchSnapshot();
+    renderResult = render(<Metric metric={{ format: RunMetricFormat.RAW, number_value: 0.54 }} />);
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders a metric when metric has max and min value of 0', () => {
-    tree = shallow(
+    renderResult = render(
       <Metric
         metadata={{ name: 'some metric', count: 1, maxValue: 0, minValue: 0 }}
         metric={{ format: RunMetricFormat.RAW, number_value: 0.54 }}
       />,
     );
-    expect(tree).toMatchSnapshot();
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders a metric and does not log an error when metric is between max and min value', () => {
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-    tree = shallow(
+    renderResult = render(
       <Metric
         metadata={{ name: 'some metric', count: 1, maxValue: 1, minValue: 0 }}
         metric={{ format: RunMetricFormat.RAW, number_value: 0.54 }}
       />,
     );
     expect(consoleSpy).toHaveBeenCalledTimes(0);
-    expect(tree).toMatchSnapshot();
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders a metric and logs an error when metric has value less than min value', () => {
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-    tree = shallow(
+    renderResult = render(
       <Metric
         metadata={{ name: 'some metric', count: 1, maxValue: 1, minValue: 0 }}
         metric={{ format: RunMetricFormat.RAW, number_value: -0.54 }}
       />,
     );
     expect(consoleSpy).toHaveBeenCalled();
-    expect(tree).toMatchSnapshot();
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders a metric and logs an error when metric has value greater than max value', () => {
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-    tree = shallow(
+    renderResult = render(
       <Metric
         metadata={{ name: 'some metric', count: 1, maxValue: 1, minValue: 0 }}
         metric={{ format: RunMetricFormat.RAW, number_value: 2 }}
       />,
     );
     expect(consoleSpy).toHaveBeenCalled();
-    expect(tree).toMatchSnapshot();
+    expect(renderResult.container).toMatchSnapshot();
   });
 });

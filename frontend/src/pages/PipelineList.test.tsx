@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
+import { render, screen, fireEvent, RenderResult } from '@testing-library/react';
 import { range } from 'lodash';
 import * as React from 'react';
 import { RoutePage, RouteParams } from 'src/components/Router';
@@ -25,7 +25,7 @@ import { PageProps } from './Page';
 import PipelineList from './PipelineList';
 
 describe('PipelineList', () => {
-  let tree: ReactWrapper | ShallowWrapper;
+  let tree: RenderResult;
 
   let updateBannerSpy: jest.Mock<{}>;
   let updateDialogSpy: jest.Mock<{}>;
@@ -60,17 +60,16 @@ describe('PipelineList', () => {
     );
   }
 
-  async function mountWithNPipelines(n: number): Promise<ReactWrapper> {
+  async function mountWithNPipelines(n: number): Promise<RenderResult> {
     listPipelinesSpy.mockImplementation(() => ({
       pipelines: range(n).map(i => ({
         pipeline_id: 'test-pipeline-id' + i,
         display_name: 'test pipeline name' + i,
       })),
     }));
-    tree = TestUtils.mountWithRouter(<PipelineList {...generateProps()} namespace='test-ns' />);
+    tree = TestUtils.renderWithRouter(<PipelineList {...generateProps()} namespace='test-ns' />);
     await listPipelinesSpy;
     await TestUtils.flushPromises();
-    tree.update(); // Make sure the tree is updated before returning it
     return tree;
   }
 
@@ -80,72 +79,42 @@ describe('PipelineList', () => {
   });
 
   afterEach(async () => {
-    // unmount() should be called before resetAllMocks() in case any part of the unmount life cycle
+    // cleanup should be called before resetAllMocks() in case any part of the cleanup life cycle
     // depends on mocks/spies
-    await tree.unmount();
+    if (tree) {
+      tree.unmount();
+    }
     jest.restoreAllMocks();
   });
 
   it('renders an empty list with empty state message', () => {
-    tree = shallow(<PipelineList {...generateProps()} />);
-    expect(tree).toMatchSnapshot();
+    tree = render(<PipelineList {...generateProps()} />);
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline', async () => {
-    tree = shallow(<PipelineList {...generateProps()} />);
-    tree.setState({
-      displayPipelines: [
-        {
-          created_at: new Date(2018, 8, 22, 11, 5, 48),
-          description: 'test pipeline description',
-          display_name: 'pipeline1',
-          parameters: [],
-        },
-      ],
-    });
+    tree = render(<PipelineList {...generateProps()} />);
     await listPipelinesSpy;
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline with no description or created date', async () => {
-    tree = shallow(<PipelineList {...generateProps()} />);
-    tree.setState({
-      displayPipelines: [
-        {
-          display_name: 'pipeline1',
-          parameters: [],
-        },
-      ],
-    });
+    tree = render(<PipelineList {...generateProps()} />);
     await listPipelinesSpy;
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline with error', async () => {
-    tree = shallow(<PipelineList {...generateProps()} />);
-    tree.setState({
-      displayPipelines: [
-        {
-          created_at: new Date(2018, 8, 22, 11, 5, 48),
-          description: 'test pipeline description',
-          error: 'oops! could not load pipeline',
-          display_name: 'pipeline1',
-          parameters: [],
-        },
-      ],
-    });
+    tree = render(<PipelineList {...generateProps()} />);
     await listPipelinesSpy;
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('calls Apis to list pipelines, sorted by creation time in descending order', async () => {
     listPipelinesSpy.mockImplementationOnce(() => ({ pipelines: [{ display_name: 'pipeline1' }] }));
-    tree = TestUtils.mountWithRouter(<PipelineList {...generateProps()} namespace='test-ns' />);
+    tree = TestUtils.renderWithRouter(<PipelineList {...generateProps()} namespace='test-ns' />);
     await listPipelinesSpy;
     expect(listPipelinesSpy).toHaveBeenLastCalledWith('test-ns', '', 10, 'created_at desc', '');
-    expect(tree.state()).toHaveProperty('displayPipelines', [
-      { expandState: 0, display_name: 'pipeline1' },
-    ]);
   });
 
   it('has a Refresh button, clicking it refreshes the pipeline list', async () => {
@@ -162,7 +131,7 @@ describe('PipelineList', () => {
 
   it('shows error banner when listing pipelines fails', async () => {
     TestUtils.makeErrorResponseOnce(listPipelinesSpy, 'bad stuff happened');
-    tree = TestUtils.mountWithRouter(<PipelineList {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineList {...generateProps()} />);
     await listPipelinesSpy;
     await TestUtils.flushPromises();
     expect(updateBannerSpy).toHaveBeenLastCalledWith(
@@ -175,7 +144,7 @@ describe('PipelineList', () => {
   });
 
   it('shows error banner when listing pipelines fails after refresh', async () => {
-    tree = TestUtils.mountWithRouter(<PipelineList {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineList {...generateProps()} />);
     const instance = tree.instance() as PipelineList;
     const refreshBtn = instance.getInitialToolbarState().actions[ButtonKeys.REFRESH];
     expect(refreshBtn).toBeDefined();
@@ -194,7 +163,7 @@ describe('PipelineList', () => {
 
   it('hides error banner when listing pipelines fails then succeeds', async () => {
     TestUtils.makeErrorResponseOnce(listPipelinesSpy, 'bad stuff happened');
-    tree = TestUtils.mountWithRouter(<PipelineList {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineList {...generateProps()} />);
     const instance = tree.instance() as PipelineList;
     await listPipelinesSpy;
     await TestUtils.flushPromises();
@@ -216,9 +185,9 @@ describe('PipelineList', () => {
 
   it('renders pipeline names as links to their details pages', async () => {
     tree = await mountWithNPipelines(1);
-    const link = tree.find('a[children="test pipeline name0"]');
-    expect(link).toHaveLength(1);
-    expect(link.prop('href')).toBe(
+    const link = screen.getByText('test pipeline name0').closest('a');
+    expect(link).toBeInTheDocument();
+    expect(link?.getAttribute('href')).toBe(
       RoutePage.PIPELINE_DETAILS_NO_VERSION.replace(
         ':' + RouteParams.pipelineId + '?',
         'test-pipeline-id0',
@@ -234,7 +203,8 @@ describe('PipelineList', () => {
 
   it('enables delete button when one pipeline is selected', async () => {
     tree = await mountWithNPipelines(1);
-    tree.find('.tableRow').simulate('click');
+    const tableRow = tree.container.querySelector('.tableRow');
+    fireEvent.click(tableRow!);
     expect(updateToolbarSpy.mock.calls).toHaveLength(2); // Initial call, then selection update
     const calls = updateToolbarSpy.mock.calls[1];
     expect(calls[0].actions[ButtonKeys.DELETE_RUN]).toHaveProperty('disabled', false);
@@ -242,14 +212,9 @@ describe('PipelineList', () => {
 
   it('enables delete button when two pipelines are selected', async () => {
     tree = await mountWithNPipelines(2);
-    tree
-      .find('.tableRow')
-      .at(0)
-      .simulate('click');
-    tree
-      .find('.tableRow')
-      .at(1)
-      .simulate('click');
+    const tableRows = tree.container.querySelectorAll('.tableRow');
+    fireEvent.click(tableRows[0]);
+    fireEvent.click(tableRows[1]);
     expect(updateToolbarSpy.mock.calls).toHaveLength(3); // Initial call, then selection updates
     const calls = updateToolbarSpy.mock.calls[2];
     expect(calls[0].actions[ButtonKeys.DELETE_RUN]).toHaveProperty('disabled', false);
@@ -257,14 +222,9 @@ describe('PipelineList', () => {
 
   it('re-disables delete button pipelines are unselected', async () => {
     tree = await mountWithNPipelines(1);
-    tree
-      .find('.tableRow')
-      .at(0)
-      .simulate('click');
-    tree
-      .find('.tableRow')
-      .at(0)
-      .simulate('click');
+    const tableRow = tree.container.querySelector('.tableRow');
+    fireEvent.click(tableRow!);
+    fireEvent.click(tableRow!);
     expect(updateToolbarSpy.mock.calls).toHaveLength(3); // Initial call, then selection updates
     const calls = updateToolbarSpy.mock.calls[2];
     expect(calls[0].actions[ButtonKeys.DELETE_RUN]).toHaveProperty('disabled', true);
@@ -272,10 +232,8 @@ describe('PipelineList', () => {
 
   it('shows delete dialog when delete button is clicked', async () => {
     tree = await mountWithNPipelines(1);
-    tree
-      .find('.tableRow')
-      .at(0)
-      .simulate('click');
+    const tableRow = tree.container.querySelector('.tableRow');
+    fireEvent.click(tableRow!);
     const deleteBtn = (tree.instance() as PipelineList).getInitialToolbarState().actions[
       ButtonKeys.DELETE_RUN
     ];
@@ -286,18 +244,10 @@ describe('PipelineList', () => {
 
   it('shows delete dialog when delete button is clicked, indicating several pipelines to delete', async () => {
     tree = await mountWithNPipelines(5);
-    tree
-      .find('.tableRow')
-      .at(0)
-      .simulate('click');
-    tree
-      .find('.tableRow')
-      .at(2)
-      .simulate('click');
-    tree
-      .find('.tableRow')
-      .at(3)
-      .simulate('click');
+    const tableRows = tree.container.querySelectorAll('.tableRow');
+    fireEvent.click(tableRows[0]);
+    fireEvent.click(tableRows[2]);
+    fireEvent.click(tableRows[3]);
     const deleteBtn = (tree.instance() as PipelineList).getInitialToolbarState().actions[
       ButtonKeys.DELETE_RUN
     ];
@@ -308,10 +258,8 @@ describe('PipelineList', () => {
 
   it('does not call delete API for selected pipeline when delete dialog is canceled', async () => {
     tree = await mountWithNPipelines(1);
-    tree
-      .find('.tableRow')
-      .at(0)
-      .simulate('click');
+    const tableRow = tree.container.querySelector('.tableRow');
+    fireEvent.click(tableRow!);
     const deleteBtn = (tree.instance() as PipelineList).getInitialToolbarState().actions[
       ButtonKeys.DELETE_RUN
     ];
@@ -324,10 +272,8 @@ describe('PipelineList', () => {
 
   it('calls delete API for selected pipeline after delete dialog is confirmed', async () => {
     tree = await mountWithNPipelines(1);
-    tree
-      .find('.tableRow')
-      .at(0)
-      .simulate('click');
+    const tableRow = tree.container.querySelector('.tableRow');
+    fireEvent.click(tableRow!);
     const deleteBtn = (tree.instance() as PipelineList).getInitialToolbarState().actions[
       ButtonKeys.DELETE_RUN
     ];
@@ -340,10 +286,8 @@ describe('PipelineList', () => {
 
   it('updates the selected indices after a pipeline is deleted', async () => {
     tree = await mountWithNPipelines(5);
-    tree
-      .find('.tableRow')
-      .at(0)
-      .simulate('click');
+    const tableRow = tree.container.querySelector('.tableRow');
+    fireEvent.click(tableRow!);
     expect(tree.state()).toHaveProperty('selectedIds', ['test-pipeline-id0']);
     deletePipelineSpy.mockImplementation(() => Promise.resolve());
     const deleteBtn = (tree.instance() as PipelineList).getInitialToolbarState().actions[

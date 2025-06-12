@@ -17,7 +17,7 @@
 import * as React from 'react';
 import TestUtils from 'src/TestUtils';
 import { ListRequest, Apis } from 'src/lib/Apis';
-import { shallow, ReactWrapper, ShallowWrapper } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import RecurringRunsManager, { RecurringRunListProps } from './RecurringRunsManager';
 import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from 'src/apisv2beta1/recurringrun';
 
@@ -31,7 +31,7 @@ describe('RecurringRunsManager', () => {
     }
   }
 
-  let tree: ReactWrapper | ShallowWrapper;
+  let tree: any;
 
   const updateDialogSpy = jest.fn();
   const updateSnackbarSpy = jest.fn();
@@ -81,11 +81,27 @@ describe('RecurringRunsManager', () => {
     updateSnackbarSpy.mockReset();
   });
 
-  afterEach(() => tree.unmount());
+  afterEach(() => {
+    if (tree && tree.unmount) {
+      tree.unmount();
+    }
+  });
 
   it('calls API to load recurring runs', async () => {
-    tree = shallow(<TestRecurringRunsManager {...generateProps()} />);
-    await (tree.instance() as TestRecurringRunsManager)._loadRuns({});
+    let componentRef: TestRecurringRunsManager | null = null;
+    const TestComponent = React.forwardRef<TestRecurringRunsManager>((props, ref) => (
+      <TestRecurringRunsManager
+        {...props}
+        ref={(instance: TestRecurringRunsManager) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = render(<TestComponent {...generateProps()} />);
+    await componentRef!._loadRuns({});
     expect(listRecurringRunsSpy).toHaveBeenCalledTimes(1);
     expect(listRecurringRunsSpy).toHaveBeenLastCalledWith(
       undefined,
@@ -95,15 +111,27 @@ describe('RecurringRunsManager', () => {
       undefined,
       'test-experiment',
     );
-    expect(tree.state('runs')).toEqual(RECURRINGRUNS);
-    expect(tree).toMatchSnapshot();
+    expect(componentRef!.state.runs).toEqual(RECURRINGRUNS);
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('shows error dialog if listing fails', async () => {
     TestUtils.makeErrorResponseOnce(listRecurringRunsSpy, 'woops!');
     jest.spyOn(console, 'error').mockImplementation();
-    tree = shallow(<TestRecurringRunsManager {...generateProps()} />);
-    await (tree.instance() as TestRecurringRunsManager)._loadRuns({});
+    let componentRef: TestRecurringRunsManager | null = null;
+    const TestComponent = React.forwardRef<TestRecurringRunsManager>((props, ref) => (
+      <TestRecurringRunsManager
+        {...props}
+        ref={(instance: TestRecurringRunsManager) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = render(<TestComponent {...generateProps()} />);
+    await componentRef!._loadRuns({});
     expect(listRecurringRunsSpy).toHaveBeenCalledTimes(1);
     expect(updateDialogSpy).toHaveBeenLastCalledWith(
       expect.objectContaining({
@@ -111,7 +139,7 @@ describe('RecurringRunsManager', () => {
         title: 'Error retrieving recurring run configs',
       }),
     );
-    expect(tree.state('runs')).toEqual([]);
+    expect(componentRef!.state.runs).toEqual([]);
   });
 
   it('calls API to enable run', async () => {
@@ -169,10 +197,10 @@ describe('RecurringRunsManager', () => {
     await TestUtils.flushPromises();
     tree.update();
 
-    const enableBtn = tree.find('.tableRow Button').at(0);
+    const enableBtn = screen.getAllByRole('button')[0];
     expect(enableBtn).toMatchSnapshot();
 
-    enableBtn.simulate('click');
+    fireEvent.click(enableBtn);
     await TestUtils.flushPromises();
     expect(disableRecurringRunSpy).toHaveBeenCalledTimes(1);
     expect(disableRecurringRunSpy).toHaveBeenLastCalledWith(RECURRINGRUNS[0].recurring_run_id);
@@ -183,10 +211,10 @@ describe('RecurringRunsManager', () => {
     await TestUtils.flushPromises();
     tree.update();
 
-    const enableBtn = tree.find('.tableRow Button').at(1);
+    const enableBtn = screen.getAllByRole('button')[1];
     expect(enableBtn).toMatchSnapshot();
 
-    enableBtn.simulate('click');
+    fireEvent.click(enableBtn);
     await TestUtils.flushPromises();
     expect(enableRecurringRunSpy).toHaveBeenCalledTimes(1);
     expect(enableRecurringRunSpy).toHaveBeenLastCalledWith(RECURRINGRUNS[1].recurring_run_id);
@@ -197,10 +225,10 @@ describe('RecurringRunsManager', () => {
     await TestUtils.flushPromises();
     tree.update();
 
-    const enableBtn = tree.find('.tableRow Button').at(2);
+    const enableBtn = screen.getAllByRole('button')[2];
     expect(enableBtn).toMatchSnapshot();
 
-    enableBtn.simulate('click');
+    fireEvent.click(enableBtn);
     await TestUtils.flushPromises();
     expect(enableRecurringRunSpy).toHaveBeenCalledTimes(1);
     expect(enableRecurringRunSpy).toHaveBeenLastCalledWith(RECURRINGRUNS[2].recurring_run_id);
@@ -211,11 +239,11 @@ describe('RecurringRunsManager', () => {
     await TestUtils.flushPromises();
     tree.update();
 
-    const enableBtn = tree.find('.tableRow Button').at(0);
+    const enableBtn = screen.getAllByRole('button')[0];
     expect(enableBtn).toMatchSnapshot();
 
     expect(listRecurringRunsSpy).toHaveBeenCalledTimes(1);
-    enableBtn.simulate('click');
+    fireEvent.click(enableBtn);
     await TestUtils.flushPromises();
     expect(listRecurringRunsSpy).toHaveBeenCalledTimes(2);
   });

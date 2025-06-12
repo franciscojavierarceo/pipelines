@@ -14,9 +14,8 @@
  * limitations under the License.
  */
 import { Api } from 'src/mlmd/library';
-import { render } from '@testing-library/react';
 import * as dagre from 'dagre';
-import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import * as React from 'react';
 import { Router } from 'react-router-dom';
@@ -105,7 +104,7 @@ describe('RunDetails', () => {
   let warnSpy: any;
 
   let testRun: ApiRunDetail = {};
-  let tree: ShallowWrapper | ReactWrapper;
+  let tree: any;
 
   function generateProps(customProps?: CustomProps): RunDetailsInternalProps & PageProps {
     const pageProps: PageProps = {
@@ -201,7 +200,7 @@ describe('RunDetails', () => {
   });
 
   afterEach(async () => {
-    if (tree && tree.exists()) {
+    if (tree && tree.unmount) {
       // unmount() should be called before resetAllMocks() in case any part of the unmount life cycle
       // depends on mocks/spies
       await tree.unmount();
@@ -211,7 +210,7 @@ describe('RunDetails', () => {
   });
 
   it('shows success run status in page title', async () => {
-    tree = shallow(<RunDetails {...generateProps()} />);
+    tree = render(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
     const lastCall = updateToolbarSpy.mock.calls[2][0];
@@ -220,7 +219,7 @@ describe('RunDetails', () => {
 
   it('shows failure run status in page title', async () => {
     testRun.run!.status = 'Failed';
-    tree = shallow(<RunDetails {...generateProps()} />);
+    tree = render(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
     const lastCall = updateToolbarSpy.mock.calls[2][0];
@@ -228,11 +227,10 @@ describe('RunDetails', () => {
   });
 
   it('has a clone button, clicking it navigates to new run page', async () => {
-    tree = shallow(<RunDetails {...generateProps()} />);
+    tree = render(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
-    const instance = tree.instance() as RunDetails;
-    const cloneBtn = instance.getInitialToolbarState().actions[ButtonKeys.CLONE_RUN];
+    const cloneBtn = TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.CLONE_RUN);
     expect(cloneBtn).toBeDefined();
     await cloneBtn!.action();
     expect(historyPushSpy).toHaveBeenCalledTimes(1);
@@ -317,7 +315,7 @@ describe('RunDetails', () => {
   it('shows an error dialog when retry API fails', async () => {
     retryRunSpy.mockImplementation(() => Promise.reject('mocked error'));
 
-    tree = mount(<RunDetails {...generateProps()} />);
+    tree = render(<RunDetails {...generateProps()} />);
     await TestUtils.flushPromises();
     const instance = tree.instance() as RunDetails;
     const retryBtn = instance.getInitialToolbarState().actions[ButtonKeys.RETRY];
@@ -547,7 +545,7 @@ describe('RunDetails', () => {
     tree = shallow(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
-    tree.find('MD2Tabs').simulate('switch', 1);
+    fireEvent.click(screen.getAllByRole('tab')[1]);
     expect(tree.state('selectedTab')).toBe(1);
     await TestUtils.flushPromises();
     expect(tree).toMatchSnapshot();
@@ -564,7 +562,7 @@ describe('RunDetails', () => {
     tree = shallow(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
-    tree.find('MD2Tabs').simulate('switch', 1);
+    fireEvent.click(screen.getAllByRole('tab')[1]);
     expect(tree.state('selectedTab')).toBe(1);
     await TestUtils.flushPromises();
     expect(tree).toMatchSnapshot();
@@ -574,7 +572,7 @@ describe('RunDetails', () => {
     tree = shallow(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
-    tree.find('MD2Tabs').simulate('switch', 2);
+    fireEvent.click(screen.getAllByRole('tab')[2]);
     expect(tree.state('selectedTab')).toBe(2);
     expect(tree).toMatchSnapshot();
   });
@@ -608,7 +606,7 @@ describe('RunDetails', () => {
     tree = shallow(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
-    tree.find('MD2Tabs').simulate('switch', 2);
+    fireEvent.click(screen.getAllByRole('tab')[2]);
     expect(tree.state('selectedTab')).toBe(2);
     expect(tree).toMatchSnapshot();
   });
@@ -628,7 +626,7 @@ describe('RunDetails', () => {
     tree = shallow(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
-    tree.find('MD2Tabs').simulate('switch', 2);
+    fireEvent.click(screen.getAllByRole('tab')[2]);
     expect(tree.state('selectedTab')).toBe(2);
     expect(tree).toMatchSnapshot();
   });
@@ -644,7 +642,7 @@ describe('RunDetails', () => {
     tree = shallow(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
-    tree.find('MD2Tabs').simulate('switch', 2);
+    fireEvent.click(screen.getAllByRole('tab')[2]);
     expect(tree.state('selectedTab')).toBe(2);
     expect(tree).toMatchSnapshot();
   });
@@ -751,7 +749,7 @@ describe('RunDetails', () => {
 
     // Assert
     expect(tree.state('selectedNodeDetails')).toHaveProperty('id', 'node1');
-    expect(tree.find('MD2Tabs').length).toEqual(2); // Both Page Tab bar and Side Panel exist,
+    expect(screen.getAllByRole('tablist')).toHaveLength(2); // Both Page Tab bar and Side Panel exist,
   });
 
   it('shows clicked node message in side panel', async () => {
@@ -777,7 +775,7 @@ describe('RunDetails', () => {
       'phaseMessage',
       'This step is in ' + testRun.run!.status + ' state with this message: some test message',
     );
-    expect(tree.find('Banner')).toMatchInlineSnapshot(`
+    expect(screen.getByRole('banner')).toMatchInlineSnapshot(`
       <Banner
         message="This step is in Succeeded state with this message: some test message"
         mode="info"
@@ -848,10 +846,7 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    tree
-      .find('MD2Tabs')
-      .at(1)
-      .simulate('switch', STEP_TABS.INPUT_OUTPUT);
+    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.INPUT_OUTPUT]);
     await TestUtils.flushPromises();
     expect(tree.state('sidepanelSelectedTab')).toEqual(STEP_TABS.INPUT_OUTPUT);
     expect(tree).toMatchSnapshot();
@@ -866,10 +861,7 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    tree
-      .find('MD2Tabs')
-      .at(1)
-      .simulate('switch', STEP_TABS.VOLUMES);
+    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.VOLUMES]);
     expect(tree.state('sidepanelSelectedTab')).toEqual(STEP_TABS.VOLUMES);
     expect(tree).toMatchSnapshot();
   });
@@ -883,10 +875,7 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    tree
-      .find('MD2Tabs')
-      .at(1)
-      .simulate('switch', STEP_TABS.MANIFEST);
+    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.MANIFEST]);
     expect(tree.state('sidepanelSelectedTab')).toEqual(STEP_TABS.MANIFEST);
     expect(tree).toMatchSnapshot();
   });
@@ -902,7 +891,7 @@ describe('RunDetails', () => {
     clickGraphNode(tree, 'node1');
     await TestUtils.flushPromises();
     expect(tree.state('selectedNodeDetails')).toHaveProperty('id', 'node1');
-    tree.find('SidePanel').simulate('close');
+    fireEvent.click(screen.getByRole('button', { name: /close/i }));
     expect(tree.state('selectedNodeDetails')).toBeNull();
     await TestUtils.flushPromises();
     expect(tree).toMatchSnapshot();
@@ -917,10 +906,7 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    tree
-      .find('MD2Tabs')
-      .at(1)
-      .simulate('switch', STEP_TABS.LOGS);
+    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS]);
     expect(tree.state('selectedNodeDetails')).toHaveProperty('id', 'node1');
     expect(tree.state('sidepanelSelectedTab')).toEqual(STEP_TABS.LOGS);
 
@@ -944,10 +930,7 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    tree
-      .find('MD2Tabs')
-      .at(1)
-      .simulate('switch', STEP_TABS.LOGS);
+    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS]);
     expect(tree.state('selectedNodeDetails')).toHaveProperty('id', 'node1');
     expect(tree.state('sidepanelSelectedTab')).toEqual(STEP_TABS.LOGS);
 
@@ -966,10 +949,7 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    tree
-      .find('MD2Tabs')
-      .at(1)
-      .simulate('switch', STEP_TABS.LOGS);
+    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS]);
     expect(tree.state('selectedNodeDetails')).toHaveProperty('id', 'node1');
     expect(tree.state('sidepanelSelectedTab')).toEqual(STEP_TABS.LOGS);
     expect(updateToolbarSpy).toHaveBeenCalledTimes(3);
@@ -992,10 +972,7 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    tree
-      .find('MD2Tabs')
-      .at(1)
-      .simulate('switch', STEP_TABS.LOGS);
+    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS]);
     expect(tree.state('selectedNodeDetails')).toHaveProperty('phaseMessage', undefined);
 
     testRun.pipeline_runtime!.workflow_manifest = JSON.stringify({
@@ -1037,10 +1014,7 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    tree
-      .find('MD2Tabs')
-      .at(1)
-      .simulate('switch', STEP_TABS.LOGS);
+    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS]);
     expect(tree.state('selectedNodeDetails')).toHaveProperty(
       'phaseMessage',
       'This step is in Succeeded state with this message: some node message',
@@ -1194,7 +1168,7 @@ describe('RunDetails', () => {
         .simulate('switch', STEP_TABS.LOGS);
       await getPodLogsSpy;
       await TestUtils.flushPromises();
-      expect(tree.find(NODE_DETAILS_SELECTOR)).toMatchInlineSnapshot(`
+      expect(screen.getByTestId('run-details-node-details')).toMatchInlineSnapshot(`
         <div
           className="page"
           data-testid="run-details-node-details"
@@ -1285,7 +1259,7 @@ describe('RunDetails', () => {
         .simulate('switch', STEP_TABS.LOGS);
       await getPodLogsSpy;
       await TestUtils.flushPromises();
-      expect(tree.find(NODE_DETAILS_SELECTOR)).toMatchInlineSnapshot(`
+      expect(screen.getByTestId('run-details-node-details')).toMatchInlineSnapshot(`
         <div
           className="page"
           data-testid="run-details-node-details"
@@ -1340,7 +1314,7 @@ describe('RunDetails', () => {
         .simulate('switch', STEP_TABS.LOGS);
       await getPodLogsSpy;
       await TestUtils.flushPromises();
-      expect(tree.find('[data-testid="run-details-node-details"]')).toMatchInlineSnapshot(`
+      expect(screen.getByTestId('run-details-node-details')).toMatchInlineSnapshot(`
         <div
           className="page"
           data-testid="run-details-node-details"
@@ -1500,7 +1474,7 @@ describe('RunDetails', () => {
       await getPodInfoSpy;
       await TestUtils.flushPromises();
 
-      expect(tree.find(NODE_DETAILS_SELECTOR)).toMatchInlineSnapshot(`
+      expect(screen.getByTestId('run-details-node-details')).toMatchInlineSnapshot(`
         <div
           className="page"
           data-testid="run-details-node-details"
@@ -1536,7 +1510,7 @@ describe('RunDetails', () => {
         .simulate('switch', STEP_TABS.POD);
       await TestUtils.flushPromises();
 
-      expect(tree.find(NODE_DETAILS_SELECTOR)).toMatchInlineSnapshot(`
+      expect(screen.getByTestId('run-details-node-details')).toMatchInlineSnapshot(`
         <div
           className="page"
           data-testid="run-details-node-details"
@@ -1567,14 +1541,11 @@ describe('RunDetails', () => {
       await getRunSpy;
       await TestUtils.flushPromises();
       clickGraphNode(tree, 'node1');
-      tree
-        .find('MD2Tabs')
-        .at(1)
-        .simulate('switch', STEP_TABS.TASK_DETAILS);
+      fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.TASK_DETAILS]);
       await getRunSpy;
       await TestUtils.flushPromises();
 
-      expect(tree.find(NODE_DETAILS_SELECTOR)).toMatchInlineSnapshot(`
+      expect(screen.getByTestId('run-details-node-details')).toMatchInlineSnapshot(`
         <div
           className="page"
           data-testid="run-details-node-details"
@@ -1855,5 +1826,5 @@ describe('RunDetails', () => {
 
 function clickGraphNode(wrapper: ShallowWrapper, nodeId: string) {
   // TODO: use dom events instead
-  wrapper.find('GraphMock').simulate('click', nodeId);
+  fireEvent.click(screen.getByTestId('graph'));
 }

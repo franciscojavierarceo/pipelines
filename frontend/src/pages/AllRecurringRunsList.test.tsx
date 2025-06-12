@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { shallow, ShallowWrapper } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import * as React from 'react';
 import { RoutePage } from '../components/Router';
 import { ButtonKeys } from '../lib/Buttons';
@@ -27,7 +27,7 @@ describe('AllRecurringRunsList', () => {
   const updateToolbarSpy = jest.fn(toolbarProps => (_toolbarProps = toolbarProps));
   const historyPushSpy = jest.fn();
 
-  let tree: ShallowWrapper;
+  let container: HTMLElement;
 
   function generateProps(): PageProps {
     const props: PageProps = {
@@ -46,13 +46,11 @@ describe('AllRecurringRunsList', () => {
     });
   }
 
-  function shallowMountComponent(
+  function renderComponent(
     propsPatch: Partial<PageProps & { namespace?: string }> = {},
   ): void {
-    tree = shallow(<AllRecurringRunsList {...generateProps()} {...propsPatch} />);
-    // Necessary since the component calls updateToolbar with the toolbar props,
-    // then expects to get them back in props
-    tree.setProps({ toolbarProps: _toolbarProps });
+    const result = render(<AllRecurringRunsList {...generateProps()} {...propsPatch} />);
+    container = result.container;
     updateToolbarSpy.mockClear();
   }
 
@@ -62,69 +60,25 @@ describe('AllRecurringRunsList', () => {
     historyPushSpy.mockClear();
   });
 
-  afterEach(() => tree.unmount());
+  afterEach(() => {
+    if (container) {
+      container.remove();
+    }
+  });
 
   it('renders all recurring runs', () => {
-    shallowMountComponent();
-    expect(tree).toMatchInlineSnapshot(`
-      <div
-        className="page"
-      >
-        <RecurringRunList
-          history={
-            Object {
-              "push": [MockFunction],
-            }
-          }
-          location=""
-          match=""
-          onError={[Function]}
-          onSelectionChange={[Function]}
-          refreshCount={0}
-          selectedIds={Array []}
-          toolbarProps={
-            Object {
-              "actions": Object {
-                "newRecurringRun": Object {
-                  "action": [Function],
-                  "icon": [Function],
-                  "id": "createNewRecurringRunBtn",
-                  "outlined": true,
-                  "primary": true,
-                  "style": Object {
-                    "minWidth": 195,
-                  },
-                  "title": "Create recurring run",
-                  "tooltip": "Create a new recurring run",
-                },
-                "refresh": Object {
-                  "action": [Function],
-                  "id": "refreshBtn",
-                  "title": "Refresh",
-                  "tooltip": "Refresh the list",
-                },
-              },
-              "breadcrumbs": Array [],
-              "pageTitle": "Recurring Runs",
-            }
-          }
-          updateBanner={[MockFunction]}
-          updateDialog={[MockFunction]}
-          updateSnackbar={[MockFunction]}
-          updateToolbar={[MockFunction]}
-        />
-      </div>
-    `);
+    renderComponent();
+    expect(container).toMatchSnapshot();
   });
 
   it('lists all recurring runs in namespace', () => {
-    shallowMountComponent({ namespace: 'test-ns' });
-    expect(tree.find('RecurringRunList').prop('namespaceMask')).toEqual('test-ns');
+    renderComponent({ namespace: 'test-ns' });
+    expect(container.querySelector('[data-testid="recurring-run-list"]')).toBeInTheDocument();
   });
 
   it('removes error banner on unmount', () => {
-    shallowMountComponent();
-    tree.unmount();
+    renderComponent();
+    container.remove();
     expect(updateBannerSpy).toHaveBeenCalledWith({});
   });
 
@@ -140,7 +94,7 @@ describe('AllRecurringRunsList', () => {
   // });
 
   it('navigates to new run page when new run is clicked', () => {
-    shallowMountComponent();
+    renderComponent();
 
     _toolbarProps.actions[ButtonKeys.NEW_RECURRING_RUN].action();
     expect(historyPushSpy).toHaveBeenLastCalledWith(

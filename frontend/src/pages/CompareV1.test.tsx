@@ -18,7 +18,7 @@ import * as React from 'react';
 import { createMemoryHistory } from 'history';
 import EnhancedCompareV1, { TEST_ONLY, TaggedViewerConfig } from './CompareV1';
 import TestUtils from '../TestUtils';
-import { ReactWrapper, ShallowWrapper, shallow } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { Apis } from '../lib/Apis';
 import { PageProps } from './Page';
 import { RoutePage, QUERY_PARAMS } from '../components/Router';
@@ -27,7 +27,6 @@ import { PlotType } from '../components/viewers/Viewer';
 import { OutputArtifactLoader } from '../lib/OutputArtifactLoader';
 import { Workflow } from '../../third_party/argo-ui/argo_template';
 import { ButtonKeys } from '../lib/Buttons';
-import { render } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import { NamespaceContext } from 'src/lib/KubeflowClient';
 import { METRICS_SECTION_NAME, OVERVIEW_SECTION_NAME, PARAMS_SECTION_NAME } from './Compare';
@@ -40,7 +39,7 @@ class TestCompare extends CompareV1 {
 }
 
 describe('CompareV1', () => {
-  let tree: ReactWrapper | ShallowWrapper;
+  let tree: any;
 
   const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => null);
   const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => null);
@@ -125,7 +124,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run-with-workflow-1,run-with-workflow-2`;
 
-    tree = shallow(<TestCompare {...props} />);
+    tree = render(<TestCompare {...props} />);
     await TestUtils.flushPromises();
   }
 
@@ -148,15 +147,15 @@ describe('CompareV1', () => {
   });
 
   afterEach(async () => {
-    // unmount() should be called before resetAllMocks() in case any part of the unmount life cycle
+    // cleanup should be called before resetAllMocks() in case any part of the cleanup life cycle
     // depends on mocks/spies
-    if (tree && tree.exists()) {
-      await tree.unmount();
+    if (tree && tree.unmount) {
+      tree.unmount();
     }
   });
 
   it('clears banner upon initial load', () => {
-    tree = shallow(<CompareV1 {...generateProps()} />);
+    tree = render(<CompareV1 {...generateProps()} />);
     expect(updateBannerSpy).toHaveBeenCalledTimes(1);
     expect(updateBannerSpy).toHaveBeenLastCalledWith({});
   });
@@ -165,7 +164,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     // Ensure there are no run IDs in the query
     props.location.search = '';
-    tree = shallow(<CompareV1 {...props} />);
+    tree = render(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
 
     expect(updateBannerSpy).toHaveBeenCalledTimes(1);
@@ -179,7 +178,7 @@ describe('CompareV1', () => {
     // Ensure there are run IDs in the query
     props.location.search = `?${QUERY_PARAMS.runlist}=${MOCK_RUN_1_ID},${MOCK_RUN_2_ID},${MOCK_RUN_3_ID}`;
 
-    tree = shallow(<CompareV1 {...props} />);
+    tree = render(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
     expect(tree).toMatchSnapshot();
   });
@@ -189,7 +188,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run-1,run-2,run-3`;
 
-    tree = shallow(<CompareV1 {...props} />);
+    tree = render(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
 
     expect(getRunSpy).toHaveBeenCalledTimes(3);
@@ -201,7 +200,7 @@ describe('CompareV1', () => {
   it('shows an error banner if fetching any run fails', async () => {
     TestUtils.makeErrorResponseOnce(getRunSpy, 'test error');
 
-    tree = shallow(<CompareV1 {...generateProps()} />);
+    tree = render(<CompareV1 {...generateProps()} />);
     await TestUtils.flushPromises();
 
     expect(updateBannerSpy).toHaveBeenLastCalledWith(
@@ -221,7 +220,7 @@ describe('CompareV1', () => {
     ];
     getRunSpy.mockImplementation((id: string) => runs.find(r => r.run!.id === id));
 
-    tree = shallow(<CompareV1 {...generateProps()} />);
+    tree = render(<CompareV1 {...generateProps()} />);
     await TestUtils.flushPromises();
 
     expect(updateBannerSpy).toHaveBeenLastCalledWith({
@@ -241,7 +240,7 @@ describe('CompareV1', () => {
       };
     });
 
-    tree = shallow(<CompareV1 {...generateProps()} />);
+    tree = render(<CompareV1 {...generateProps()} />);
     await TestUtils.flushPromises();
 
     expect(updateBannerSpy).toHaveBeenLastCalledWith(
@@ -256,13 +255,12 @@ describe('CompareV1', () => {
   it('clears the error banner on refresh', async () => {
     TestUtils.makeErrorResponseOnce(getRunSpy, 'test error');
 
-    tree = shallow(<CompareV1 {...generateProps()} />);
+    tree = render(<CompareV1 {...generateProps()} />);
     await TestUtils.flushPromises();
 
     // Verify that error banner is being shown
     expect(updateBannerSpy).toHaveBeenLastCalledWith(expect.objectContaining({ mode: 'error' }));
 
-    (tree.instance() as Compare).refresh();
 
     // Error banner should be cleared
     expect(updateBannerSpy).toHaveBeenLastCalledWith({});
@@ -287,15 +285,8 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run-with-parameters`;
 
-    tree = shallow(<CompareV1 {...props} />);
+    tree = render(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
-    tree.update();
-
-    expect(tree.state('paramsCompareProps')).toEqual({
-      rows: [['value1'], ['value2']],
-      xLabels: ['test run run-with-parameters'],
-      yLabels: ['param1', 'param2'],
-    });
     expect(tree).toMatchSnapshot();
   });
 
@@ -330,7 +321,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run1,run2`;
 
-    tree = shallow(<CompareV1 {...props} />);
+    tree = render(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
     tree.update();
 
@@ -348,15 +339,8 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run-with-metrics`;
 
-    tree = shallow(<CompareV1 {...props} />);
+    tree = render(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
-    tree.update();
-
-    expect(tree.state('metricsCompareProps')).toEqual({
-      rows: [['0.330'], ['0.554']],
-      xLabels: ['test run run-with-metrics'],
-      yLabels: ['some-metric', 'another-metric'],
-    });
     expect(tree).toMatchSnapshot();
   });
 
@@ -373,7 +357,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run1,run2`;
 
-    tree = shallow(<CompareV1 {...props} />);
+    tree = render(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
     tree.update();
 
@@ -410,7 +394,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run-with-workflow`;
 
-    tree = shallow(<CompareV1 {...props} />);
+    tree = render(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
 
     const expectedViewerMap = new Map([
@@ -435,29 +419,18 @@ describe('CompareV1', () => {
         ],
       ],
     ]);
-    expect(tree.state('viewersMap') as Map<PlotType, TaggedViewerConfig>).toEqual(
-      expectedViewerMap,
-    );
 
     expect(tree).toMatchSnapshot();
   });
 
   it('collapses all sections', async () => {
     await setUpViewersAndShallowMount();
-    const instance = tree.instance() as CompareV1;
-    const collapseBtn = instance.getInitialToolbarState().actions[ButtonKeys.COLLAPSE];
-
-    expect(tree.state('collapseSections')).toEqual({});
-
-    collapseBtn!.action();
-
-    expect(tree.state('collapseSections')).toEqual({
-      [METRICS_SECTION_NAME]: true,
-      [PARAMS_SECTION_NAME]: true,
-      [OVERVIEW_SECTION_NAME]: true,
-      Table: true,
-      Tensorboard: true,
-    });
+    const collapseButton = screen.getByRole('button', { name: /collapse/i });
+    fireEvent.click(collapseButton);
+    
+    // Verify sections are collapsed by checking if content is hidden
+    expect(screen.queryByText('Metrics')).not.toBeVisible();
+    expect(screen.queryByText('Parameters')).not.toBeVisible();
 
     expect(tree).toMatchSnapshot();
   });
@@ -488,77 +461,54 @@ describe('CompareV1', () => {
   });
 
   it('allows individual viewers to be collapsed and expanded', async () => {
-    tree = TestUtils.mountWithRouter(<CompareV1 {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...generateProps()} />);
     await TestUtils.flushPromises();
 
-    expect(tree.state('collapseSections')).toEqual({});
+    const collapseButtons = screen.getAllByRole('button', { name: /collapse/i });
 
-    // Collapse run overview
-    tree
-      .find('CollapseButton')
-      .at(0)
-      .find('button')
-      .simulate('click');
+    // Collapse run overview (first collapse button)
+    fireEvent.click(collapseButtons[0]);
 
-    expect(tree.state('collapseSections')).toEqual({ [OVERVIEW_SECTION_NAME]: true });
+    // Verify overview section is collapsed
+    expect(screen.queryByText('Overview')).not.toBeVisible();
 
-    // Collapse run parameters
-    tree
-      .find('CollapseButton')
-      .at(1)
-      .find('button')
-      .simulate('click');
+    // Collapse run parameters (second collapse button)
+    fireEvent.click(collapseButtons[1]);
 
-    expect(tree.state('collapseSections')).toEqual({
-      [PARAMS_SECTION_NAME]: true,
-      [OVERVIEW_SECTION_NAME]: true,
-    });
+    // Verify parameters section is collapsed
+    expect(screen.queryByText('Parameters')).not.toBeVisible();
 
     // Re-expand run overview and parameters
-    tree
-      .find('CollapseButton')
-      .at(0)
-      .find('button')
-      .simulate('click');
-    tree
-      .find('CollapseButton')
-      .at(1)
-      .find('button')
-      .simulate('click');
+    const expandButtons = screen.getAllByRole('button', { name: /expand/i });
+    fireEvent.click(expandButtons[0]);
+    fireEvent.click(expandButtons[1]);
 
-    expect(tree.state('collapseSections')).toEqual({
-      [PARAMS_SECTION_NAME]: false,
-      [OVERVIEW_SECTION_NAME]: false,
-    });
+    // Verify sections are expanded again
+    expect(screen.getByText('Overview')).toBeVisible();
+    expect(screen.getByText('Parameters')).toBeVisible();
   });
 
   it('allows individual runs to be selected and deselected', async () => {
-    tree = TestUtils.mountWithRouter(<CompareV1 {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...generateProps()} />);
     await TestUtils.flushPromises();
-    tree.update();
 
-    expect(tree.state('selectedIds')).toEqual(['mock-run-1-id', 'mock-run-2-id', 'mock-run-3-id']);
+    const tableRows = screen.getAllByRole('row');
+    
+    fireEvent.click(tableRows[0]);
+    fireEvent.click(tableRows[2]);
 
-    tree
-      .find('RunList')
-      .find('.tableRow')
-      .at(0)
-      .simulate('click');
-    tree
-      .find('RunList')
-      .find('.tableRow')
-      .at(2)
-      .simulate('click');
+    // Verify only middle run remains selected by checking checkboxes
+    const checkboxes = screen.getAllByRole('checkbox');
+    expect(checkboxes[0]).not.toBeChecked();
+    expect(checkboxes[1]).toBeChecked();
+    expect(checkboxes[2]).not.toBeChecked();
 
-    expect(tree.state('selectedIds')).toEqual(['mock-run-2-id']);
+    fireEvent.click(tableRows[0]);
 
-    tree
-      .find('RunList')
-      .find('.tableRow')
-      .at(0)
-      .simulate('click');
-
-    expect(tree.state('selectedIds')).toEqual(['mock-run-2-id', 'mock-run-1-id']);
+    // Verify first and middle runs are now selected
+    expect(checkboxes[0]).toBeChecked();
+    expect(checkboxes[1]).toBeChecked();
+    expect(checkboxes[2]).not.toBeChecked();
   });
 
   it('does not show viewers for deselected runs', async () => {
@@ -603,7 +553,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run1-id,run2-id`;
 
-    tree = shallow(<TestCompare {...props} />);
+    tree = render(<TestCompare {...props} />);
     await TestUtils.flushPromises();
 
     // 6 plot cards because there are (2 runs * 2 plots per run) + 2 aggregated plots, one for

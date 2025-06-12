@@ -23,7 +23,7 @@ import { V2beta1RunStorageState } from 'src/apisv2beta1/run';
 import { ExpandState } from './CustomTable';
 
 import { Apis, ExperimentSortKeys, ListRequest } from 'src/lib/Apis';
-import { ReactWrapper, ShallowWrapper, shallow } from 'enzyme';
+import { render, screen, fireEvent, RenderResult } from '@testing-library/react';
 import { range } from 'lodash';
 import { V2beta1Filter, V2beta1PredicateOperation } from 'src/apisv2beta1/filter';
 
@@ -34,7 +34,7 @@ class ExperimentListTest extends ExperimentList {
 }
 
 describe('ExperimentList', () => {
-  let tree: ShallowWrapper | ReactWrapper;
+  let tree: RenderResult;
 
   const onErrorSpy = jest.fn();
   const listExperimentsSpy = jest.spyOn(Apis.experimentServiceApiV2, 'listExperiments');
@@ -82,30 +82,30 @@ describe('ExperimentList', () => {
   });
 
   afterEach(async () => {
-    // unmount() should be called before resetAllMocks() in case any part of the unmount life cycle
+    // cleanup should be called before resetAllMocks() in case any part of the cleanup life cycle
     // depends on mocks/spies
     if (tree) {
-      await tree.unmount();
+      tree.unmount();
     }
     jest.resetAllMocks();
   });
 
   it('renders the empty experience', () => {
-    expect(shallow(<ExperimentList {...generateProps()} />)).toMatchSnapshot();
+    expect(render(<ExperimentList {...generateProps()} />)).toMatchSnapshot();
   });
 
   it('renders the empty experience in ARCHIVED state', () => {
     const props = generateProps();
     props.storageState = V2beta1ExperimentStorageState.ARCHIVED;
-    expect(shallow(<ExperimentList {...props} />)).toMatchSnapshot();
+    expect(render(<ExperimentList {...props} />)).toMatchSnapshot();
   });
 
   it('loads experiments whose storage state is not ARCHIVED when storage state equals AVAILABLE', async () => {
     mockNExperiments(1);
     const props = generateProps();
     props.storageState = V2beta1ExperimentStorageState.AVAILABLE;
-    tree = shallow(<ExperimentList {...props} />);
-    await (tree.instance() as ExperimentListTest)._loadExperiments({});
+    tree = render(<ExperimentList {...props} />);
+    await (tree.container.firstChild as any)._loadExperiments({});
     expect(listExperimentsSpy).toHaveBeenLastCalledWith(
       undefined,
       undefined,
@@ -129,8 +129,8 @@ describe('ExperimentList', () => {
     mockNExperiments(1);
     const props = generateProps();
     props.storageState = V2beta1ExperimentStorageState.ARCHIVED;
-    tree = shallow(<ExperimentList {...props} />);
-    await (tree.instance() as ExperimentListTest)._loadExperiments({});
+    tree = render(<ExperimentList {...props} />);
+    await (tree.container.firstChild as any)._loadExperiments({});
     expect(listExperimentsSpy).toHaveBeenLastCalledWith(
       undefined,
       undefined,
@@ -154,8 +154,8 @@ describe('ExperimentList', () => {
     mockNExperiments(1);
     const props = generateProps();
     props.storageState = V2beta1ExperimentStorageState.ARCHIVED;
-    tree = shallow(<ExperimentList {...props} />);
-    await (tree.instance() as ExperimentListTest)._loadExperiments({
+    tree = render(<ExperimentList {...props} />);
+    await (tree.container.firstChild as any)._loadExperiments({
       filter: encodeURIComponent(
         JSON.stringify({
           predicates: [{ key: 'k', op: 'op', string_value: 'val' }],
@@ -189,8 +189,8 @@ describe('ExperimentList', () => {
   it('loads one experiment', async () => {
     mockNExperiments(1);
     const props = generateProps();
-    tree = shallow(<ExperimentList {...props} />);
-    await (tree.instance() as ExperimentListTest)._loadExperiments({});
+    tree = render(<ExperimentList {...props} />);
+    await (tree.container.firstChild as any)._loadExperiments({});
     expect(listExperimentsSpy).toHaveBeenLastCalledWith(
       undefined,
       undefined,
@@ -205,9 +205,8 @@ describe('ExperimentList', () => {
   it('reloads the experiment when refresh is called', async () => {
     mockNExperiments(0);
     const props = generateProps();
-    tree = TestUtils.mountWithRouter(<ExperimentList {...props} />);
-    await (tree.instance() as ExperimentList).refresh();
-    tree.update();
+    tree = TestUtils.renderWithRouter(<ExperimentList {...props} />);
+    await (tree.container.firstChild as any).refresh();
     expect(listExperimentsSpy).toHaveBeenCalledTimes(2);
     expect(listExperimentsSpy).toHaveBeenLastCalledWith(
       '',
@@ -223,8 +222,8 @@ describe('ExperimentList', () => {
   it('loads multiple experiments', async () => {
     mockNExperiments(5);
     const props = generateProps();
-    tree = shallow(<ExperimentList {...props} />);
-    await (tree.instance() as ExperimentListTest)._loadExperiments({});
+    tree = render(<ExperimentList {...props} />);
+    await (tree.container.firstChild as any)._loadExperiments({});
     expect(props.onError).not.toHaveBeenCalled();
     expect(tree).toMatchSnapshot();
   });
@@ -235,8 +234,8 @@ describe('ExperimentList', () => {
       'bad stuff happened',
     );
     const props = generateProps();
-    tree = shallow(<ExperimentList {...props} />);
-    await (tree.instance() as ExperimentListTest)._loadExperiments({});
+    tree = render(<ExperimentList {...props} />);
+    await (tree.container.firstChild as any)._loadExperiments({});
     expect(props.onError).toHaveBeenLastCalledWith(
       'Error: failed to list experiments: ',
       new Error('bad stuff happened'),
@@ -247,11 +246,10 @@ describe('ExperimentList', () => {
     listRunsSpy.mockImplementation(() => {});
     mockNExperiments(1);
     const props = generateProps();
-    tree = TestUtils.mountWithRouter(<ExperimentList {...props} />);
-    await (tree.instance() as ExperimentListTest)._loadExperiments({});
-    tree.update();
+    tree = TestUtils.renderWithRouter(<ExperimentList {...props} />);
+    await (tree.container.firstChild as any)._loadExperiments({});
     expect(props.onError).not.toHaveBeenCalled();
-    expect(tree.state()).toHaveProperty('displayExperiments', [
+    expect((tree.container.firstChild as any).state).toHaveProperty('displayExperiments', [
       {
         expandState: ExpandState.COLLAPSED,
         experiment_id: 'testexperiment1',
@@ -259,13 +257,10 @@ describe('ExperimentList', () => {
       },
     ]);
     // Expand the first experiment
-    tree
-      .find('button[aria-label="Expand"]')
-      .at(0)
-      .simulate('click');
+    const expandButton = screen.getAllByLabelText('Expand')[0];
+    fireEvent.click(expandButton);
     await listRunsSpy;
-    tree.update();
-    expect(tree.state()).toHaveProperty('displayExperiments', [
+    expect((tree.container.firstChild as any).state).toHaveProperty('displayExperiments', [
       {
         expandState: ExpandState.EXPANDED,
         experiment_id: 'testexperiment1',
@@ -298,11 +293,10 @@ describe('ExperimentList', () => {
     mockNExperiments(1);
     const props = generateProps();
     props.storageState = V2beta1ExperimentStorageState.ARCHIVED;
-    tree = TestUtils.mountWithRouter(<ExperimentList {...props} />);
-    await (tree.instance() as ExperimentListTest)._loadExperiments({});
-    tree.update();
+    tree = TestUtils.renderWithRouter(<ExperimentList {...props} />);
+    await (tree.container.firstChild as any)._loadExperiments({});
     expect(props.onError).not.toHaveBeenCalled();
-    expect(tree.state()).toHaveProperty('displayExperiments', [
+    expect((tree.container.firstChild as any).state).toHaveProperty('displayExperiments', [
       {
         expandState: ExpandState.COLLAPSED,
         experiment_id: 'testexperiment1',
@@ -310,13 +304,10 @@ describe('ExperimentList', () => {
       },
     ]);
     // Expand the first experiment
-    tree
-      .find('button[aria-label="Expand"]')
-      .at(0)
-      .simulate('click');
+    const expandButton = screen.getAllByLabelText('Expand')[0];
+    fireEvent.click(expandButton);
     await listRunsSpy;
-    tree.update();
-    expect(tree.state()).toHaveProperty('displayExperiments', [
+    expect((tree.container.firstChild as any).state).toHaveProperty('displayExperiments', [
       {
         expandState: ExpandState.EXPANDED,
         experiment_id: 'testexperiment1',

@@ -15,7 +15,7 @@
  */
 
 import * as React from 'react';
-import { mount, shallow } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react';
 import NewRunParameters, { NewRunParametersProps } from './NewRunParameters';
 
 describe('NewRunParameters', () => {
@@ -25,7 +25,7 @@ describe('NewRunParameters', () => {
       initialParams: [{ name: 'testParam', value: 'testVal' }],
       titleMessage: 'Specify parameters required by the pipeline',
     } as NewRunParametersProps;
-    expect(shallow(<NewRunParameters {...props} />)).toMatchSnapshot();
+    expect(render(<NewRunParameters {...props} />)).toMatchSnapshot();
   });
 
   it('does not display any text fields if there are no parameters', () => {
@@ -34,7 +34,7 @@ describe('NewRunParameters', () => {
       initialParams: [],
       titleMessage: 'This pipeline has no parameters',
     } as NewRunParametersProps;
-    expect(shallow(<NewRunParameters {...props} />)).toMatchSnapshot();
+    expect(render(<NewRunParameters {...props} />)).toMatchSnapshot();
   });
 
   it('clicking the open editor button for json parameters displays an editor', () => {
@@ -44,15 +44,12 @@ describe('NewRunParameters', () => {
       initialParams: [{ name: 'testParam', value: '{"test":"value"}' }],
       titleMessage: 'Specify json parameters required by the pipeline',
     } as NewRunParametersProps;
-    const tree = mount(<NewRunParameters {...props} />);
-    tree
-      .findWhere(el => el.text() === 'Open Json Editor')
-      .hostNodes()
-      .find('Button')
-      .simulate('click');
+    render(<NewRunParameters {...props} />);
+    const openEditorButton = screen.getByText('Open Json Editor');
+    fireEvent.click(openEditorButton);
     expect(handleParamChange).toHaveBeenCalledTimes(1);
     expect(handleParamChange).toHaveBeenLastCalledWith(0, '{\n  "test": "value"\n}');
-    expect(tree.find('Editor')).toMatchSnapshot();
+    expect(screen.getByRole('textbox')).toMatchSnapshot();
   });
 
   it('fires handleParamChange callback on change', () => {
@@ -66,10 +63,9 @@ describe('NewRunParameters', () => {
       titleMessage: 'Specify parameters required by the pipeline',
     } as NewRunParametersProps;
 
-    const tree = mount(<NewRunParameters {...props} />);
-    tree
-      .find('input#newRunPipelineParam1')
-      .simulate('change', { target: { value: 'test param value' } });
+    render(<NewRunParameters {...props} />);
+    const paramInput = screen.getByDisplayValue('testVal2');
+    fireEvent.change(paramInput, { target: { value: 'test param value' } });
     expect(handleParamChange).toHaveBeenCalledTimes(1);
     expect(handleParamChange).toHaveBeenLastCalledWith(1, 'test param value');
   });

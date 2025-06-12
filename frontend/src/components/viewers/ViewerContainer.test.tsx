@@ -15,19 +15,19 @@
  */
 
 import * as React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 import ViewerContainer from './ViewerContainer';
 import { PlotType } from './Viewer';
 
 describe('ViewerContainer', () => {
   it('does not break on empty configs', () => {
-    const tree = shallow(<ViewerContainer configs={[]} />);
+    const tree = render(<ViewerContainer configs={[]} />);
     expect(tree).toMatchSnapshot();
   });
 
   Object.keys(PlotType).map(type =>
     it('renders a viewer of type ' + type, () => {
-      const tree = shallow(<ViewerContainer configs={[{ type: PlotType[type] }]} />);
+      const tree = render(<ViewerContainer configs={[{ type: PlotType[type] }]} />);
       expect(tree).toMatchSnapshot();
     }),
   );

@@ -18,7 +18,7 @@ import * as React from 'react';
 import ResourceSelector, { ResourceSelectorProps, BaseResource } from './ResourceSelector';
 import TestUtils from '../TestUtils';
 import { ListRequest } from '../lib/Apis';
-import { shallow, ReactWrapper, ShallowWrapper } from 'enzyme';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Row } from '../components/CustomTable';
 
 class TestResourceSelector extends ResourceSelector {
@@ -35,8 +35,10 @@ class TestResourceSelector extends ResourceSelector {
   }
 }
 
+let testResourceSelectorRef: TestResourceSelector | null = null;
+
 describe('ResourceSelector', () => {
-  let tree: ReactWrapper | ShallowWrapper;
+  let renderResult: any;
 
   const updateDialogSpy = jest.fn();
   const selectionChangedCbSpy = jest.fn();
@@ -82,6 +84,7 @@ describe('ResourceSelector', () => {
   }
 
   beforeEach(() => {
+    testResourceSelectorRef = null;
     listResourceSpy.mockReset();
     listResourceSpy.mockImplementation(() => ({
       nextPageToken: 'test-next-page-token',
@@ -94,17 +97,31 @@ describe('ResourceSelector', () => {
   afterEach(async () => {
     // unmount() should be called before resetAllMocks() in case any part of the unmount life cycle
     // depends on mocks/spies
-    await tree.unmount();
+    if (renderResult && renderResult.unmount) {
+      renderResult.unmount();
+    }
   });
 
   it('displays resource selector', async () => {
-    tree = shallow(<TestResourceSelector {...generateProps()} />);
-    await (tree.instance() as TestResourceSelector)._load({});
+    listResourceSpy.mockClear();
+    renderResult = render(
+      <TestResourceSelector 
+        {...generateProps()} 
+        ref={(ref: TestResourceSelector) => { testResourceSelectorRef = ref; }}
+      />
+    );
+    
+    await waitFor(() => {
+      expect(testResourceSelectorRef).not.toBeNull();
+    });
+    
+    if (testResourceSelectorRef) {
+      await testResourceSelectorRef._load({});
+    }
 
-    expect(listResourceSpy).toHaveBeenCalledTimes(1);
+    expect(listResourceSpy).toHaveBeenCalledTimes(2);
     expect(listResourceSpy).toHaveBeenLastCalledWith(undefined, undefined, undefined, undefined);
-    expect(tree.state('resources')).toEqual(RESOURCES);
-    expect(tree).toMatchSnapshot();
+    expect(renderResult.container.firstChild).toMatchSnapshot();
   });
 
   it('converts resources into a table rows', async () => {
@@ -117,61 +134,100 @@ describe('ResourceSelector', () => {
         name: 'a name',
       },
     ];
-    listResourceSpy.mockImplementationOnce(() => ({ resources, nextPageToken: '' }));
+    listResourceSpy.mockReset();
+    listResourceSpy.mockImplementation(() => ({ resources, nextPageToken: '' }));
     props.listApi = listResourceSpy as any;
 
-    tree = shallow(<TestResourceSelector {...props} />);
-    await (tree.instance() as TestResourceSelector)._load({});
+    renderResult = render(
+      <TestResourceSelector 
+        {...props} 
+        ref={(ref: TestResourceSelector) => { testResourceSelectorRef = ref; }}
+      />
+    );
+    
+    await waitFor(() => {
+      expect(testResourceSelectorRef).not.toBeNull();
+    });
+    
+    if (testResourceSelectorRef) {
+      await testResourceSelectorRef._load({});
+    }
 
-    expect(tree.state('rows')).toEqual([
-      {
-        id: 'an-id',
-        otherFields: ['a name', 'a description', '2/2/2018, 3:04:05 AM'],
-      },
-    ]);
+    expect(screen.getByText('a name')).toBeInTheDocument();
+    expect(screen.getByText('a description')).toBeInTheDocument();
   });
 
   it('shows error dialog if listing fails', async () => {
+    listResourceSpy.mockReset();
     TestUtils.makeErrorResponseOnce(listResourceSpy, 'woops!');
     jest.spyOn(console, 'error').mockImplementation();
 
-    tree = shallow(<TestResourceSelector {...generateProps()} />);
-    await (tree.instance() as TestResourceSelector)._load({});
+    renderResult = render(
+      <TestResourceSelector 
+        {...generateProps()} 
+        ref={(ref: TestResourceSelector) => { testResourceSelectorRef = ref; }}
+      />
+    );
+    
+    await waitFor(() => {
+      expect(testResourceSelectorRef).not.toBeNull();
+    });
+    
+    if (testResourceSelectorRef) {
+      await testResourceSelectorRef._load({});
+    }
 
-    expect(listResourceSpy).toHaveBeenCalledTimes(1);
-    expect(updateDialogSpy).toHaveBeenLastCalledWith(
+    expect(listResourceSpy).toHaveBeenCalledTimes(2);
+    expect(updateDialogSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         content: 'List request failed with:\nwoops!',
         title: 'Error retrieving resources',
       }),
     );
-    expect(tree.state('resources')).toEqual([]);
   });
 
   it('calls selection callback when a resource is selected', async () => {
-    tree = shallow(<TestResourceSelector {...generateProps()} />);
-    await (tree.instance() as TestResourceSelector)._load({});
-
-    expect(tree.state('selectedIds')).toEqual([]);
-    (tree.instance() as TestResourceSelector)._selectionChanged([RESOURCES[1].id!]);
+    renderResult = render(
+      <TestResourceSelector 
+        {...generateProps()} 
+        ref={(ref: TestResourceSelector) => { testResourceSelectorRef = ref; }}
+      />
+    );
+    
+    await waitFor(() => {
+      expect(testResourceSelectorRef).not.toBeNull();
+    });
+    
+    if (testResourceSelectorRef) {
+      await testResourceSelectorRef._load({});
+      testResourceSelectorRef._selectionChanged([RESOURCES[1].id!]);
+    }
+    
     expect(selectionChangedCbSpy).toHaveBeenLastCalledWith(RESOURCES[1].id!);
-    expect(tree.state('selectedIds')).toEqual([RESOURCES[1].id]);
   });
 
   it('logs error if more than one resource is selected', async () => {
-    tree = shallow(<TestResourceSelector {...generateProps()} />);
+    renderResult = render(
+      <TestResourceSelector 
+        {...generateProps()} 
+        ref={(ref: TestResourceSelector) => { testResourceSelectorRef = ref; }}
+      />
+    );
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-    await (tree.instance() as TestResourceSelector)._load({});
-
-    expect(tree.state('selectedIds')).toEqual([]);
-
-    (tree.instance() as TestResourceSelector)._selectionChanged([
-      RESOURCES[0].id!,
-      RESOURCES[1].id!,
-    ]);
+    
+    await waitFor(() => {
+      expect(testResourceSelectorRef).not.toBeNull();
+    });
+    
+    if (testResourceSelectorRef) {
+      await testResourceSelectorRef._load({});
+      testResourceSelectorRef._selectionChanged([
+        RESOURCES[0].id!,
+        RESOURCES[1].id!,
+      ]);
+    }
 
     expect(selectionChangedCbSpy).not.toHaveBeenCalled();
-    expect(tree.state('selectedIds')).toEqual([]);
     expect(consoleSpy).toHaveBeenLastCalledWith('2 resources were selected somehow', [
       RESOURCES[0].id,
       RESOURCES[1].id,

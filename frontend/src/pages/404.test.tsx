@@ -17,7 +17,7 @@
 import * as React from 'react';
 import Page404 from './404';
 import { PageProps } from './Page';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 describe('404', () => {
   function generateProps(): PageProps {
@@ -34,6 +34,6 @@ describe('404', () => {
   }
 
   it('renders a 404 page', () => {
-    expect(shallow(<Page404 {...generateProps()} />)).toMatchSnapshot();
+    expect(render(<Page404 {...generateProps()} />)).toMatchSnapshot();
   });
 });

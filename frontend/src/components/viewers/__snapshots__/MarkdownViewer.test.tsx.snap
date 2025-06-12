@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MarkdownViewer does not break on empty data 1`] = `null`;
+exports[`MarkdownViewer does not break on empty data 1`] = `<div />`;
 
 exports[`MarkdownViewer renders some basic markdown 1`] = `
 <div
