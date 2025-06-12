@@ -95,7 +95,7 @@ describe('Banner', () => {
     const detailsButton = screen.getByText('Details');
     fireEvent.click(detailsButton);
     expect(screen.getByRole('dialog')).toBeInTheDocument();
-    const dismissButton = screen.getByTestId('dismissDialogBtn');
+    const dismissButton = screen.getByRole('button', { name: /dismiss/i });
     fireEvent.click(dismissButton);
     expect(screen.queryByRole('dialog')).toBeNull();
   });

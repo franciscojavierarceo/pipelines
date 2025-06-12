@@ -28,7 +28,7 @@ import { PageProps } from '../Page';
 import { RouteParams, RoutePage } from '../../components/Router';
 import * as features from '../../features';
 
-const V2_PIPELINESPEC_PATH = '../../data/test/lightweight_python_functions_v2_pipeline_rev.yaml';
+const V2_PIPELINESPEC_PATH = 'src/data/test/lightweight_python_functions_v2_pipeline_rev.yaml';
 const v2YamlTemplateString = fs.readFileSync(V2_PIPELINESPEC_PATH, 'utf8');
 
 describe('RecurringRunDetailsV2FC', () => {
@@ -100,8 +100,12 @@ describe('RecurringRunDetailsV2FC', () => {
     // mock both v2_alpha and functional feature keys are enable.
     jest.spyOn(features, 'isFeatureEnabled').mockReturnValue(true);
 
-    getRecurringRunSpy.mockImplementation(() => fullTestV2RecurringRun);
-    getPipelineVersionSpy.mockImplementation(() => testPipelineVersion);
+    getRecurringRunSpy.mockImplementation((recurring_run_id: string) =>
+      Promise.resolve(fullTestV2RecurringRun),
+    );
+    getPipelineVersionSpy.mockImplementation((pipeline_id: string, pipeline_version_id: string) =>
+      Promise.resolve(testPipelineVersion),
+    );
 
     deleteRecurringRunSpy.mockImplementation();
     enableRecurringRunSpy.mockImplementation();
@@ -144,7 +148,9 @@ describe('RecurringRunDetailsV2FC', () => {
         },
       },
     };
-    getRecurringRunSpy.mockImplementation(() => cronTestRecurringRun);
+    getRecurringRunSpy.mockImplementation((recurring_run_id: string) =>
+      Promise.resolve(cronTestRecurringRun),
+    );
 
     render(
       <CommonTestWrapper>
@@ -216,10 +222,12 @@ describe('RecurringRunDetailsV2FC', () => {
 
   it('shows Experiments -> Experiment name -> run name when there is an experiment', async () => {
     fullTestV2RecurringRun.experiment_id = 'test-experiment-id';
-    getExperimentSpy.mockImplementation(id => ({
-      experiment_id: id,
-      display_name: 'test experiment name',
-    }));
+    getExperimentSpy.mockImplementation((experiment_id: string) =>
+      Promise.resolve({
+        experiment_id: experiment_id,
+        display_name: 'test experiment name',
+      }),
+    );
     render(
       <CommonTestWrapper>
         <RecurringRunDetailsRouter {...generateProps()} />

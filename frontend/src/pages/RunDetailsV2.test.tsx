@@ -41,7 +41,7 @@ import { RunDetailsInternalProps } from './RunDetails';
 import { RunDetailsV2 } from './RunDetailsV2';
 import fs from 'fs';
 
-const V2_PIPELINESPEC_PATH = '../data/test/lightweight_python_functions_v2_pipeline_rev.yaml';
+const V2_PIPELINESPEC_PATH = 'src/data/test/lightweight_python_functions_v2_pipeline_rev.yaml';
 const v2YamlTemplateString = fs.readFileSync(V2_PIPELINESPEC_PATH, 'utf8');
 
 testBestPractices();
@@ -92,7 +92,7 @@ describe('RunDetailsV2', () => {
     state: V2beta1RuntimeState.SUCCEEDED,
   };
   const TEST_EXPERIMENT: V2beta1Experiment = {
-    created_at: '2021-01-24T18:03:08Z',
+    created_at: new Date('2021-01-24T18:03:08Z'),
     description: 'All runs will be grouped here.',
     experiment_id: 'some-experiment-id',
     display_name: 'Default',
@@ -156,7 +156,7 @@ describe('RunDetailsV2', () => {
         ) {
           response.setContext(new Context());
         }
-        return response;
+        return Promise.resolve(response);
       });
     jest
       .spyOn(Api.getInstance().metadataStoreService, 'getExecutionsByContext')
@@ -189,9 +189,9 @@ describe('RunDetailsV2', () => {
 
     jest
       .spyOn(Api.getInstance().metadataStoreService, 'getContextByTypeAndName')
-      .mockImplementation((request: GetContextByTypeAndNameRequest) => {
-        return new GetContextByTypeAndNameResponse();
-      });
+      .mockImplementation((request: GetContextByTypeAndNameRequest) =>
+        Promise.resolve(new GetContextByTypeAndNameResponse()),
+      );
     jest
       .spyOn(Api.getInstance().metadataStoreService, 'getExecutionsByContext')
       .mockResolvedValue(new GetExecutionsByContextResponse());
