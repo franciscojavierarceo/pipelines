@@ -47,10 +47,7 @@ import LogViewer from '../LogViewer';
 import { getResourceStateText, ResourceType } from '../ResourceInfo';
 import { MetricsVisualizations } from '../viewers/MetricsVisualizations';
 import { ArtifactTitle } from './ArtifactTitle';
-import InputOutputTab, {
-  getArtifactParamList,
-  ParamList,
-} from './InputOutputTab';
+import InputOutputTab, { getArtifactParamList, ParamList } from './InputOutputTab';
 import { convertYamlToPlatformSpec, convertYamlToV2PipelineSpec } from '../../lib/v2/WorkflowUtils';
 import { PlatformDeploymentConfig } from '../../generated/pipeline_spec/pipeline_spec';
 import { getComponentSpec } from '../../lib/v2/NodeUtils';

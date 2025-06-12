@@ -33,11 +33,7 @@ import {
 } from '../../mlmd/MlmdUtils';
 import { Artifact, ArtifactType, Execution } from '../../third_party/mlmd';
 import Banner from '../Banner';
-import CustomTable, {
-  Column,
-  CustomRendererProps,
-  Row as TableRow,
-} from '../CustomTable';
+import CustomTable, { Column, CustomRendererProps, Row as TableRow } from '../CustomTable';
 import PlotCard from '../PlotCard';
 import ConfusionMatrix, { ConfusionMatrixConfig } from './ConfusionMatrix';
 import { HTMLViewerConfig } from './HTMLViewer';

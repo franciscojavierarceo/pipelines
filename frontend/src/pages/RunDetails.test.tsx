@@ -845,7 +845,9 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.INPUT_OUTPUT]);
+    fireEvent.click(
+      screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.INPUT_OUTPUT],
+    );
     await TestUtils.flushPromises();
     expect(tree.state('sidepanelSelectedTab')).toEqual(STEP_TABS.INPUT_OUTPUT);
     expect(tree).toMatchSnapshot();
@@ -860,7 +862,9 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.VOLUMES]);
+    fireEvent.click(
+      screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.VOLUMES],
+    );
     expect(tree.state('sidepanelSelectedTab')).toEqual(STEP_TABS.VOLUMES);
     expect(tree).toMatchSnapshot();
   });
@@ -874,7 +878,9 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.MANIFEST]);
+    fireEvent.click(
+      screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.MANIFEST],
+    );
     expect(tree.state('sidepanelSelectedTab')).toEqual(STEP_TABS.MANIFEST);
     expect(tree).toMatchSnapshot();
   });
@@ -905,7 +911,9 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS]);
+    fireEvent.click(
+      screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS],
+    );
     expect(tree.state('selectedNodeDetails')).toHaveProperty('id', 'node1');
     expect(tree.state('sidepanelSelectedTab')).toEqual(STEP_TABS.LOGS);
 
@@ -929,7 +937,9 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS]);
+    fireEvent.click(
+      screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS],
+    );
     expect(tree.state('selectedNodeDetails')).toHaveProperty('id', 'node1');
     expect(tree.state('sidepanelSelectedTab')).toEqual(STEP_TABS.LOGS);
 
@@ -948,7 +958,9 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS]);
+    fireEvent.click(
+      screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS],
+    );
     expect(tree.state('selectedNodeDetails')).toHaveProperty('id', 'node1');
     expect(tree.state('sidepanelSelectedTab')).toEqual(STEP_TABS.LOGS);
     expect(updateToolbarSpy).toHaveBeenCalledTimes(3);
@@ -971,7 +983,9 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS]);
+    fireEvent.click(
+      screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS],
+    );
     expect(tree.state('selectedNodeDetails')).toHaveProperty('phaseMessage', undefined);
 
     testRun.pipeline_runtime!.workflow_manifest = JSON.stringify({
@@ -1013,7 +1027,9 @@ describe('RunDetails', () => {
     await getRunSpy;
     await TestUtils.flushPromises();
     clickGraphNode(tree, 'node1');
-    fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS]);
+    fireEvent.click(
+      screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.LOGS],
+    );
     expect(tree.state('selectedNodeDetails')).toHaveProperty(
       'phaseMessage',
       'This step is in Succeeded state with this message: some node message',
@@ -1540,7 +1556,9 @@ describe('RunDetails', () => {
       await getRunSpy;
       await TestUtils.flushPromises();
       clickGraphNode(tree, 'node1');
-      fireEvent.click(screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.TASK_DETAILS]);
+      fireEvent.click(
+        screen.getAllByRole('tablist')[1].querySelectorAll('[role="tab"]')[STEP_TABS.TASK_DETAILS],
+      );
       await getRunSpy;
       await TestUtils.flushPromises();
 

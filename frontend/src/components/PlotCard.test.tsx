@@ -28,7 +28,9 @@ describe('PlotCard', () => {
   const config: ViewerConfig = { type: PlotType.CONFUSION_MATRIX };
 
   it('renders on confusion matrix viewer card', () => {
-    const { container } = render(<PlotCard title='test title' configs={[config]} maxDimension={100} />);
+    const { container } = render(
+      <PlotCard title='test title' configs={[config]} maxDimension={100} />,
+    );
     expect(container).toMatchSnapshot();
   });
 

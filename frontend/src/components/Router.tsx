@@ -45,9 +45,7 @@ import NewExperiment from '../pages/NewExperiment';
 import NewPipelineVersion from '../pages/NewPipelineVersion';
 import NewRunSwitcher from '../pages/NewRunSwitcher';
 import PipelineDetails from '../pages/PipelineDetails';
-import PrivateAndSharedPipelines, {
-  PrivateAndSharedTab,
-} from '../pages/PrivateAndSharedPipelines';
+import PrivateAndSharedPipelines, { PrivateAndSharedTab } from '../pages/PrivateAndSharedPipelines';
 import RecurringRunDetailsRouter from '../pages/RecurringRunDetailsRouter';
 import SideNav from './SideNav';
 import Toolbar, { ToolbarProps } from './Toolbar';

@@ -49,7 +49,9 @@ describe('ArchivedExperiemnts', () => {
   });
 
   it('renders archived experiments', () => {
-    const { container: renderedContainer } = TestUtils.renderWithRouter(<ArchivedExperiments {...generateProps()} />);
+    const { container: renderedContainer } = TestUtils.renderWithRouter(
+      <ArchivedExperiments {...generateProps()} />,
+    );
     container = renderedContainer;
     expect(container).toMatchSnapshot();
   });
@@ -68,6 +70,9 @@ describe('ArchivedExperiemnts', () => {
   it('shows a list of archived experiments', () => {
     TestUtils.renderWithRouter(<ArchivedExperiments {...generateProps()} />);
     const experimentList = screen.getByTestId('experiment-list');
-    expect(experimentList).toHaveAttribute('data-storage-state', V2beta1ExperimentStorageState.ARCHIVED.toString());
+    expect(experimentList).toHaveAttribute(
+      'data-storage-state',
+      V2beta1ExperimentStorageState.ARCHIVED.toString(),
+    );
   });
 });

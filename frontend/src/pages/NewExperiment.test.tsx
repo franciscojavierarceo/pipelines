@@ -167,7 +167,9 @@ describe('NewExperiment', () => {
   });
 
   it('calls the createExperimentAPI with namespace when it is provided', async () => {
-    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} namespace='test-ns' />);
+    renderResult = TestUtils.renderWithRouter(
+      <NewExperiment {...(generateProps() as any)} namespace='test-ns' />,
+    );
 
     fillAnyExperimentName();
     const createBtn = screen.getByTestId('createExperimentBtn');

@@ -134,16 +134,16 @@ describe('UploadPipelineDialog', () => {
     const spy = jest.fn(() => true);
 
     render(<UploadPipelineDialog open={true} onClose={spy} />);
-    
+
     const urlRadio = screen.getByTestId('uploadFromUrlBtn');
     fireEvent.click(urlRadio);
-    
+
     const urlInput = screen.getByLabelText(/file url/i);
     fireEvent.change(urlInput, { target: { value: 'https://some.url.com' } });
-    
+
     const nameInput = screen.getByLabelText(/pipeline name/i);
     fireEvent.change(nameInput, { target: { value: 'test pipeline name' } });
-    
+
     const descInput = screen.getByLabelText(/pipeline description/i);
     fireEvent.change(descInput, { target: { value: 'test description' } });
 
@@ -151,7 +151,15 @@ describe('UploadPipelineDialog', () => {
     fireEvent.click(confirmBtn);
     await TestUtils.flushPromises();
 
-    expect(spy).toHaveBeenCalledWith(true, 'test pipeline name', null, 'https://some.url.com', ImportMethod.URL, true, 'test description');
+    expect(spy).toHaveBeenCalledWith(
+      true,
+      'test pipeline name',
+      null,
+      'https://some.url.com',
+      ImportMethod.URL,
+      true,
+      'test description',
+    );
   });
 
   it('does not reset the state if the dialog is closed and the callback returns false', async () => {

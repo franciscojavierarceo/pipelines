@@ -79,9 +79,7 @@ describe('Banner', () => {
   });
 
   it('does not show troubleshooting link if warning', () => {
-    render(
-      <Banner message='Some message' mode='warning' showTroubleshootingGuideLink={true} />,
-    );
+    render(<Banner message='Some message' mode='warning' showTroubleshootingGuideLink={true} />);
     expect(screen.queryByText('Troubleshooting guide')).toBeNull();
   });
 

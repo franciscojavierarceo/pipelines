@@ -26,7 +26,9 @@ describe('PagedTable', () => {
   });
 
   it('does not break on empty data', () => {
-    const { container } = render(<PagedTable configs={[{ data: [], labels: [], type: PlotType.TABLE }]} />);
+    const { container } = render(
+      <PagedTable configs={[{ data: [], labels: [], type: PlotType.TABLE }]} />,
+    );
     expect(container).toMatchSnapshot();
   });
 
@@ -42,7 +44,9 @@ describe('PagedTable', () => {
   });
 
   it('renders simple data without labels', () => {
-    const { container } = render(<PagedTable configs={[{ data, labels: [], type: PlotType.TABLE }]} />);
+    const { container } = render(
+      <PagedTable configs={[{ data, labels: [], type: PlotType.TABLE }]} />,
+    );
     expect(container).toMatchSnapshot();
   });
 

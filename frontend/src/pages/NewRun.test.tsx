@@ -283,7 +283,6 @@ describe('NewRun', () => {
     tree = TestUtils.renderWithRouter(<TestNewRun {...props} />);
     await TestUtils.flushPromises();
 
-
     expect(tree.state()).toHaveProperty('errorMessage', 'Run name is required');
   });
 
@@ -1463,7 +1462,9 @@ describe('NewRun', () => {
         target: { value: 'test run description' },
       });
 
-      fireEvent.change(screen.getByTestId('newRunPipelineParam0'), { target: { value: '{"test2": "value2"}' } });
+      fireEvent.change(screen.getByTestId('newRunPipelineParam0'), {
+        target: { value: '{"test2": "value2"}' },
+      });
 
       fireEvent.click(screen.getByRole('button', { name: /expand/i }));
 

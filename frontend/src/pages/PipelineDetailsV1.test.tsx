@@ -124,7 +124,9 @@ spec:
   beforeEach(() => {});
 
   it('shows correct versions in version selector', async () => {
-    TestUtils.renderWithRouter(<PipelineDetailsV1 {...generateProps(new graphlib.Graph(), new graphlib.Graph())} />);
+    TestUtils.renderWithRouter(
+      <PipelineDetailsV1 {...generateProps(new graphlib.Graph(), new graphlib.Graph())} />,
+    );
 
     expect(screen.getByText('test-pipeline-version'));
     expect(screen.getByTestId('version_selector').childElementCount).toEqual(1);

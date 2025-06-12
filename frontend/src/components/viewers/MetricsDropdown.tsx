@@ -18,11 +18,7 @@ import React, { useEffect, useState } from 'react';
 import { color, commonCss, fontsize, zIndex } from '../../Css';
 import { classes, stylesheet } from 'typestyle';
 import { LinkedArtifact, getArtifactName } from '../../mlmd/MlmdUtils';
-import TwoLevelDropdown, {
-  DropdownItem,
-  DropdownSubItem,
-  SelectedItem,
-} from '../TwoLevelDropdown';
+import TwoLevelDropdown, { DropdownItem, DropdownSubItem, SelectedItem } from '../TwoLevelDropdown';
 import {
   ConfusionMatrixSection,
   getHtmlViewerConfig,

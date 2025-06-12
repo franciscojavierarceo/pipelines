@@ -37,11 +37,7 @@ export default class TestUtils {
    */
   // tslint:disable-next-line:variable-name
   public static renderWithRouter(component: React.ReactElement<any>): RenderResult {
-    return render(
-      <MemoryRouter>
-        {component}
-      </MemoryRouter>
-    );
+    return render(<MemoryRouter>{component}</MemoryRouter>);
   }
 
   /**

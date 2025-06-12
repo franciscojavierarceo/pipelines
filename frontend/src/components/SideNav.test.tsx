@@ -73,39 +73,53 @@ describe('SideNav', () => {
   it('renders expanded state', () => {
     localStorageHasKeySpy.mockImplementationOnce(() => false);
     (window as any).innerWidth = wideWidth;
-    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.PIPELINES} {...defaultProps} />);
+    renderResult = TestUtils.renderWithRouter(
+      <SideNav page={RoutePage.PIPELINES} {...defaultProps} />,
+    );
     expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders collapsed state', () => {
     localStorageHasKeySpy.mockImplementationOnce(() => false);
     (window as any).innerWidth = narrowWidth;
-    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.PIPELINES} {...defaultProps} />);
+    renderResult = TestUtils.renderWithRouter(
+      <SideNav page={RoutePage.PIPELINES} {...defaultProps} />,
+    );
     expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders Pipelines as active page', () => {
-    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.PIPELINES} {...defaultProps} />);
+    renderResult = TestUtils.renderWithRouter(
+      <SideNav page={RoutePage.PIPELINES} {...defaultProps} />,
+    );
     expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders Pipelines as active when on PipelineDetails page', () => {
-    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.PIPELINE_DETAILS} {...defaultProps} />);
+    renderResult = TestUtils.renderWithRouter(
+      <SideNav page={RoutePage.PIPELINE_DETAILS} {...defaultProps} />,
+    );
     expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders experiments as active page', () => {
-    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.EXPERIMENTS} {...defaultProps} />);
+    renderResult = TestUtils.renderWithRouter(
+      <SideNav page={RoutePage.EXPERIMENTS} {...defaultProps} />,
+    );
     expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders experiments as active when on ExperimentDetails page', () => {
-    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.EXPERIMENT_DETAILS} {...defaultProps} />);
+    renderResult = TestUtils.renderWithRouter(
+      <SideNav page={RoutePage.EXPERIMENT_DETAILS} {...defaultProps} />,
+    );
     expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders experiments as active page when on NewExperiment page', () => {
-    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.NEW_EXPERIMENT} {...defaultProps} />);
+    renderResult = TestUtils.renderWithRouter(
+      <SideNav page={RoutePage.NEW_EXPERIMENT} {...defaultProps} />,
+    );
     expect(renderResult.container).toMatchSnapshot();
   });
 
@@ -823,7 +837,9 @@ describe('SideNav', () => {
   });
 
   it('populates the display build information using the default props', async () => {
-    renderResult = TestUtils.renderWithRouter(<SideNav page={RoutePage.PIPELINES} {...defaultProps} />);
+    renderResult = TestUtils.renderWithRouter(
+      <SideNav page={RoutePage.PIPELINES} {...defaultProps} />,
+    );
 
     expect(renderResult.container).toMatchSnapshot();
 

@@ -62,7 +62,9 @@ describe('Toolbar', () => {
   });
 
   it('renders nothing when there are no breadcrumbs or actions', () => {
-    const { container } = render(<Toolbar breadcrumbs={[]} actions={{}} history={history} pageTitle='' />);
+    const { container } = render(
+      <Toolbar breadcrumbs={[]} actions={{}} history={history} pageTitle='' />,
+    );
     expect(container).toMatchSnapshot();
   });
 

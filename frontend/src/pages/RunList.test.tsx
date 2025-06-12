@@ -113,7 +113,7 @@ describe('RunList', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
     return componentRef!;
   }
@@ -131,7 +131,7 @@ describe('RunList', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
     return componentRef!;
   }
@@ -183,7 +183,7 @@ describe('RunList', () => {
           }}
         />
       ));
-      
+
       tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
       await componentRef!._loadRuns({});
       expect(Apis.runServiceApiV2.listRuns).toHaveBeenLastCalledWith(
@@ -221,7 +221,7 @@ describe('RunList', () => {
           }}
         />
       ));
-      
+
       tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
       await componentRef!._loadRuns({});
       expect(Apis.runServiceApiV2.listRuns).toHaveBeenLastCalledWith(
@@ -259,7 +259,7 @@ describe('RunList', () => {
           }}
         />
       ));
-      
+
       tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
       await componentRef!._loadRuns({
         filter: encodeURIComponent(
@@ -324,7 +324,7 @@ describe('RunList', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
     await componentRef!.refresh();
     expect(Apis.runServiceApiV2.listRuns).toHaveBeenCalledTimes(2);
@@ -376,7 +376,7 @@ describe('RunList', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
     await componentRef!._loadRuns({});
     expect(props.onError).toHaveBeenLastCalledWith(
@@ -460,7 +460,7 @@ describe('RunList', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
     await componentRef!._loadRuns({});
     expect(props.onError).not.toHaveBeenCalled();
@@ -489,7 +489,7 @@ describe('RunList', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
     await componentRef!._loadRuns({});
     expect(props.onError).not.toHaveBeenCalled();
@@ -518,7 +518,7 @@ describe('RunList', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
     await componentRef!._loadRuns({});
     expect(props.onError).not.toHaveBeenCalled();
@@ -543,7 +543,7 @@ describe('RunList', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
     await componentRef!._loadRuns({
       filter: encodeURIComponent(
@@ -583,7 +583,7 @@ describe('RunList', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
     await componentRef!._loadRuns({
       filter: encodeURIComponent(
@@ -679,9 +679,7 @@ describe('RunList', () => {
 
   it('renders run name as link to its details page', () => {
     const componentRef = getMountedInstance();
-    expect(
-      componentRef._nameCustomRenderer({ value: 'test run', id: 'run-id' }),
-    ).toMatchSnapshot();
+    expect(componentRef._nameCustomRenderer({ value: 'test run', id: 'run-id' })).toMatchSnapshot();
   });
 
   it('renders pipeline name as link to its details page', () => {

@@ -20,7 +20,6 @@ import CustomTable, { Column, ExpandState, Row, css } from './CustomTable';
 import TestUtils from '../TestUtils';
 import { V2beta1PredicateOperation } from '../apisv2beta1/filter';
 
-
 const props = {
   columns: [],
   orderAscending: true,
@@ -79,7 +78,9 @@ describe('CustomTable', () => {
   });
 
   it('renders with provided filter label', async () => {
-    const tree = TestUtils.renderWithRouter(<CustomTable {...props} filterLabel='test filter label' />);
+    const tree = TestUtils.renderWithRouter(
+      <CustomTable {...props} filterLabel='test filter label' />,
+    );
     await TestUtils.flushPromises();
     expect(tree.container).toMatchSnapshot();
   });
@@ -97,7 +98,9 @@ describe('CustomTable', () => {
   });
 
   it('renders empty message on no rows', async () => {
-    const tree = TestUtils.renderWithRouter(<CustomTable {...props} emptyMessage='test empty message' />);
+    const tree = TestUtils.renderWithRouter(
+      <CustomTable {...props} emptyMessage='test empty message' />,
+    );
     await TestUtils.flushPromises();
     expect(tree.container).toMatchSnapshot();
   });
@@ -172,7 +175,9 @@ describe('CustomTable', () => {
       },
     ];
     const reload = jest.fn();
-    const tree = TestUtils.renderWithRouter(<CustomTable {...props} reload={reload} columns={testcolumns} />);
+    const tree = TestUtils.renderWithRouter(
+      <CustomTable {...props} reload={reload} columns={testcolumns} />,
+    );
     expect(reload).toHaveBeenLastCalledWith({
       filter: '',
       orderAscending: false,
@@ -208,7 +213,9 @@ describe('CustomTable', () => {
       },
     ];
     const reload = jest.fn();
-    const tree = TestUtils.renderWithRouter(<CustomTable {...props} reload={reload} columns={testcolumns} />);
+    const tree = TestUtils.renderWithRouter(
+      <CustomTable {...props} reload={reload} columns={testcolumns} />,
+    );
     expect(reload).toHaveBeenLastCalledWith({
       filter: '',
       orderAscending: false,
@@ -254,7 +261,9 @@ describe('CustomTable', () => {
       },
     ];
     const reload = jest.fn();
-    const tree = TestUtils.renderWithRouter(<CustomTable {...props} reload={reload} columns={testcolumns} />);
+    const tree = TestUtils.renderWithRouter(
+      <CustomTable {...props} reload={reload} columns={testcolumns} />,
+    );
     expect(reload).toHaveBeenLastCalledWith({
       filter: '',
       orderAscending: false,
@@ -292,7 +301,9 @@ describe('CustomTable', () => {
   });
 
   it('renders some rows', async () => {
-    const tree = TestUtils.renderWithRouter(<CustomTable {...props} rows={rows} columns={columns} />);
+    const tree = TestUtils.renderWithRouter(
+      <CustomTable {...props} rows={rows} columns={columns} />,
+    );
     await TestUtils.flushPromises();
     expect(tree.container).toMatchSnapshot();
   });
@@ -375,7 +386,9 @@ describe('CustomTable', () => {
   });
 
   it('handles no updateSelection method being passed', () => {
-    const tree = TestUtils.renderWithRouter(<CustomTable {...props} rows={rows} columns={columns} />);
+    const tree = TestUtils.renderWithRouter(
+      <CustomTable {...props} rows={rows} columns={columns} />,
+    );
     tree
       .find('.row')
       .at(0)
@@ -466,7 +479,9 @@ describe('CustomTable', () => {
   it('disables previous and next page buttons if no next page token given', async () => {
     const reloadResult = Promise.resolve('');
     const spy = () => reloadResult;
-    const tree = TestUtils.renderWithRouter(<CustomTable {...props} rows={rows} columns={columns} reload={spy} />);
+    const tree = TestUtils.renderWithRouter(
+      <CustomTable {...props} rows={rows} columns={columns} reload={spy} />,
+    );
     await TestUtils.flushPromises();
     expect(tree.state()).toHaveProperty('maxPageIndex', 0);
     expect(
@@ -486,7 +501,9 @@ describe('CustomTable', () => {
   it('enables next page button if next page token is given', async () => {
     const reloadResult = Promise.resolve('some token');
     const spy = () => reloadResult;
-    const tree = TestUtils.renderWithRouter(<CustomTable {...props} rows={rows} columns={columns} reload={spy} />);
+    const tree = TestUtils.renderWithRouter(
+      <CustomTable {...props} rows={rows} columns={columns} reload={spy} />,
+    );
     await reloadResult;
     expect(tree.state()).toHaveProperty('maxPageIndex', Number.MAX_SAFE_INTEGER);
     expect(
@@ -506,7 +523,9 @@ describe('CustomTable', () => {
   it('calls reload with next page token when next page button is clicked', async () => {
     const reloadResult = Promise.resolve('some token');
     const spy = jest.fn(() => reloadResult);
-    const tree = TestUtils.renderWithRouter(<CustomTable {...props} rows={rows} columns={columns} reload={spy} />);
+    const tree = TestUtils.renderWithRouter(
+      <CustomTable {...props} rows={rows} columns={columns} reload={spy} />,
+    );
     await TestUtils.flushPromises();
 
     tree
@@ -525,7 +544,9 @@ describe('CustomTable', () => {
   it('renders new rows after clicking next page, and enables previous page button', async () => {
     const reloadResult = Promise.resolve('some token');
     const spy = jest.fn(() => reloadResult);
-    const tree = TestUtils.renderWithRouter(<CustomTable {...props} rows={[]} columns={columns} reload={spy} />);
+    const tree = TestUtils.renderWithRouter(
+      <CustomTable {...props} rows={[]} columns={columns} reload={spy} />,
+    );
     await TestUtils.flushPromises();
 
     tree
@@ -554,7 +575,9 @@ describe('CustomTable', () => {
   it('renders new rows after clicking previous page, and enables next page button', async () => {
     const reloadResult = Promise.resolve('some token');
     const spy = jest.fn(() => reloadResult);
-    const tree = TestUtils.renderWithRouter(<CustomTable {...props} rows={[]} columns={columns} reload={spy} />);
+    const tree = TestUtils.renderWithRouter(
+      <CustomTable {...props} rows={[]} columns={columns} reload={spy} />,
+    );
     await reloadResult;
 
     tree
@@ -711,12 +734,14 @@ describe('CustomTable', () => {
     const reload = jest.fn();
     let customTableRef: CustomTableTest | null = null;
     render(
-      <CustomTableTest 
-        {...props} 
-        reload={reload} 
-        rows={rows} 
+      <CustomTableTest
+        {...props}
+        reload={reload}
+        rows={rows}
         columns={columns}
-        ref={(ref: CustomTableTest) => { customTableRef = ref; }}
+        ref={(ref: CustomTableTest) => {
+          customTableRef = ref;
+        }}
       />,
     );
     // lodash's debounce function doesn't play nice with Jest, so we skip the handleChange function
@@ -747,12 +772,14 @@ describe('CustomTable', () => {
   it('uses an empty filter if requestFilter is called with no filter', async () => {
     let customTableRef: CustomTableTest | null = null;
     render(
-      <CustomTableTest 
-        {...props} 
-        rows={rows} 
+      <CustomTableTest
+        {...props}
+        rows={rows}
         columns={columns}
-        ref={(ref: CustomTableTest) => { customTableRef = ref; }}
-      />
+        ref={(ref: CustomTableTest) => {
+          customTableRef = ref;
+        }}
+      />,
     );
     if (customTableRef) {
       customTableRef._requestFilter();

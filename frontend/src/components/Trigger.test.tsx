@@ -259,7 +259,9 @@ describe('Trigger', () => {
       (tree.instance() as Trigger).handleChange('startDate')({
         target: { value: 'this_is_not_valid_date_format' },
       });
-      expect(screen.getByTestId('startTimeMessage')).toHaveTextContent("Invalid start date or time, start time won't be set");
+      expect(screen.getByTestId('startTimeMessage')).toHaveTextContent(
+        "Invalid start date or time, start time won't be set",
+      );
 
       // Message is removed if the format is correct.
       (tree.instance() as Trigger).handleChange('startDate')({
@@ -282,7 +284,9 @@ describe('Trigger', () => {
       (tree.instance() as Trigger).handleChange('startDate')({
         target: { value: 'this_is_not_valid_date_format' },
       });
-      expect(screen.getByTestId('startTimeMessage')).toHaveTextContent("Invalid start date or time, start time won't be set");
+      expect(screen.getByTestId('startTimeMessage')).toHaveTextContent(
+        "Invalid start date or time, start time won't be set",
+      );
 
       // Message is removed if checkbox is not selected.
       (tree.instance() as Trigger).handleChange('hasStartDate')({
@@ -305,7 +309,9 @@ describe('Trigger', () => {
       (tree.instance() as Trigger).handleChange('endTime')({
         target: { value: 'this_is_not_valid_time_format' },
       });
-      expect(screen.getByTestId('endTimeMessage')).toHaveTextContent("Invalid end date or time, end time won't be set");
+      expect(screen.getByTestId('endTimeMessage')).toHaveTextContent(
+        "Invalid end date or time, end time won't be set",
+      );
 
       // Message is removed if the format is correct.
       (tree.instance() as Trigger).handleChange('endTime')({
@@ -328,7 +334,9 @@ describe('Trigger', () => {
       (tree.instance() as Trigger).handleChange('endTime')({
         target: { value: 'this_is_not_valid_date_format' },
       });
-      expect(screen.getByTestId('endTimeMessage')).toHaveTextContent("Invalid end date or time, end time won't be set");
+      expect(screen.getByTestId('endTimeMessage')).toHaveTextContent(
+        "Invalid end date or time, end time won't be set",
+      );
 
       // Message is removed if checkbox is not selected.
       (tree.instance() as Trigger).handleChange('hasEndDate')({

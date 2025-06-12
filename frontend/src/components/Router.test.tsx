@@ -63,9 +63,7 @@ describe('Router', () => {
         <Router configs={configs} />
       </ReactRouter>,
     );
-    expect(container.querySelector('[data-testid=page-title]')!.textContent).toEqual(
-      'Apple',
-    );
+    expect(container.querySelector('[data-testid=page-title]')!.textContent).toEqual('Apple');
     // When visiting the second page, page title should be reset automatically.
     history.push('/pear');
     expect(container.querySelector('[data-testid=page-title]')!.textContent).toEqual('');

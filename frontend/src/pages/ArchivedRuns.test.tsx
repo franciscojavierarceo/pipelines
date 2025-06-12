@@ -66,7 +66,9 @@ describe('ArchivedRuns', () => {
   });
 
   it('lists archived runs in namespace', () => {
-    renderResult = TestUtils.renderWithRouter(<ArchivedRuns {...generateProps()} namespace='test-ns' />);
+    renderResult = TestUtils.renderWithRouter(
+      <ArchivedRuns {...generateProps()} namespace='test-ns' />,
+    );
     expect(renderResult.container).toBeInTheDocument();
   });
 

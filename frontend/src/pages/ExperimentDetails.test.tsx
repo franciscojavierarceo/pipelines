@@ -390,7 +390,7 @@ describe('ExperimentDetails', () => {
 
     getExperimentSpy.mockReset();
     getExperimentSpy.mockImplementation(() => newMockExperiment());
-    
+
     await TestUtils.flushPromises();
 
     // Error banner should be cleared on successful data fetch
@@ -669,7 +669,9 @@ describe('ExperimentDetails', () => {
 
   describe('EnhancedExperimentDetails', () => {
     it('renders ExperimentDetails initially', () => {
-      TestUtils.renderWithRouter(<EnhancedExperimentDetails {...generateProps()}></EnhancedExperimentDetails>);
+      TestUtils.renderWithRouter(
+        <EnhancedExperimentDetails {...generateProps()}></EnhancedExperimentDetails>,
+      );
       expect(getExperimentSpy).toHaveBeenCalledTimes(1);
     });
 

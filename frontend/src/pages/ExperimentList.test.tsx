@@ -103,7 +103,9 @@ describe('ExperimentList', () => {
         display_name: 'test run name' + i,
       })),
     }));
-    tree = TestUtils.renderWithRouter(<ExperimentList {...generateProps()} namespace={namespace} />);
+    tree = TestUtils.renderWithRouter(
+      <ExperimentList {...generateProps()} namespace={namespace} />,
+    );
     await listExperimentsSpy;
     await listRunsSpy;
     await TestUtils.flushPromises();

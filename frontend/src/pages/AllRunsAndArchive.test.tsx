@@ -54,7 +54,8 @@ describe('RunsAndArchive', () => {
     props.history.push = spy;
     const { container } = TestUtils.renderWithRouter(<AllRunsAndArchive {...(props as any)} />);
 
-    const tabs = container.querySelector('[data-testid="MD2Tabs"]') || container.querySelector('MD2Tabs');
+    const tabs =
+      container.querySelector('[data-testid="MD2Tabs"]') || container.querySelector('MD2Tabs');
     if (tabs) {
       fireEvent.click(tabs, { detail: { index: 1 } });
       expect(spy).toHaveBeenCalledWith('/archive/runs');

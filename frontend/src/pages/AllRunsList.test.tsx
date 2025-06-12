@@ -41,21 +41,22 @@ describe('AllRunsList', () => {
   let renderResult: any;
   let component: AllRunsList;
 
-  function renderComponent(
-    propsPatch: Partial<PageProps & { namespace?: string }> = {},
-  ): void {
+  function renderComponent(propsPatch: Partial<PageProps & { namespace?: string }> = {}): void {
     renderResult = TestUtils.renderWithRouter(<AllRunsList {...props} {...propsPatch} />);
     // Necessary since the component calls updateToolbar with the toolbar props,
     // then expects to get them back in props
     component = renderResult.container.querySelector('[data-testid="all-runs-list"]') as any;
     if (!component) {
-      const fiber = (renderResult.container as any)._reactInternalFiber || 
-                   (renderResult.container as any)._reactInternalInstance;
+      const fiber =
+        (renderResult.container as any)._reactInternalFiber ||
+        (renderResult.container as any)._reactInternalInstance;
       component = fiber?.child?.stateNode;
     }
     if (component && component.getInitialToolbarState) {
       _toolbarProps = component.getInitialToolbarState();
-      renderResult = TestUtils.renderWithRouter(<AllRunsList {...props} {...propsPatch} toolbarProps={_toolbarProps} />);
+      renderResult = TestUtils.renderWithRouter(
+        <AllRunsList {...props} {...propsPatch} toolbarProps={_toolbarProps} />,
+      );
     }
     updateToolbarSpy.mockClear();
   }
@@ -148,6 +149,9 @@ describe('AllRunsList', () => {
   it('shows a list of available runs', () => {
     renderComponent();
     const runList = renderResult.container.querySelector('[data-testid="run-list"]');
-    expect(runList).toHaveAttribute('data-storage-state', V2beta1RunStorageState.AVAILABLE.toString());
+    expect(runList).toHaveAttribute(
+      'data-storage-state',
+      V2beta1RunStorageState.AVAILABLE.toString(),
+    );
   });
 });

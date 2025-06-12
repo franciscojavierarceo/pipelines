@@ -38,7 +38,9 @@ function generateProps(): AllExperimentsAndArchiveProps {
 
 describe('ExperimentsAndArchive', () => {
   it('renders experiments page', () => {
-    const tree = TestUtils.renderWithRouter(<AllExperimentsAndArchive {...(generateProps() as any)} />);
+    const tree = TestUtils.renderWithRouter(
+      <AllExperimentsAndArchive {...(generateProps() as any)} />,
+    );
     expect(tree.container).toMatchSnapshot();
   });
 

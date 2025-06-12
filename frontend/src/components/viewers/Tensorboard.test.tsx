@@ -278,7 +278,9 @@ describe.only('Tensorboard', () => {
     const config = DEFAULT_CONFIG;
     const getAppMock = () => Promise.resolve(GET_APP_NOT_FOUND);
     const getTensorboardSpy = jest.spyOn(Apis, 'getTensorboardApp').mockImplementation(getAppMock);
-    const { container: renderedContainer } = render(<TensorboardViewer configs={[DEFAULT_CONFIG]} />);
+    const { container: renderedContainer } = render(
+      <TensorboardViewer configs={[DEFAULT_CONFIG]} />,
+    );
     container = renderedContainer;
     const base = container.innerHTML;
 
@@ -335,7 +337,9 @@ describe.only('Tensorboard', () => {
     const startAppMock = jest.fn(() => Promise.resolve(''));
     jest.spyOn(Apis, 'getTensorboardApp').mockImplementation(getAppMock);
     jest.spyOn(Apis, 'startTensorboardApp').mockImplementationOnce(startAppMock);
-    const { container: renderedContainer } = render(<TensorboardViewer configs={[config, config2]} />);
+    const { container: renderedContainer } = render(
+      <TensorboardViewer configs={[config, config2]} />,
+    );
     container = renderedContainer;
     await TestUtils.flushPromises();
     expect(getAppMock).toHaveBeenCalledWith(
@@ -376,12 +380,12 @@ describe.only('Tensorboard', () => {
 
     const selectButton = container.querySelector('div[role="button"]');
     fireEvent.click(selectButton!);
-    
-    const tensorflowOption = Array.from(container.querySelectorAll('li')).find(el => 
-      el.textContent?.startsWith('TensorFlow 1.15')
+
+    const tensorflowOption = Array.from(container.querySelectorAll('li')).find(el =>
+      el.textContent?.startsWith('TensorFlow 1.15'),
     );
     fireEvent.click(tensorflowOption!);
-    
+
     const startButton = screen.getByTitle('Start Tensorboard');
     fireEvent.click(startButton);
     expect(startAppSpy).toHaveBeenCalledWith({
@@ -406,7 +410,7 @@ describe.only('Tensorboard', () => {
     // delete a tensorboard
     const deleteButton = container.querySelector('#delete button');
     fireEvent.click(deleteButton!);
-    
+
     const confirmButton = screen.getByTitle('Stop');
     fireEvent.click(confirmButton);
     expect(deleteAppSpy).toHaveBeenCalledWith(config.url, config.namespace);
@@ -423,7 +427,7 @@ describe.only('Tensorboard', () => {
     const { container: renderedContainer } = render(<TensorboardViewer configs={[config]} />);
     container = renderedContainer;
     await TestUtils.flushPromises();
-    
+
     const deleteButton = container.querySelector('#delete button');
     fireEvent.click(deleteButton!);
     expect(screen.getByText('Stop Tensorboard?')).toBeInTheDocument();
@@ -436,7 +440,7 @@ describe.only('Tensorboard', () => {
     const { container: renderedContainer } = render(<TensorboardViewer configs={[config]} />);
     container = renderedContainer;
     await TestUtils.flushPromises();
-    
+
     const deleteButton = container.querySelector('#delete button');
     fireEvent.click(deleteButton!);
 
@@ -461,12 +465,16 @@ describe.only('Tensorboard', () => {
     expect(Apis.isTensorboardPodReady).toHaveBeenCalledTimes(1);
     expect(Apis.isTensorboardPodReady).toHaveBeenCalledWith('apis/v1beta1/_proxy/podaddress');
     expect(screen.getByText('Open Tensorboard')).toBeInTheDocument();
-    expect(screen.getByText('Tensorboard is starting, and you may need to wait for a few minutes.')).toBeInTheDocument();
+    expect(
+      screen.getByText('Tensorboard is starting, and you may need to wait for a few minutes.'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Stop Tensorboard')).toBeInTheDocument();
 
     // After a while, it is ready and wait message is not shwon any more
     jest.spyOn(Apis, 'isTensorboardPodReady').mockImplementation(() => Promise.resolve(true));
     await flushPromisesAndTimers();
-    expect(screen.queryByText('Tensorboard is starting, and you may need to wait for a few minutes.')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText('Tensorboard is starting, and you may need to wait for a few minutes.'),
+    ).not.toBeInTheDocument();
   });
 });

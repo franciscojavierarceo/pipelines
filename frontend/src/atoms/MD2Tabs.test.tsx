@@ -34,9 +34,7 @@ describe('Input', () => {
 
   it('calls the onSwitch function if an unselected button is clicked', () => {
     const switchHandler = jest.fn();
-    render(
-      <MD2Tabs tabs={['tab1', 'tab2']} selectedTab={0} onSwitch={switchHandler} />,
-    );
+    render(<MD2Tabs tabs={['tab1', 'tab2']} selectedTab={0} onSwitch={switchHandler} />);
     const buttons = screen.getAllByRole('button');
     fireEvent.click(buttons[1]);
     expect(switchHandler).toHaveBeenCalled();
@@ -44,9 +42,7 @@ describe('Input', () => {
 
   it('does not the onSwitch function if the already selected button is clicked', () => {
     const switchHandler = jest.fn();
-    render(
-      <MD2Tabs tabs={['tab1', 'tab2']} selectedTab={1} onSwitch={switchHandler} />,
-    );
+    render(<MD2Tabs tabs={['tab1', 'tab2']} selectedTab={1} onSwitch={switchHandler} />);
     const buttons = screen.getAllByRole('button');
     fireEvent.click(buttons[1]);
     expect(switchHandler).not.toHaveBeenCalled();

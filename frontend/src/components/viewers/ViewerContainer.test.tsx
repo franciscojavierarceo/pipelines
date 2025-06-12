@@ -28,7 +28,9 @@ describe('ViewerContainer', () => {
 
   Object.keys(PlotType).map(type =>
     it('renders a viewer of type ' + type, () => {
-      const tree = TestUtils.renderWithRouter(<ViewerContainer configs={[{ type: PlotType[type] }]} />);
+      const tree = TestUtils.renderWithRouter(
+        <ViewerContainer configs={[{ type: PlotType[type] }]} />,
+      );
       expect(tree.container).toMatchSnapshot();
     }),
   );

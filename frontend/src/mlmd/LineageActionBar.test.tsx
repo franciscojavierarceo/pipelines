@@ -35,7 +35,9 @@ describe('LineageActionBar', () => {
   });
 
   it('Renders correctly for a given initial target', () => {
-    const { container } = render(<LineageActionBar initialTarget={testModel} setLineageViewTarget={jest.fn()} />);
+    const { container } = render(
+      <LineageActionBar initialTarget={testModel} setLineageViewTarget={jest.fn()} />,
+    );
     expect(container).toMatchSnapshot();
   });
 

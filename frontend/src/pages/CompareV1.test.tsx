@@ -261,7 +261,6 @@ describe('CompareV1', () => {
     // Verify that error banner is being shown
     expect(updateBannerSpy).toHaveBeenLastCalledWith(expect.objectContaining({ mode: 'error' }));
 
-
     // Error banner should be cleared
     expect(updateBannerSpy).toHaveBeenLastCalledWith({});
   });
@@ -427,7 +426,7 @@ describe('CompareV1', () => {
     await setUpViewersAndShallowMount();
     const collapseButton = screen.getByRole('button', { name: /collapse/i });
     fireEvent.click(collapseButton);
-    
+
     // Verify sections are collapsed by checking if content is hidden
     expect(screen.queryByText('Metrics')).not.toBeVisible();
     expect(screen.queryByText('Parameters')).not.toBeVisible();
@@ -437,17 +436,17 @@ describe('CompareV1', () => {
 
   it('expands all sections if they were collapsed', async () => {
     await setUpViewersAndShallowMount();
-    
+
     const collapseButton = screen.getByRole('button', { name: /collapse/i });
     fireEvent.click(collapseButton);
-    
+
     // Verify sections are collapsed by checking if content is hidden
     expect(screen.queryByText('Metrics')).not.toBeVisible();
     expect(screen.queryByText('Parameters')).not.toBeVisible();
-    
+
     const expandButton = screen.getByRole('button', { name: /expand/i });
     fireEvent.click(expandButton);
-    
+
     // Verify sections are expanded by checking if content is visible
     expect(screen.getByText('Metrics')).toBeVisible();
     expect(screen.getByText('Parameters')).toBeVisible();
@@ -488,7 +487,7 @@ describe('CompareV1', () => {
     await TestUtils.flushPromises();
 
     const tableRows = screen.getAllByRole('row');
-    
+
     fireEvent.click(tableRows[0]);
     fireEvent.click(tableRows[2]);
 

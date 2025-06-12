@@ -47,10 +47,10 @@ describe('AllRecurringRunsList', () => {
     });
   }
 
-  function renderComponent(
-    propsPatch: Partial<PageProps & { namespace?: string }> = {},
-  ): void {
-    const result = TestUtils.renderWithRouter(<AllRecurringRunsList {...generateProps()} {...propsPatch} />);
+  function renderComponent(propsPatch: Partial<PageProps & { namespace?: string }> = {}): void {
+    const result = TestUtils.renderWithRouter(
+      <AllRecurringRunsList {...generateProps()} {...propsPatch} />,
+    );
     container = result.container;
     updateToolbarSpy.mockClear();
   }

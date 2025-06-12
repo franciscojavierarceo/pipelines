@@ -99,7 +99,7 @@ describe('RecurringRunsManager', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...generateProps()} />);
     await componentRef!._loadRuns({});
     expect(listRecurringRunsSpy).toHaveBeenCalledTimes(1);
@@ -129,7 +129,7 @@ describe('RecurringRunsManager', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...generateProps()} />);
     await componentRef!._loadRuns({});
     expect(listRecurringRunsSpy).toHaveBeenCalledTimes(1);
@@ -154,7 +154,7 @@ describe('RecurringRunsManager', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...generateProps()} />);
     await componentRef!._setEnabledState('test-run', true);
     expect(enableRecurringRunSpy).toHaveBeenCalledTimes(1);
@@ -173,7 +173,7 @@ describe('RecurringRunsManager', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...generateProps()} />);
     await componentRef!._setEnabledState('test-run', false);
     expect(disableRecurringRunSpy).toHaveBeenCalledTimes(1);
@@ -192,7 +192,7 @@ describe('RecurringRunsManager', () => {
         }}
       />
     ));
-    
+
     tree = TestUtils.renderWithRouter(<TestComponent {...generateProps()} />);
     TestUtils.makeErrorResponseOnce(enableRecurringRunSpy, 'cannot enable');
     await componentRef!._setEnabledState('test-run', true);

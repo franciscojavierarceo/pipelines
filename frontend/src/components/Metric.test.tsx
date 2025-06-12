@@ -48,12 +48,16 @@ describe('Metric', () => {
   });
 
   it('renders a metric when metric has value and percentage format', () => {
-    renderResult = render(<Metric metric={{ format: RunMetricFormat.PERCENTAGE, number_value: 0.54 }} />);
+    renderResult = render(
+      <Metric metric={{ format: RunMetricFormat.PERCENTAGE, number_value: 0.54 }} />,
+    );
     expect(renderResult.container).toMatchSnapshot();
   });
 
   it('renders an empty metric when metric has no metadata and unspecified format', () => {
-    renderResult = render(<Metric metric={{ format: RunMetricFormat.UNSPECIFIED, number_value: 0.54 }} />);
+    renderResult = render(
+      <Metric metric={{ format: RunMetricFormat.UNSPECIFIED, number_value: 0.54 }} />,
+    );
     expect(renderResult.container).toMatchSnapshot();
   });
 

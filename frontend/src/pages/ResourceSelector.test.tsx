@@ -105,16 +105,18 @@ describe('ResourceSelector', () => {
   it('displays resource selector', async () => {
     listResourceSpy.mockClear();
     renderResult = render(
-      <TestResourceSelector 
-        {...generateProps()} 
-        ref={(ref: TestResourceSelector) => { testResourceSelectorRef = ref; }}
-      />
+      <TestResourceSelector
+        {...generateProps()}
+        ref={(ref: TestResourceSelector) => {
+          testResourceSelectorRef = ref;
+        }}
+      />,
     );
-    
+
     await waitFor(() => {
       expect(testResourceSelectorRef).not.toBeNull();
     });
-    
+
     if (testResourceSelectorRef) {
       await testResourceSelectorRef._load({});
     }
@@ -139,16 +141,18 @@ describe('ResourceSelector', () => {
     props.listApi = listResourceSpy as any;
 
     renderResult = render(
-      <TestResourceSelector 
-        {...props} 
-        ref={(ref: TestResourceSelector) => { testResourceSelectorRef = ref; }}
-      />
+      <TestResourceSelector
+        {...props}
+        ref={(ref: TestResourceSelector) => {
+          testResourceSelectorRef = ref;
+        }}
+      />,
     );
-    
+
     await waitFor(() => {
       expect(testResourceSelectorRef).not.toBeNull();
     });
-    
+
     if (testResourceSelectorRef) {
       await testResourceSelectorRef._load({});
     }
@@ -163,16 +167,18 @@ describe('ResourceSelector', () => {
     jest.spyOn(console, 'error').mockImplementation();
 
     renderResult = render(
-      <TestResourceSelector 
-        {...generateProps()} 
-        ref={(ref: TestResourceSelector) => { testResourceSelectorRef = ref; }}
-      />
+      <TestResourceSelector
+        {...generateProps()}
+        ref={(ref: TestResourceSelector) => {
+          testResourceSelectorRef = ref;
+        }}
+      />,
     );
-    
+
     await waitFor(() => {
       expect(testResourceSelectorRef).not.toBeNull();
     });
-    
+
     if (testResourceSelectorRef) {
       await testResourceSelectorRef._load({});
     }
@@ -188,43 +194,44 @@ describe('ResourceSelector', () => {
 
   it('calls selection callback when a resource is selected', async () => {
     renderResult = render(
-      <TestResourceSelector 
-        {...generateProps()} 
-        ref={(ref: TestResourceSelector) => { testResourceSelectorRef = ref; }}
-      />
+      <TestResourceSelector
+        {...generateProps()}
+        ref={(ref: TestResourceSelector) => {
+          testResourceSelectorRef = ref;
+        }}
+      />,
     );
-    
+
     await waitFor(() => {
       expect(testResourceSelectorRef).not.toBeNull();
     });
-    
+
     if (testResourceSelectorRef) {
       await testResourceSelectorRef._load({});
       testResourceSelectorRef._selectionChanged([RESOURCES[1].id!]);
     }
-    
+
     expect(selectionChangedCbSpy).toHaveBeenLastCalledWith(RESOURCES[1].id!);
   });
 
   it('logs error if more than one resource is selected', async () => {
     renderResult = render(
-      <TestResourceSelector 
-        {...generateProps()} 
-        ref={(ref: TestResourceSelector) => { testResourceSelectorRef = ref; }}
-      />
+      <TestResourceSelector
+        {...generateProps()}
+        ref={(ref: TestResourceSelector) => {
+          testResourceSelectorRef = ref;
+        }}
+      />,
     );
     const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
-    
+
     await waitFor(() => {
       expect(testResourceSelectorRef).not.toBeNull();
     });
-    
+
     if (testResourceSelectorRef) {
       await testResourceSelectorRef._load({});
-      testResourceSelectorRef._selectionChanged([
-        RESOURCES[0].id!,
-        RESOURCES[1].id!,
-      ]);
+      testResourceSelectorRef._selectionChanged([RESOURCES[0].id!, RESOURCES[1].id!]);
     }
 
     expect(selectionChangedCbSpy).not.toHaveBeenCalled();
