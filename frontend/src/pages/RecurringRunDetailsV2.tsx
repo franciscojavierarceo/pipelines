@@ -15,19 +15,19 @@
  */
 
 import * as React from 'react';
-import Buttons, { ButtonKeys } from 'src/lib/Buttons';
-import DetailsTable from 'src/components/DetailsTable';
-import { V2beta1Experiment } from 'src/apisv2beta1/experiment';
-import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from 'src/apisv2beta1/recurringrun';
-import { Apis } from 'src/lib/Apis';
+import Buttons, { ButtonKeys } from '../lib/Buttons';
+import DetailsTable from '../components/DetailsTable';
+import { V2beta1Experiment } from '../apisv2beta1/experiment';
+import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from '../apisv2beta1/recurringrun';
+import { Apis } from '../lib/Apis';
 import { Page } from './Page';
-import { RoutePage, RouteParams } from 'src/components/Router';
-import { Breadcrumb, ToolbarProps } from 'src/components/Toolbar';
+import { RoutePage, RouteParams } from '../components/Router';
+import { Breadcrumb, ToolbarProps } from '../components/Toolbar';
 import { classes } from 'typestyle';
-import { commonCss, padding } from 'src/Css';
-import { KeyValue } from 'src/lib/StaticGraphParser';
-import { formatDateString, errorToMessage, enabledDisplayStringV2 } from 'src/lib/Utils';
-import { triggerDisplayString } from 'src/lib/TriggerUtils';
+import { commonCss, padding } from '../Css';
+import { KeyValue } from '../lib/StaticGraphParser';
+import { formatDateString, errorToMessage, enabledDisplayStringV2 } from '../lib/Utils';
+import { triggerDisplayString } from '../lib/TriggerUtils';
 
 interface RecurringRunConfigState {
   run: V2beta1RecurringRun | null;

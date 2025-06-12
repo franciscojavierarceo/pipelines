@@ -17,11 +17,11 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
 import { ImportMethod, NewPipelineVersion } from './NewPipelineVersion';
-import TestUtils from 'src/TestUtils';
+import TestUtils from '../TestUtils';
 
 import { PageProps } from './Page';
-import { Apis } from 'src/lib/Apis';
-import { RoutePage, QUERY_PARAMS } from 'src/components/Router';
+import { Apis } from '../lib/Apis';
+import { RoutePage, QUERY_PARAMS } from '../components/Router';
 
 class TestNewPipelineVersion extends NewPipelineVersion {
   public _pipelineSelectorClosed = super._pipelineSelectorClosed;

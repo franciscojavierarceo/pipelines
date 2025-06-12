@@ -18,11 +18,11 @@ import * as React from 'react';
 import Buttons from '../lib/Buttons';
 import ExperimentList from '../components/ExperimentList';
 import { Page, PageProps } from './Page';
-import { V2beta1ExperimentStorageState } from 'src/apisv2beta1/experiment';
+import { V2beta1ExperimentStorageState } from '../apisv2beta1/experiment';
 import { ToolbarProps } from '../components/Toolbar';
 import { classes } from 'typestyle';
 import { commonCss, padding } from '../Css';
-import { NamespaceContext } from 'src/lib/KubeflowClient';
+import { NamespaceContext } from '../lib/KubeflowClient';
 
 interface ArchivedExperimentsProp {
   namespace?: string;

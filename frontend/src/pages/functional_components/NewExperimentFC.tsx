@@ -17,17 +17,17 @@
 import Button from '@material-ui/core/Button';
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { commonCss, fontsize, padding } from 'src/Css';
-import { V2beta1Experiment } from 'src/apisv2beta1/experiment';
-import { V2beta1PipelineVersion } from 'src/apisv2beta1/pipeline';
-import BusyButton from 'src/atoms/BusyButton';
-import Input from 'src/atoms/Input';
-import { QUERY_PARAMS, RoutePage } from 'src/components/Router';
-import { Apis } from 'src/lib/Apis';
-import { URLParser } from 'src/lib/URLParser';
-import { errorToMessage } from 'src/lib/Utils';
-import { getLatestVersion } from 'src/pages/NewRunV2';
-import { PageProps } from 'src/pages/Page';
+import { commonCss, fontsize, padding } from '../../Css';
+import { V2beta1Experiment } from '../../apisv2beta1/experiment';
+import { V2beta1PipelineVersion } from '../../apisv2beta1/pipeline';
+import BusyButton from '../../atoms/BusyButton';
+import Input from '../../atoms/Input';
+import { QUERY_PARAMS, RoutePage } from '../../components/Router';
+import { Apis } from '../../lib/Apis';
+import { URLParser } from '../../lib/URLParser';
+import { errorToMessage } from '../../lib/Utils';
+import { getLatestVersion } from '../NewRunV2';
+import { PageProps } from '../Page';
 import { classes, stylesheet } from 'typestyle';
 
 const css = stylesheet({

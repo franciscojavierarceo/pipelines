@@ -15,33 +15,33 @@
  */
 
 import * as React from 'react';
-import Buttons, { ButtonKeys } from 'src/lib/Buttons';
+import Buttons, { ButtonKeys } from '../lib/Buttons';
 import CustomTable, {
   Column,
   Row,
   ExpandState,
   CustomRendererProps,
-} from 'src/components/CustomTable';
+} from '../components/CustomTable';
 import RunList from './RunList';
 import produce from 'immer';
 import {
   V2beta1ListExperimentsResponse,
   V2beta1Experiment,
   V2beta1ExperimentStorageState,
-} from 'src/apisv2beta1/experiment';
-import { V2beta1Filter, V2beta1PredicateOperation } from 'src/apisv2beta1/filter';
-import { V2beta1Run, V2beta1RunStorageState } from 'src/apisv2beta1/run';
-import { Apis, ExperimentSortKeys, ListRequest, RunSortKeys } from 'src/lib/Apis';
+} from '../apisv2beta1/experiment';
+import { V2beta1Filter, V2beta1PredicateOperation } from '../apisv2beta1/filter';
+import { V2beta1Run, V2beta1RunStorageState } from '../apisv2beta1/run';
+import { Apis, ExperimentSortKeys, ListRequest, RunSortKeys } from '../lib/Apis';
 import { Link } from 'react-router-dom';
 import { Page, PageProps } from './Page';
-import { RoutePage, RouteParams } from 'src/components/Router';
-import { ToolbarProps } from 'src/components/Toolbar';
+import { RoutePage, RouteParams } from '../components/Router';
+import { ToolbarProps } from '../components/Toolbar';
 import { classes } from 'typestyle';
-import { commonCss, padding } from 'src/Css';
-import { logger } from 'src/lib/Utils';
+import { commonCss, padding } from '../Css';
+import { logger } from '../lib/Utils';
 import { statusToIcon } from './StatusV2';
 import Tooltip from '@material-ui/core/Tooltip';
-import { NamespaceContext } from 'src/lib/KubeflowClient';
+import { NamespaceContext } from '../lib/KubeflowClient';
 
 interface DisplayExperiment extends V2beta1Experiment {
   last5Runs?: V2beta1Run[];

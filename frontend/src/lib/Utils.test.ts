@@ -27,7 +27,7 @@ import {
   logger,
   mergeApiParametersByNames,
 } from './Utils';
-import { V2beta1RecurringRunStatus } from 'src/apisv2beta1/recurringrun';
+import { V2beta1RecurringRunStatus } from '../apisv2beta1/recurringrun';
 
 describe('Utils', () => {
   describe('log', () => {

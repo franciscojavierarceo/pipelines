@@ -18,30 +18,30 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import fs from 'fs';
 import 'jest';
 import * as JsYaml from 'js-yaml';
-import * as features from 'src/features';
+import * as features from '../features';
 import React from 'react';
-import { testBestPractices } from 'src/TestUtils';
-import { CommonTestWrapper } from 'src/TestWrapper';
+import { testBestPractices } from '../TestUtils';
+import { CommonTestWrapper } from '../TestWrapper';
 import {
   V2beta1Experiment,
   V2beta1ExperimentStorageState,
   V2beta1ListExperimentsResponse,
-} from 'src/apisv2beta1/experiment';
-import { V2beta1Filter, V2beta1PredicateOperation } from 'src/apisv2beta1/filter';
+} from '../apisv2beta1/experiment';
+import { V2beta1Filter, V2beta1PredicateOperation } from '../apisv2beta1/filter';
 import {
   V2beta1Pipeline,
   V2beta1PipelineVersion,
   V2beta1ListPipelinesResponse,
   V2beta1ListPipelineVersionsResponse,
-} from 'src/apisv2beta1/pipeline';
-import { V2beta1Run, V2beta1RuntimeState } from 'src/apisv2beta1/run';
-import { V2beta1RecurringRun, RecurringRunMode } from 'src/apisv2beta1/recurringrun';
-import { QUERY_PARAMS, RoutePage } from 'src/components/Router';
-import { Apis } from 'src/lib/Apis';
-import { convertYamlToV2PipelineSpec } from 'src/lib/v2/WorkflowUtils';
-import NewRunV2 from 'src/pages/NewRunV2';
-import NewRunSwitcher from 'src/pages/NewRunSwitcher';
-import { PageProps } from 'src/Page';
+} from '../apisv2beta1/pipeline';
+import { V2beta1Run, V2beta1RuntimeState } from '../apisv2beta1/run';
+import { V2beta1RecurringRun, RecurringRunMode } from '../apisv2beta1/recurringrun';
+import { QUERY_PARAMS, RoutePage } from '../components/Router';
+import { Apis } from '../lib/Apis';
+import { convertYamlToV2PipelineSpec } from '../lib/v2/WorkflowUtils';
+import NewRunV2 from './NewRunV2';
+import NewRunSwitcher from './NewRunSwitcher';
+import { PageProps } from '../Page';
 
 const V2_XG_PIPELINESPEC_PATH = 'src/data/test/xgboost_sample_pipeline.yaml';
 const v2XGYamlTemplateString = fs.readFileSync(V2_XG_PIPELINESPEC_PATH, 'utf8');

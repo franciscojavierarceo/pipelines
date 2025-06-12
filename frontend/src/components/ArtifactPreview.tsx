@@ -16,14 +16,14 @@
 
 import React from 'react';
 import { useQuery } from 'react-query';
-import { ExternalLink } from 'src/atoms/ExternalLink';
-import { color } from 'src/Css';
-import { Apis } from 'src/lib/Apis';
-import WorkflowParser, { StoragePath } from 'src/lib/WorkflowParser';
+import { ExternalLink } from '../atoms/ExternalLink';
+import { color } from '../Css';
+import { Apis } from '../lib/Apis';
+import WorkflowParser, { StoragePath } from '../lib/WorkflowParser';
 import { stylesheet } from 'typestyle';
 import Banner from './Banner';
 import { ValueComponentProps } from './DetailsTable';
-import { logger } from 'src/lib/Utils';
+import { logger } from '../lib/Utils';
 import { URIToSessionInfo } from './tabs/InputOutputTab';
 
 const css = stylesheet({

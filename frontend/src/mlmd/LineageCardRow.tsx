@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 import { classes, cssRaw } from 'typestyle';
 import { LineageTypedResource } from './LineageTypes';
 import { getResourceDescription, getResourceName } from './Utils';
-import { Artifact } from 'src/third_party/mlmd';
+import { Artifact } from '../third_party/mlmd';
 
 cssRaw(`
 .cardRow {

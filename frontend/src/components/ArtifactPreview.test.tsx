@@ -16,7 +16,7 @@
 
 import { render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { CommonTestWrapper } from 'src/TestWrapper';
+import { CommonTestWrapper } from '../TestWrapper';
 import { Apis } from '../lib/Apis';
 import { testBestPractices } from '../TestUtils';
 import ArtifactPreview from './ArtifactPreview';

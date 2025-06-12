@@ -18,18 +18,18 @@ import { render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
 import fs from 'fs';
 import * as JsYaml from 'js-yaml';
-import { CommonTestWrapper } from 'src/TestWrapper';
+import { CommonTestWrapper } from '../TestWrapper';
 import RecurringRunDetailsRouter from './RecurringRunDetailsRouter';
 import RecurringRunDetailsV2 from './RecurringRunDetailsV2';
-import TestUtils from 'src/TestUtils';
-import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from 'src/apisv2beta1/recurringrun';
-import { V2beta1PipelineVersion } from 'src/apisv2beta1/pipeline';
-import { Apis } from 'src/lib/Apis';
+import TestUtils from '../TestUtils';
+import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from '../apisv2beta1/recurringrun';
+import { V2beta1PipelineVersion } from '../apisv2beta1/pipeline';
+import { Apis } from '../lib/Apis';
 import { PageProps } from './Page';
-import { RouteParams, RoutePage } from 'src/components/Router';
-import * as features from 'src/features';
+import { RouteParams, RoutePage } from '../components/Router';
+import * as features from '../features';
 
-const V2_PIPELINESPEC_PATH = 'src/data/test/lightweight_python_functions_v2_pipeline_rev.yaml';
+const V2_PIPELINESPEC_PATH = '../data/test/lightweight_python_functions_v2_pipeline_rev.yaml';
 const v2YamlTemplateString = fs.readFileSync(V2_PIPELINESPEC_PATH, 'utf8');
 
 describe('RecurringRunDetailsV2', () => {

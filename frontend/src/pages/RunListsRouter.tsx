@@ -15,9 +15,9 @@
  */
 
 import * as React from 'react';
-import { V2beta1RunStorageState } from 'src/apisv2beta1/run';
-import MD2Tabs from 'src/atoms/MD2Tabs';
-import { commonCss, padding } from 'src/Css';
+import { V2beta1RunStorageState } from '../apisv2beta1/run';
+import MD2Tabs from '../atoms/MD2Tabs';
+import { commonCss, padding } from '../Css';
 import { classes } from 'typestyle';
 import RunList, { RunListProps } from './RunList';
 

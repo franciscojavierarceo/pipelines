@@ -16,13 +16,13 @@
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
-import { CommonTestWrapper } from 'src/TestWrapper';
-import TestUtils from 'src/TestUtils';
+import { CommonTestWrapper } from '../../TestWrapper';
+import TestUtils from '../../TestUtils';
 import { NewExperimentFC } from './NewExperimentFC';
-import { Apis } from 'src/lib/Apis';
-import { PageProps } from 'src/pages/Page';
-import * as features from 'src/features';
-import { RoutePage, QUERY_PARAMS } from 'src/components/Router';
+import { Apis } from '../../lib/Apis';
+import { PageProps } from '../Page';
+import * as features from '../../features';
+import { RoutePage, QUERY_PARAMS } from '../../components/Router';
 
 describe('NewExperiment', () => {
   const TEST_EXPERIMENT_ID = 'new-experiment-id';

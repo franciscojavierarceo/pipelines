@@ -17,10 +17,10 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
-import { ErrorBoundary } from 'src/atoms/ErrorBoundary';
-import { commonCss, padding } from 'src/Css';
-import { KeyValue } from 'src/lib/StaticGraphParser';
-import { getMetadataValue } from 'src/mlmd/library';
+import { ErrorBoundary } from '../../atoms/ErrorBoundary';
+import { commonCss, padding } from '../../Css';
+import { KeyValue } from '../../lib/StaticGraphParser';
+import { getMetadataValue } from '../../mlmd/library';
 import {
   filterEventWithInputArtifact,
   filterEventWithOutputArtifact,
@@ -30,8 +30,8 @@ import {
   getLinkedArtifactsByExecution,
   getStoreSessionInfoFromArtifact,
   LinkedArtifact,
-} from 'src/mlmd/MlmdUtils';
-import { ArtifactType, Execution } from 'src/third_party/mlmd';
+} from '../../mlmd/MlmdUtils';
+import { ArtifactType, Execution } from '../../third_party/mlmd';
 import ArtifactPreview from '../ArtifactPreview';
 import Banner from '../Banner';
 import DetailsTable from '../DetailsTable';

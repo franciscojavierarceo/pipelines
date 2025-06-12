@@ -16,7 +16,7 @@
 
 import React, { Ref, useRef, useState } from 'react';
 import { Button, Tooltip } from '@material-ui/core';
-import { color } from 'src/Css';
+import { color } from '../Css';
 import { classes, stylesheet } from 'typestyle';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';

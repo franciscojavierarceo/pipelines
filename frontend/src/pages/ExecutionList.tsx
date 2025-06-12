@@ -16,34 +16,34 @@
 
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { ListRequest } from 'src/lib/Apis';
-import { ExecutionHelpers } from 'src/mlmd/MlmdUtils';
-import { Api } from 'src/mlmd/library';
+import { ListRequest } from '../lib/Apis';
+import { ExecutionHelpers } from '../mlmd/MlmdUtils';
+import { Api } from '../mlmd/library';
 import {
   Execution,
   ExecutionType,
   GetExecutionsRequest,
   GetExecutionTypesRequest,
-} from 'src/third_party/mlmd';
-import { ListOperationOptions } from 'src/third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
+} from '../third_party/mlmd';
+import { ListOperationOptions } from '../third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
 import { classes } from 'typestyle';
 import CustomTable, {
   Column,
   CustomRendererProps,
   ExpandState,
   Row,
-} from 'src/components/CustomTable';
-import { RoutePageFactory } from 'src/components/Router';
-import { ToolbarProps } from 'src/components/Toolbar';
-import { commonCss, padding } from 'src/Css';
+} from '../components/CustomTable';
+import { RoutePageFactory } from '../components/Router';
+import { ToolbarProps } from '../components/Toolbar';
+import { commonCss, padding } from '../Css';
 import {
   CollapsedAndExpandedRows,
   getExpandedRow,
   groupRows,
   rowFilterFn,
   serviceErrorToString,
-} from 'src/lib/Utils';
-import { Page } from 'src/pages/Page';
+} from '../lib/Utils';
+import { Page } from './Page';
 
 interface ExecutionListProps {
   isGroupView: boolean;

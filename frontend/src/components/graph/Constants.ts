@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Execution, Artifact } from 'src/third_party/mlmd';
+import { Execution, Artifact } from '../../third_party/mlmd';
 
 // Being used as the base interace for Node and Edge in Reactflow.
 export type FlowElementDataBase = {

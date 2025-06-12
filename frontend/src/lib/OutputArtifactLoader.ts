@@ -15,7 +15,7 @@
  */
 
 import { csvParseRows } from 'd3-dsv';
-import { Artifact, ArtifactType, Execution } from 'src/third_party/mlmd';
+import { Artifact, ArtifactType, Execution } from '../third_party/mlmd';
 import { ApiVisualization, ApiVisualizationType } from '../apis/visualization';
 import { ConfusionMatrixConfig } from '../components/viewers/ConfusionMatrix';
 import { HTMLViewerConfig } from '../components/viewers/HTMLViewer';
@@ -29,7 +29,7 @@ import {
   filterArtifactsByType,
   getArtifactTypes,
   getOutputArtifactsInExecution,
-} from 'src/mlmd/MlmdUtils';
+} from '../mlmd/MlmdUtils';
 import { errorToMessage, logger } from './Utils';
 import WorkflowParser, { StoragePath } from './WorkflowParser';
 export interface PlotMetadata {

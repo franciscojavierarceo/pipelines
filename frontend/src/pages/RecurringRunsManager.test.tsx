@@ -15,11 +15,11 @@
  */
 
 import * as React from 'react';
-import TestUtils from 'src/TestUtils';
-import { ListRequest, Apis } from 'src/lib/Apis';
+import TestUtils from '../TestUtils';
+import { ListRequest, Apis } from '../lib/Apis';
 import { render, screen, fireEvent } from '@testing-library/react';
 import RecurringRunsManager, { RecurringRunListProps } from './RecurringRunsManager';
-import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from 'src/apisv2beta1/recurringrun';
+import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from '../apisv2beta1/recurringrun';
 
 describe('RecurringRunsManager', () => {
   class TestRecurringRunsManager extends RecurringRunsManager {

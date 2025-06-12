@@ -20,7 +20,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { PlotType } from './Viewer';
 import VisualizationCreator, { VisualizationCreatorConfig } from './VisualizationCreator';
 import { ApiVisualizationType } from '../../apis/visualization';
-import { diffHTML } from 'src/TestUtils';
+import { diffHTML } from '../../TestUtils';
 
 describe('VisualizationCreator', () => {
   it('does not render component when no config is provided', () => {

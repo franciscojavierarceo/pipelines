@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { Api } from 'src/mlmd/library';
+import { Api } from './library';
 import {
   EXECUTION_KEY_CACHED_EXECUTION_ID,
   filterLinkedArtifactsByType,
@@ -25,8 +25,8 @@ import {
   getRunContext,
   getArtifactsFromContext,
   getEventsByExecutions,
-} from 'src/mlmd/MlmdUtils';
-import { expectWarnings, testBestPractices } from 'src/TestUtils';
+} from './MlmdUtils';
+import { expectWarnings, testBestPractices } from '../TestUtils';
 import {
   Artifact,
   ArtifactType,
@@ -36,7 +36,7 @@ import {
   Execution,
   GetContextByTypeAndNameRequest,
   GetContextByTypeAndNameResponse,
-} from 'src/third_party/mlmd';
+} from '../third_party/mlmd';
 import {
   GetArtifactsByContextRequest,
   GetArtifactsByContextResponse,
@@ -46,7 +46,7 @@ import {
   GetContextTypeResponse,
   GetEventsByExecutionIDsRequest,
   GetEventsByExecutionIDsResponse,
-} from 'src/third_party/mlmd/generated/ml_metadata/proto/metadata_store_service_pb';
+} from '../third_party/mlmd/generated/ml_metadata/proto/metadata_store_service_pb';
 import { Workflow, WorkflowSpec, WorkflowStatus } from 'third_party/argo-ui/argo_template';
 
 testBestPractices();

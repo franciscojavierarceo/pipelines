@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { testBestPractices } from 'src/TestUtils';
+import { testBestPractices } from '../../TestUtils';
 import { Workflow, WorkflowSpec, WorkflowStatus } from 'third_party/argo-ui/argo_template';
 import {
   convertYamlToPlatformSpec,
@@ -20,8 +20,8 @@ import {
   isTemplateV2,
   isV2Pipeline,
 } from './WorkflowUtils';
-import { ComponentSpec } from 'src/generated/pipeline_spec';
-import * as features from 'src/features';
+import { ComponentSpec } from '../../generated/pipeline_spec';
+import * as features from '../../features';
 import fs from 'fs';
 import jsyaml from 'js-yaml';
 

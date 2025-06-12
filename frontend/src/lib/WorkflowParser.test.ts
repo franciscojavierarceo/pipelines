@@ -19,9 +19,9 @@ import { NodePhase } from '../lib/StatusUtils';
 import { Constants } from './Constants';
 import WorkflowParser, { StorageService } from './WorkflowParser';
 import { Workflow } from 'third_party/argo-ui/argo_template';
-import { Execution } from 'src/third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
-import { KfpExecutionProperties } from 'src/mlmd/MlmdUtils';
-import { stringValue } from 'src/mlmd/TestUtils';
+import { Execution } from '../third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
+import { KfpExecutionProperties } from '../mlmd/MlmdUtils';
+import { stringValue } from '../mlmd/TestUtils';
 
 describe('WorkflowParser', () => {
   describe('createRuntimeGraph', () => {

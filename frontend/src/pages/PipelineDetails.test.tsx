@@ -19,21 +19,21 @@ import { graphlib } from 'dagre';
 
 import * as React from 'react';
 import * as JsYaml from 'js-yaml';
-import { ApiPipeline, ApiPipelineVersion } from 'src/apis/pipeline';
-import { V2beta1Pipeline, V2beta1PipelineVersion } from 'src/apisv2beta1/pipeline';
-import { ApiRunDetail } from 'src/apis/run';
-import { QUERY_PARAMS, RoutePage, RouteParams } from 'src/components/Router';
-import { Apis } from 'src/lib/Apis';
-import { ButtonKeys } from 'src/lib/Buttons';
-import * as StaticGraphParser from 'src/lib/StaticGraphParser';
-import TestUtils from 'src/TestUtils';
-import * as features from 'src/features';
+import { ApiPipeline, ApiPipelineVersion } from '../apis/pipeline';
+import { V2beta1Pipeline, V2beta1PipelineVersion } from '../apisv2beta1/pipeline';
+import { ApiRunDetail } from '../apis/run';
+import { QUERY_PARAMS, RoutePage, RouteParams } from '../components/Router';
+import { Apis } from '../lib/Apis';
+import { ButtonKeys } from '../lib/Buttons';
+import * as StaticGraphParser from '../lib/StaticGraphParser';
+import TestUtils from '../TestUtils';
+import * as features from '../features';
 import { PageProps } from './Page';
 import PipelineDetails from './PipelineDetails';
-import { ApiJob } from 'src/apis/job';
-import { V2beta1Run } from 'src/apisv2beta1/run';
-import { V2beta1RecurringRun } from 'src/apisv2beta1/recurringrun';
-import { V2beta1Experiment } from 'src/apisv2beta1/experiment';
+import { ApiJob } from '../apis/job';
+import { V2beta1Run } from '../apisv2beta1/run';
+import { V2beta1RecurringRun } from '../apisv2beta1/recurringrun';
+import { V2beta1Experiment } from '../apisv2beta1/experiment';
 
 describe('PipelineDetails', () => {
   const updateBannerSpy = jest.fn();

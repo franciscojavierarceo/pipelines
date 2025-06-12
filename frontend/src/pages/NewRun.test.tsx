@@ -16,27 +16,27 @@
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
-import { NewRun } from 'src/pages/NewRun';
-import TestUtils from 'src/TestUtils';
+import { NewRun } from './NewRun';
+import TestUtils from '../TestUtils';
 
-import { PageProps } from 'src/pages/Page';
-import { Apis } from 'src/lib/Apis';
-import { RoutePage, RouteParams, QUERY_PARAMS } from 'src/components/Router';
-import { ApiExperiment, ApiListExperimentsResponse } from 'src/apis/experiment';
+import { PageProps } from './Page';
+import { Apis } from '../lib/Apis';
+import { RoutePage, RouteParams, QUERY_PARAMS } from '../components/Router';
+import { ApiExperiment, ApiListExperimentsResponse } from '../apis/experiment';
 import {
   ApiListPipelinesResponse,
   ApiListPipelineVersionsResponse,
   ApiPipeline,
   ApiPipelineVersion,
-} from 'src/apis/pipeline';
-import { ApiResourceType, ApiRunDetail, ApiParameter, ApiRelationship } from 'src/apis/run';
+} from '../apis/pipeline';
+import { ApiResourceType, ApiRunDetail, ApiParameter, ApiRelationship } from '../apis/run';
 import { MemoryRouter } from 'react-router';
-import { logger } from 'src/lib/Utils';
-import { NamespaceContext } from 'src/lib/KubeflowClient';
-import { CommonTestWrapper } from 'src/TestWrapper';
-import { ApiFilter, PredicateOp } from 'src/apis/filter';
-import { ApiExperimentStorageState } from 'src/apis/experiment';
-import { ApiJob } from 'src/apis/job';
+import { logger } from '../lib/Utils';
+import { NamespaceContext } from '../lib/KubeflowClient';
+import { CommonTestWrapper } from '../TestWrapper';
+import { ApiFilter, PredicateOp } from '../apis/filter';
+import { ApiExperimentStorageState } from '../apis/experiment';
+import { ApiJob } from '../apis/job';
 
 class TestNewRun extends NewRun {
   public _experimentSelectorClosed = super._experimentSelectorClosed;

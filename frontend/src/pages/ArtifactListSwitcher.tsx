@@ -15,10 +15,10 @@
  */
 
 import React, { useState } from 'react';
-import MD2Tabs from 'src/atoms/MD2Tabs';
-import { commonCss, padding } from 'src/Css';
+import MD2Tabs from '../atoms/MD2Tabs';
+import { commonCss, padding } from '../Css';
 import { classes } from 'typestyle';
-import { PageProps } from 'src/pages/Page';
+import { PageProps } from './Page';
 import ArtifactList from './ArtifactList';
 
 function ArtifactListSwitcher(props: PageProps) {

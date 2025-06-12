@@ -13,9 +13,9 @@
 // limitations under the License.
 
 import { Node } from 'react-flow-renderer';
-import { FlowElementDataBase } from 'src/components/graph/Constants';
-import { PipelineSpec } from 'src/generated/pipeline_spec';
-import { Artifact, Event, Execution, Value } from 'src/third_party/mlmd';
+import { FlowElementDataBase } from '../../components/graph/Constants';
+import { PipelineSpec } from '../../generated/pipeline_spec';
+import { Artifact, Event, Execution, Value } from '../../third_party/mlmd';
 import {
   getNodeMlmdInfo,
   PARENT_DAG_ID_KEY,

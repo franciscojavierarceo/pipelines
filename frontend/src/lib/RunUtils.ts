@@ -27,7 +27,7 @@ import {
 } from '../apis/run';
 import { logger } from './Utils';
 import WorkflowParser from './WorkflowParser';
-import { ApiExperiment } from 'src/apis/experiment';
+import { ApiExperiment } from '../apis/experiment';
 
 export interface MetricMetadata {
   count: number;

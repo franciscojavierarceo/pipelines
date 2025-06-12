@@ -23,14 +23,14 @@ import ReactFlow, {
   OnLoadParams,
   ReactFlowProvider,
 } from 'react-flow-renderer';
-import 'src/build/tailwind.output.css';
+import '../../build/tailwind.output.css';
 import {
   ArtifactFlowElementData,
   ExecutionFlowElementData,
   FlowElementDataBase,
-} from 'src/components/graph/Constants';
-import { NodeTypeNames, NODE_TYPES } from 'src/lib/v2/StaticFlow';
-import { Artifact, Execution } from 'src/third_party/mlmd';
+} from '../../components/graph/Constants';
+import { NodeTypeNames, NODE_TYPES } from '../../lib/v2/StaticFlow';
+import { Artifact, Execution } from '../../third_party/mlmd';
 
 const elements = [
   {

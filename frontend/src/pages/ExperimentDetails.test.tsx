@@ -16,20 +16,20 @@
 
 import * as React from 'react';
 import EnhancedExperimentDetails, { ExperimentDetails } from './ExperimentDetails';
-import TestUtils from 'src/TestUtils';
-import { V2beta1Experiment, V2beta1ExperimentStorageState } from 'src/apisv2beta1/experiment';
-import { V2beta1RunStorageState } from 'src/apisv2beta1/run';
-import { Apis } from 'src/lib/Apis';
+import TestUtils from '../TestUtils';
+import { V2beta1Experiment, V2beta1ExperimentStorageState } from '../apisv2beta1/experiment';
+import { V2beta1RunStorageState } from '../apisv2beta1/run';
+import { Apis } from '../lib/Apis';
 import { PageProps } from './Page';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { RoutePage, RouteParams, QUERY_PARAMS } from 'src/components/Router';
-import { ToolbarProps } from 'src/components/Toolbar';
+import { RoutePage, RouteParams, QUERY_PARAMS } from '../components/Router';
+import { ToolbarProps } from '../components/Toolbar';
 import { range } from 'lodash';
-import { ButtonKeys } from 'src/lib/Buttons';
-import { NamespaceContext } from 'src/lib/KubeflowClient';
+import { ButtonKeys } from '../lib/Buttons';
+import { NamespaceContext } from '../lib/KubeflowClient';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { V2beta1RecurringRunStatus } from 'src/apisv2beta1/recurringrun';
+import { V2beta1RecurringRunStatus } from '../apisv2beta1/recurringrun';
 
 describe('ExperimentDetails', () => {
   let tree: any;

@@ -16,9 +16,9 @@
 
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { testBestPractices } from 'src/TestUtils';
-import { CommonTestWrapper } from 'src/TestWrapper';
-import { Artifact, Value } from 'src/third_party/mlmd';
+import { testBestPractices } from '../../TestUtils';
+import { CommonTestWrapper } from '../../TestWrapper';
+import { Artifact, Value } from '../../third_party/mlmd';
 import { ArtifactTitle } from './ArtifactTitle';
 
 testBestPractices();

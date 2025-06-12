@@ -21,14 +21,14 @@ import {
   V2beta1ListExperimentsResponse,
   V2beta1Experiment,
   V2beta1ExperimentStorageState,
-} from 'src/apisv2beta1/experiment';
-import { errorToMessage } from 'src/lib/Utils';
+} from '../apisv2beta1/experiment';
+import { errorToMessage } from '../lib/Utils';
 import { RoutePage, RouteParams } from './Router';
-import { commonCss } from 'src/Css';
-import { Apis, ExperimentSortKeys, ListRequest } from 'src/lib/Apis';
-import { V2beta1RunStorageState } from 'src/apisv2beta1/run';
-import { V2beta1Filter, V2beta1PredicateOperation } from 'src/apisv2beta1/filter';
-import RunList from 'src/pages/RunList';
+import { commonCss } from '../Css';
+import { Apis, ExperimentSortKeys, ListRequest } from '../lib/Apis';
+import { V2beta1RunStorageState } from '../apisv2beta1/run';
+import { V2beta1Filter, V2beta1PredicateOperation } from '../apisv2beta1/filter';
+import RunList from '../pages/RunList';
 import produce from 'immer';
 import Tooltip from '@material-ui/core/Tooltip';
 

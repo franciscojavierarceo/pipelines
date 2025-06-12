@@ -18,16 +18,16 @@ import * as React from 'react';
 import { render } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { PageProps } from './Page';
-import { Apis } from 'src/lib/Apis';
-import { V2beta1Pipeline, V2beta1ListPipelinesResponse } from 'src/apisv2beta1/pipeline';
-import TestUtils from 'src/TestUtils';
-import { BuildInfoContext } from 'src/lib/BuildInfo';
+import { Apis } from '../lib/Apis';
+import { V2beta1Pipeline, V2beta1ListPipelinesResponse } from '../apisv2beta1/pipeline';
+import TestUtils from '../TestUtils';
+import { BuildInfoContext } from '../lib/BuildInfo';
 import PrivateAndSharedPipelines, {
   PrivateAndSharedProps,
   PrivateAndSharedTab,
 } from './PrivateAndSharedPipelines';
 import { Router } from 'react-router-dom';
-import { NamespaceContext } from 'src/lib/KubeflowClient';
+import { NamespaceContext } from '../lib/KubeflowClient';
 
 function generateProps(): PrivateAndSharedProps {
   return {

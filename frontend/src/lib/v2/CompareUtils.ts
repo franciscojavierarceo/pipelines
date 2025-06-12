@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-import { CompareTableProps, xParentLabel } from 'src/components/CompareTable';
-import { getArtifactName, getExecutionDisplayName, LinkedArtifact } from 'src/mlmd/MlmdUtils';
-import { getMetadataValue } from 'src/mlmd/Utils';
-import { Execution, Value } from 'src/third_party/mlmd';
+import { CompareTableProps, xParentLabel } from '../../components/CompareTable';
+import { getArtifactName, getExecutionDisplayName, LinkedArtifact } from '../../mlmd/MlmdUtils';
+import { getMetadataValue } from '../../mlmd/Utils';
+import { Execution, Value } from '../../third_party/mlmd';
 import * as jspb from 'google-protobuf';
 import { chain, flatMapDeep, flatten } from 'lodash';
 import { stylesheet } from 'typestyle';
-import { RuntimeParameters } from 'src/pages/NewRunV2';
-import { V2beta1Run } from 'src/apisv2beta1/run';
+import { RuntimeParameters } from '../../pages/NewRunV2';
+import { V2beta1Run } from '../../apisv2beta1/run';
 
 export const compareCss = stylesheet({
   smallRelativeContainer: {

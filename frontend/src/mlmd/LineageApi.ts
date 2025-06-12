@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { formatDateString } from 'src/lib/Utils';
+import { formatDateString } from '../lib/Utils';
 import {
   ArtifactType,
   Event,
@@ -23,7 +23,7 @@ import {
   GetExecutionTypesRequest,
   GetArtifactTypesRequest,
   MetadataStoreServicePromiseClient,
-} from 'src/third_party/mlmd';
+} from '../third_party/mlmd';
 
 const EventType = Event.Type;
 

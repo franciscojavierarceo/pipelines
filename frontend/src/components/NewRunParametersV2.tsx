@@ -17,10 +17,10 @@
 import { Button, Checkbox, FormControlLabel, InputAdornment, TextField } from '@material-ui/core';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { PipelineSpecRuntimeConfig } from 'src/apis/run';
-import { ExternalLink } from 'src/atoms/ExternalLink';
-import { ParameterType_ParameterTypeEnum } from 'src/generated/pipeline_spec/pipeline_spec';
-import { RuntimeParameters, SpecParameters } from 'src/pages/NewRunV2';
+import { PipelineSpecRuntimeConfig } from '../apis/run';
+import { ExternalLink } from '../atoms/ExternalLink';
+import { ParameterType_ParameterTypeEnum } from '../generated/pipeline_spec/pipeline_spec';
+import { RuntimeParameters, SpecParameters } from '../pages/NewRunV2';
 import { classes, stylesheet } from 'typestyle';
 import { color, commonCss, spacing, padding } from '../Css';
 import Editor from './Editor';

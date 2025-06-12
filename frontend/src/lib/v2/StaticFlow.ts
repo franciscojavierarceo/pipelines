@@ -22,12 +22,12 @@ import {
   Node,
   Position,
 } from 'react-flow-renderer';
-import ArtifactNode from 'src/components/graph/ArtifactNode';
-import { ArtifactFlowElementData, FlowElementDataBase } from 'src/components/graph/Constants';
-import ExecutionNode from 'src/components/graph/ExecutionNode';
-import SubDagNode from 'src/components/graph/SubDagNode';
-import { ComponentSpec, PipelineSpec, PipelineTaskSpec } from 'src/generated/pipeline_spec';
-import { ComponentInputsSpec_ArtifactSpec } from 'src/generated/pipeline_spec/pipeline_spec';
+import ArtifactNode from '../../components/graph/ArtifactNode';
+import { ArtifactFlowElementData, FlowElementDataBase } from '../../components/graph/Constants';
+import ExecutionNode from '../../components/graph/ExecutionNode';
+import SubDagNode from '../../components/graph/SubDagNode';
+import { ComponentSpec, PipelineSpec, PipelineTaskSpec } from '../../generated/pipeline_spec';
+import { ComponentInputsSpec_ArtifactSpec } from '../../generated/pipeline_spec/pipeline_spec';
 
 const nodeWidth = 224;
 const nodeHeight = 48;

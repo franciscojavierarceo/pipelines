@@ -37,7 +37,7 @@ import {
   parseTrigger,
   ParsedTrigger,
 } from '../lib/TriggerUtils';
-import { logger } from 'src/lib/Utils';
+import { logger } from '../lib/Utils';
 
 type TriggerInitialProps = {
   maxConcurrentRuns?: string;

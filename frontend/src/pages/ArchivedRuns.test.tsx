@@ -16,12 +16,12 @@
 
 import * as React from 'react';
 import { ArchivedRuns } from './ArchivedRuns';
-import TestUtils from 'src/TestUtils';
+import TestUtils from '../TestUtils';
 import { PageProps } from './Page';
-import { V2beta1RunStorageState } from 'src/apisv2beta1/run';
+import { V2beta1RunStorageState } from '../apisv2beta1/run';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ButtonKeys } from 'src/lib/Buttons';
-import { Apis } from 'src/lib/Apis';
+import { ButtonKeys } from '../lib/Buttons';
+import { Apis } from '../lib/Apis';
 
 describe('ArchivedRuns', () => {
   const updateBannerSpy = jest.fn();

@@ -19,8 +19,8 @@ import {
   ExecutionFlowElementData,
   FlowElementDataBase,
   SubDagFlowElementData,
-} from 'src/components/graph/Constants';
-import { PipelineSpec, PipelineTaskSpec } from 'src/generated/pipeline_spec';
+} from '../../components/graph/Constants';
+import { PipelineSpec, PipelineTaskSpec } from '../../generated/pipeline_spec';
 import {
   buildDag,
   buildGraphLayout,
@@ -31,10 +31,10 @@ import {
   NodeTypeNames,
   PipelineFlowElement,
   TaskType,
-} from 'src/lib/v2/StaticFlow';
-import { getArtifactNameFromEvent, LinkedArtifact } from 'src/mlmd/MlmdUtils';
-import { NodeMlmdInfo } from 'src/pages/RunDetailsV2';
-import { Artifact, Event, Execution, Value } from 'src/third_party/mlmd';
+} from './StaticFlow';
+import { getArtifactNameFromEvent, LinkedArtifact } from '../../mlmd/MlmdUtils';
+import { NodeMlmdInfo } from '../../pages/RunDetailsV2';
+import { Artifact, Event, Execution, Value } from '../../third_party/mlmd';
 
 export const TASK_NAME_KEY = 'task_name';
 export const PARENT_DAG_ID_KEY = 'parent_dag_id';

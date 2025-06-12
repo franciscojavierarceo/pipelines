@@ -23,9 +23,9 @@ import ReactFlow, {
   OnLoadParams,
   ReactFlowProvider,
 } from 'react-flow-renderer';
-import 'src/build/tailwind.output.css';
-import { color } from 'src/Css';
-import { Artifact } from 'src/third_party/mlmd';
+import '../../build/tailwind.output.css';
+import { color } from '../../Css';
+import { Artifact } from '../../third_party/mlmd';
 import ArtifactNode from '../../components/graph/ArtifactNode';
 
 const nodeTypes = {

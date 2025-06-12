@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-import { Execution, Value } from 'src/third_party/mlmd';
+import { Execution, Value } from '../../third_party/mlmd';
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { testBestPractices } from 'src/TestUtils';
-import { CommonTestWrapper } from 'src/TestWrapper';
+import { testBestPractices } from '../../TestUtils';
+import { CommonTestWrapper } from '../../TestWrapper';
 import { ExecutionTitle } from './ExecutionTitle';
 
 testBestPractices();

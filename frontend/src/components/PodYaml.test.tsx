@@ -17,8 +17,8 @@
 import React, { FC } from 'react';
 import { PodInfo, PodEvents } from './PodYaml';
 import { render, act, fireEvent } from '@testing-library/react';
-import { Apis } from 'src/lib/Apis';
-import TestUtils from 'src/TestUtils';
+import { Apis } from '../lib/Apis';
+import TestUtils from '../TestUtils';
 
 // Original ./Editor uses a complex external editor inside, we use a simple mock
 // for testing instead.

@@ -16,9 +16,9 @@
 
 import { render, screen, fireEvent } from '@testing-library/react';
 import * as React from 'react';
-import { V2beta1RunStorageState } from 'src/apisv2beta1/run';
-import { RoutePage } from 'src/components/Router';
-import { ButtonKeys } from 'src/lib/Buttons';
+import { V2beta1RunStorageState } from '../apisv2beta1/run';
+import { RoutePage } from '../components/Router';
+import { ButtonKeys } from '../lib/Buttons';
 import { AllRunsList } from './AllRunsList';
 import { PageProps } from './Page';
 

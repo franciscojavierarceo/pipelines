@@ -15,22 +15,22 @@
  */
 
 import * as React from 'react';
-import * as Utils from 'src/lib/Utils';
+import * as Utils from '../lib/Utils';
 import EnhancedExperimentList, { ExperimentList } from './ExperimentList';
-import TestUtils from 'src/TestUtils';
-import { V2beta1RunStorageState, V2beta1RuntimeState } from 'src/apisv2beta1/run';
-import { Apis } from 'src/lib/Apis';
-import { ExpandState } from 'src/components/CustomTable';
+import TestUtils from '../TestUtils';
+import { V2beta1RunStorageState, V2beta1RuntimeState } from '../apisv2beta1/run';
+import { Apis } from '../lib/Apis';
+import { ExpandState } from '../components/CustomTable';
 import { PageProps } from './Page';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { RoutePage, QUERY_PARAMS } from 'src/components/Router';
+import { RoutePage, QUERY_PARAMS } from '../components/Router';
 import { range } from 'lodash';
-import { ButtonKeys } from 'src/lib/Buttons';
-import { NamespaceContext } from 'src/lib/KubeflowClient';
+import { ButtonKeys } from '../lib/Buttons';
+import { NamespaceContext } from '../lib/KubeflowClient';
 import { render, act } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { V2beta1ExperimentStorageState } from 'src/apisv2beta1/experiment';
-import { V2beta1Filter, V2beta1PredicateOperation } from 'src/apisv2beta1/filter';
+import { V2beta1ExperimentStorageState } from '../apisv2beta1/experiment';
+import { V2beta1Filter, V2beta1PredicateOperation } from '../apisv2beta1/filter';
 
 // Default arguments for Apis.experimentServiceApi.listExperiment.
 const LIST_EXPERIMENT_DEFAULTS = [

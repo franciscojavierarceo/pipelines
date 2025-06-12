@@ -17,8 +17,8 @@
 import grey from '@material-ui/core/colors/grey';
 import * as React from 'react';
 import { classes, stylesheet } from 'typestyle';
-import { color, commonCss, fonts, padding } from 'src/mlmd/Css';
-import { color as commonColor } from 'src/Css';
+import { color, commonCss, fonts, padding } from '../../mlmd/Css';
+import { color as commonColor } from '../../Css';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
 export interface SubDagLayerProps {

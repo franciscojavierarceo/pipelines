@@ -16,37 +16,37 @@ import * as React from 'react';
 import { MouseEvent as ReactMouseEvent, useEffect, useState } from 'react';
 import { FlowElement } from 'react-flow-renderer';
 import { useQuery } from 'react-query';
-import { V2beta1Experiment } from 'src/apisv2beta1/experiment';
-import { V2beta1Run, V2beta1RuntimeState, V2beta1RunStorageState } from 'src/apisv2beta1/run';
-import MD2Tabs from 'src/atoms/MD2Tabs';
-import DetailsTable from 'src/components/DetailsTable';
-import { FlowElementDataBase } from 'src/components/graph/Constants';
-import { PipelineSpecTabContent } from 'src/components/PipelineSpecTabContent';
-import { RoutePage, RouteParams } from 'src/components/Router';
-import SidePanel from 'src/components/SidePanel';
-import { RuntimeNodeDetailsV2 } from 'src/components/tabs/RuntimeNodeDetailsV2';
-import { ToolbarProps } from 'src/components/Toolbar';
-import { commonCss, padding } from 'src/Css';
-import { Apis } from 'src/lib/Apis';
-import Buttons, { ButtonKeys } from 'src/lib/Buttons';
-import { KeyValue } from 'src/lib/StaticGraphParser';
-import { hasFinishedV2, statusProtoMap } from 'src/lib/StatusUtils';
-import { formatDateString, getRunDurationV2 } from 'src/lib/Utils';
+import { V2beta1Experiment } from '../apisv2beta1/experiment';
+import { V2beta1Run, V2beta1RuntimeState, V2beta1RunStorageState } from '../apisv2beta1/run';
+import MD2Tabs from '../atoms/MD2Tabs';
+import DetailsTable from '../components/DetailsTable';
+import { FlowElementDataBase } from '../components/graph/Constants';
+import { PipelineSpecTabContent } from '../components/PipelineSpecTabContent';
+import { RoutePage, RouteParams } from '../components/Router';
+import SidePanel from '../components/SidePanel';
+import { RuntimeNodeDetailsV2 } from '../components/tabs/RuntimeNodeDetailsV2';
+import { ToolbarProps } from '../components/Toolbar';
+import { commonCss, padding } from '../Css';
+import { Apis } from '../lib/Apis';
+import Buttons, { ButtonKeys } from '../lib/Buttons';
+import { KeyValue } from '../lib/StaticGraphParser';
+import { hasFinishedV2, statusProtoMap } from '../lib/StatusUtils';
+import { formatDateString, getRunDurationV2 } from '../lib/Utils';
 import {
   convertSubDagToRuntimeFlowElements,
   getNodeMlmdInfo,
   updateFlowElementsState,
-} from 'src/lib/v2/DynamicFlow';
-import { convertFlowElements } from 'src/lib/v2/StaticFlow';
-import * as WorkflowUtils from 'src/lib/v2/WorkflowUtils';
+} from '../lib/v2/DynamicFlow';
+import { convertFlowElements } from '../lib/v2/StaticFlow';
+import * as WorkflowUtils from '../lib/v2/WorkflowUtils';
 import {
   getArtifactsFromContext,
   getEventsByExecutions,
   getExecutionsFromContext,
   getKfpV2RunContext,
   LinkedArtifact,
-} from 'src/mlmd/MlmdUtils';
-import { Artifact, Event, Execution } from 'src/third_party/mlmd';
+} from '../mlmd/MlmdUtils';
+import { Artifact, Event, Execution } from '../third_party/mlmd';
 import { classes } from 'typestyle';
 import { RunDetailsProps } from './RunDetails';
 import { statusToIcon } from './StatusV2';

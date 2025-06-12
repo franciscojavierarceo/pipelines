@@ -16,7 +16,7 @@
 
 import * as React from 'react';
 import Button from '@material-ui/core/Button';
-import Buttons, { ButtonKeys } from 'src/lib/Buttons';
+import Buttons, { ButtonKeys } from '../lib/Buttons';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -24,19 +24,19 @@ import Paper from '@material-ui/core/Paper';
 import PopOutIcon from '@material-ui/icons/Launch';
 import RecurringRunsManager from './RecurringRunsManager';
 import RunListsRouter, { RunListsGroupTab } from './RunListsRouter';
-import Toolbar, { ToolbarProps } from 'src/components/Toolbar';
+import Toolbar, { ToolbarProps } from '../components/Toolbar';
 import Tooltip from '@material-ui/core/Tooltip';
-import { V2beta1Experiment, V2beta1ExperimentStorageState } from 'src/apisv2beta1/experiment';
-import { Apis } from 'src/lib/Apis';
+import { V2beta1Experiment, V2beta1ExperimentStorageState } from '../apisv2beta1/experiment';
+import { Apis } from '../lib/Apis';
 import { Page, PageProps } from './Page';
-import { RoutePage, RouteParams } from 'src/components/Router';
+import { RoutePage, RouteParams } from '../components/Router';
 import { classes, stylesheet } from 'typestyle';
-import { color, commonCss, padding } from 'src/Css';
-import { logger } from 'src/lib/Utils';
-import { useNamespaceChangeEvent } from 'src/lib/KubeflowClient';
+import { color, commonCss, padding } from '../Css';
+import { logger } from '../lib/Utils';
+import { useNamespaceChangeEvent } from '../lib/KubeflowClient';
 import { Redirect } from 'react-router-dom';
-import { V2beta1RunStorageState } from 'src/apisv2beta1/run';
-import { V2beta1RecurringRunStatus } from 'src/apisv2beta1/recurringrun';
+import { V2beta1RunStorageState } from '../apisv2beta1/run';
+import { V2beta1RecurringRunStatus } from '../apisv2beta1/recurringrun';
 
 const css = stylesheet({
   card: {

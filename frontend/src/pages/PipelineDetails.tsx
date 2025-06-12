@@ -21,40 +21,40 @@ import 'brace/theme/github';
 import { graphlib } from 'dagre';
 import * as JsYaml from 'js-yaml';
 import * as React from 'react';
-import { FeatureKey, isFeatureEnabled } from 'src/features';
-import { Apis } from 'src/lib/Apis';
+import { FeatureKey, isFeatureEnabled } from '../features';
+import { Apis } from '../lib/Apis';
 import {
   convertFlowElements,
   convertSubDagToFlowElements,
   PipelineFlowElement,
-} from 'src/lib/v2/StaticFlow';
-import * as WorkflowUtils from 'src/lib/v2/WorkflowUtils';
-import { convertYamlToV2PipelineSpec } from 'src/lib/v2/WorkflowUtils';
+} from '../lib/v2/StaticFlow';
+import * as WorkflowUtils from '../lib/v2/WorkflowUtils';
+import { convertYamlToV2PipelineSpec } from '../lib/v2/WorkflowUtils';
 import { classes } from 'typestyle';
-import { Workflow } from 'src/third_party/mlmd/argo_template';
-import { ApiGetTemplateResponse, ApiPipeline, ApiPipelineVersion } from 'src/apis/pipeline';
+import { Workflow } from '../third_party/mlmd/argo_template';
+import { ApiGetTemplateResponse, ApiPipeline, ApiPipelineVersion } from '../apis/pipeline';
 import {
   V2beta1ListPipelineVersionsResponse,
   V2beta1Pipeline,
   V2beta1PipelineVersion,
-} from 'src/apisv2beta1/pipeline';
-import { QUERY_PARAMS, RoutePage, RouteParams } from 'src/components/Router';
-import { ToolbarProps } from 'src/components/Toolbar';
-import { commonCss, padding } from 'src/Css';
-import Buttons, { ButtonKeys } from 'src/lib/Buttons';
-import RunUtils from 'src/lib/RunUtils';
-import * as StaticGraphParser from 'src/lib/StaticGraphParser';
-import { compareGraphEdges, transitiveReduction } from 'src/lib/StaticGraphParser';
-import { URLParser } from 'src/lib/URLParser';
-import { logger } from 'src/lib/Utils';
+} from '../apisv2beta1/pipeline';
+import { QUERY_PARAMS, RoutePage, RouteParams } from '../components/Router';
+import { ToolbarProps } from '../components/Toolbar';
+import { commonCss, padding } from '../Css';
+import Buttons, { ButtonKeys } from '../lib/Buttons';
+import RunUtils from '../lib/RunUtils';
+import * as StaticGraphParser from '../lib/StaticGraphParser';
+import { compareGraphEdges, transitiveReduction } from '../lib/StaticGraphParser';
+import { URLParser } from '../lib/URLParser';
+import { logger } from '../lib/Utils';
 import { Page } from './Page';
 import PipelineDetailsV1 from './PipelineDetailsV1';
 import PipelineDetailsV2 from './PipelineDetailsV2';
-import { ApiRunDetail } from 'src/apis/run';
-import { ApiJob } from 'src/apis/job';
-import { V2beta1Run } from 'src/apisv2beta1/run';
-import { V2beta1RecurringRun } from 'src/apisv2beta1/recurringrun';
-import { V2beta1Experiment } from 'src/apisv2beta1/experiment';
+import { ApiRunDetail } from '../apis/run';
+import { ApiJob } from '../apis/job';
+import { V2beta1Run } from '../apisv2beta1/run';
+import { V2beta1RecurringRun } from '../apisv2beta1/recurringrun';
+import { V2beta1Experiment } from '../apisv2beta1/experiment';
 
 interface PipelineDetailsState {
   graph: dagre.graphlib.Graph | null;

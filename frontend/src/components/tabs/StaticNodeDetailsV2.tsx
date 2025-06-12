@@ -17,18 +17,18 @@
 import { Button } from '@material-ui/core';
 import * as React from 'react';
 import { FlowElement } from 'react-flow-renderer';
-import { ComponentSpec, PipelineSpec } from 'src/generated/pipeline_spec';
-import { ParameterType } from 'src/generated/pipeline_spec/pipeline_spec_pb';
-import { KeyValue } from 'src/lib/StaticGraphParser';
-import { getStringEnumKey } from 'src/lib/Utils';
-import { getComponentSpec } from 'src/lib/v2/NodeUtils';
+import { ComponentSpec, PipelineSpec } from '../../generated/pipeline_spec';
+import { ParameterType } from '../../generated/pipeline_spec/pipeline_spec_pb';
+import { KeyValue } from '../../lib/StaticGraphParser';
+import { getStringEnumKey } from '../../lib/Utils';
+import { getComponentSpec } from '../../lib/v2/NodeUtils';
 import {
   getKeysFromArtifactNodeKey,
   getTaskKeyFromNodeKey,
   isArtifactNode,
   isTaskNode,
-} from 'src/lib/v2/StaticFlow';
-import * as WorkflowUtils from 'src/lib/v2/WorkflowUtils';
+} from '../../lib/v2/StaticFlow';
+import * as WorkflowUtils from '../../lib/v2/WorkflowUtils';
 import DetailsTable from '../DetailsTable';
 import { FlowElementDataBase } from '../graph/Constants';
 

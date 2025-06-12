@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { BaseResource } from 'src/pages/ResourceSelector';
-import { V2beta1Experiment } from 'src/apisv2beta1/experiment';
-import { V2beta1Pipeline, V2beta1PipelineVersion } from 'src/apisv2beta1/pipeline';
+import { BaseResource } from '../pages/ResourceSelector';
+import { V2beta1Experiment } from '../apisv2beta1/experiment';
+import { V2beta1Pipeline, V2beta1PipelineVersion } from '../apisv2beta1/pipeline';
 
 export function convertExperimentToResource(e: V2beta1Experiment): BaseResource {
   return {

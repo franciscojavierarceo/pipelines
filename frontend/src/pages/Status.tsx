@@ -28,7 +28,7 @@ import UnknownIcon from '@material-ui/icons/Help';
 import { color } from '../Css';
 import { logger, formatDateString } from '../lib/Utils';
 import { NodePhase, checkIfTerminated } from '../lib/StatusUtils';
-import { Execution } from 'src/third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
+import { Execution } from '../third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
 
 export function statusToIcon(
   status?: NodePhase,

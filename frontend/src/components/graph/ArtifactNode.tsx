@@ -17,7 +17,7 @@
 import FolderIcon from '@material-ui/icons/Folder';
 import React from 'react';
 import { Handle, Position } from 'react-flow-renderer';
-import { Artifact } from 'src/third_party/mlmd';
+import { Artifact } from '../../third_party/mlmd';
 import { ArtifactFlowElementData } from './Constants';
 
 interface ArtifactNodeProps {

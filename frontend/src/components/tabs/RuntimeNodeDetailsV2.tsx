@@ -18,42 +18,42 @@ import { Button } from '@material-ui/core';
 import * as React from 'react';
 import { useState } from 'react';
 import { FlowElement } from 'react-flow-renderer';
-// import { ComponentSpec, PipelineSpec } from 'src/generated/pipeline_spec';
+// import { ComponentSpec, PipelineSpec } from '../../generated/pipeline_spec';
 import {
   KubernetesExecutorConfig,
   PvcMount,
-} from 'src/generated/platform_spec/kubernetes_platform';
+} from '../../generated/platform_spec/kubernetes_platform';
 import { useQuery } from 'react-query';
-import MD2Tabs from 'src/atoms/MD2Tabs';
-import { commonCss, padding } from 'src/Css';
-import { Apis } from 'src/lib/Apis';
-import { KeyValue } from 'src/lib/StaticGraphParser';
-import { errorToMessage } from 'src/lib/Utils';
-import { getTaskKeyFromNodeKey, NodeTypeNames } from 'src/lib/v2/StaticFlow';
+import MD2Tabs from '../../atoms/MD2Tabs';
+import { commonCss, padding } from '../../Css';
+import { Apis } from '../../lib/Apis';
+import { KeyValue } from '../../lib/StaticGraphParser';
+import { errorToMessage } from '../../lib/Utils';
+import { getTaskKeyFromNodeKey, NodeTypeNames } from '../../lib/v2/StaticFlow';
 import {
   EXECUTION_KEY_CACHED_EXECUTION_ID,
   getArtifactTypeName,
   getArtifactTypes,
   KfpExecutionProperties,
   LinkedArtifact,
-} from 'src/mlmd/MlmdUtils';
-import { NodeMlmdInfo } from 'src/pages/RunDetailsV2';
-import { ArtifactType, Execution } from 'src/third_party/mlmd';
-import ArtifactPreview from 'src/components/ArtifactPreview';
-import Banner from 'src/components/Banner';
-import DetailsTable from 'src/components/DetailsTable';
-import { FlowElementDataBase } from 'src/components/graph/Constants';
-import LogViewer from 'src/components/LogViewer';
-import { getResourceStateText, ResourceType } from 'src/components/ResourceInfo';
-import { MetricsVisualizations } from 'src/components/viewers/MetricsVisualizations';
-import { ArtifactTitle } from 'src/components/tabs/ArtifactTitle';
+} from '../../mlmd/MlmdUtils';
+import { NodeMlmdInfo } from '../../pages/RunDetailsV2';
+import { ArtifactType, Execution } from '../../third_party/mlmd';
+import ArtifactPreview from '../ArtifactPreview';
+import Banner from '../Banner';
+import DetailsTable from '../DetailsTable';
+import { FlowElementDataBase } from '../graph/Constants';
+import LogViewer from '../LogViewer';
+import { getResourceStateText, ResourceType } from '../ResourceInfo';
+import { MetricsVisualizations } from '../viewers/MetricsVisualizations';
+import { ArtifactTitle } from './ArtifactTitle';
 import InputOutputTab, {
   getArtifactParamList,
   ParamList,
-} from 'src/components/tabs/InputOutputTab';
-import { convertYamlToPlatformSpec, convertYamlToV2PipelineSpec } from 'src/lib/v2/WorkflowUtils';
-import { PlatformDeploymentConfig } from 'src/generated/pipeline_spec/pipeline_spec';
-import { getComponentSpec } from 'src/lib/v2/NodeUtils';
+} from './InputOutputTab';
+import { convertYamlToPlatformSpec, convertYamlToV2PipelineSpec } from '../../lib/v2/WorkflowUtils';
+import { PlatformDeploymentConfig } from '../../generated/pipeline_spec/pipeline_spec';
+import { getComponentSpec } from '../../lib/v2/NodeUtils';
 
 export const LOGS_DETAILS = 'logs_details';
 export const LOGS_BANNER_MESSAGE = 'logs_banner_message';

@@ -15,20 +15,20 @@
  */
 
 import * as React from 'react';
-import CustomTable, { Column, Row, CustomRendererProps } from 'src/components/CustomTable';
-import { ExperimentInfo } from 'src/lib/RunUtils';
-import { Apis, JobSortKeys, ListRequest } from 'src/lib/Apis';
+import CustomTable, { Column, Row, CustomRendererProps } from '../components/CustomTable';
+import { ExperimentInfo } from '../lib/RunUtils';
+import { Apis, JobSortKeys, ListRequest } from '../lib/Apis';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { RoutePage, RouteParams } from 'src/components/Router';
-import { commonCss, color } from 'src/Css';
-import { formatDateString, errorToMessage } from 'src/lib/Utils';
+import { RoutePage, RouteParams } from '../components/Router';
+import { commonCss, color } from '../Css';
+import { formatDateString, errorToMessage } from '../lib/Utils';
 import Tooltip from '@material-ui/core/Tooltip';
 import {
   V2beta1RecurringRun,
   V2beta1RecurringRunStatus,
   V2beta1Trigger,
-} from 'src/apisv2beta1/recurringrun';
-import { V2beta1ListExperimentsResponse } from 'src/apisv2beta1/experiment';
+} from '../apisv2beta1/recurringrun';
+import { V2beta1ListExperimentsResponse } from '../apisv2beta1/experiment';
 
 interface DisplayRecurringRun {
   experiment?: ExperimentInfo;

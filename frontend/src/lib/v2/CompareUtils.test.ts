@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-import { testBestPractices } from 'src/TestUtils';
+import { testBestPractices } from '../../TestUtils';
 import {
   getScalarTableProps,
   getParamsTableProps,
   getValidRocCurveArtifactData,
   RunArtifact,
 } from './CompareUtils';
-import { Artifact, Event, Execution, Value } from 'src/third_party/mlmd';
-import { LinkedArtifact } from 'src/mlmd/MlmdUtils';
+import { Artifact, Event, Execution, Value } from '../../third_party/mlmd';
+import { LinkedArtifact } from '../../mlmd/MlmdUtils';
 import * as jspb from 'google-protobuf';
 import { Struct } from 'google-protobuf/google/protobuf/struct_pb';
-import { RuntimeParameters } from 'src/pages/NewRunV2';
-import { V2beta1Run } from 'src/apisv2beta1/run';
+import { RuntimeParameters } from '../../pages/NewRunV2';
+import { V2beta1Run } from '../../apisv2beta1/run';
 
 const MOCK_RUN_1_ID = 'mock-run-1-id';
 const MOCK_RUN_2_ID = 'mock-run-2-id';

@@ -16,7 +16,7 @@
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
-import { Api } from 'src/mlmd/library';
+import { Api } from '../mlmd/library';
 import {
   Execution,
   ExecutionType,
@@ -24,13 +24,13 @@ import {
   GetExecutionsResponse,
   GetExecutionTypesResponse,
   Value,
-} from 'src/third_party/mlmd';
-import { ListOperationOptions } from 'src/third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
-import { RoutePage } from 'src/components/Router';
-import TestUtils, { testBestPractices } from 'src/TestUtils';
-import ExecutionList from 'src/pages/ExecutionList';
-import { PageProps } from 'src/pages/Page';
-import { CommonTestWrapper } from 'src/TestWrapper';
+} from '../third_party/mlmd';
+import { ListOperationOptions } from '../third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
+import { RoutePage } from '../components/Router';
+import TestUtils, { testBestPractices } from '../TestUtils';
+import ExecutionList from './ExecutionList';
+import { PageProps } from './Page';
+import { CommonTestWrapper } from '../TestWrapper';
 
 testBestPractices();
 

@@ -20,7 +20,7 @@ import { Page, PageProps } from './Page';
 import { ToolbarProps } from '../components/Toolbar';
 import { classes } from 'typestyle';
 import { commonCss, padding } from '../Css';
-import { NamespaceContext } from 'src/lib/KubeflowClient';
+import { NamespaceContext } from '../lib/KubeflowClient';
 import RecurringRunList from './RecurringRunList';
 
 interface AllRecurringRunsListState {

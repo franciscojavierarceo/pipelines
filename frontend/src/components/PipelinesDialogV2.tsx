@@ -19,19 +19,19 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import { classes } from 'typestyle';
-import { padding, commonCss } from 'src/Css';
+import { padding, commonCss } from '../Css';
 import DialogContent from '@material-ui/core/DialogContent';
-import ResourceSelector from 'src/pages/ResourceSelector';
-import { Apis, PipelineSortKeys } from 'src/lib/Apis';
+import ResourceSelector from '../pages/ResourceSelector';
+import { Apis, PipelineSortKeys } from '../lib/Apis';
 import { Column } from './CustomTable';
-import { V2beta1Pipeline } from 'src/apisv2beta1/pipeline';
-import Buttons from 'src/lib/Buttons';
-import { PageProps } from 'src/pages/Page';
-import MD2Tabs from 'src/atoms/MD2Tabs';
-import Toolbar, { ToolbarActionMap } from 'src/components/Toolbar';
-import { PipelineTabsHeaders, PipelineTabsTooltips } from 'src/pages/PrivateAndSharedPipelines';
-import { BuildInfoContext } from 'src/lib/BuildInfo';
-import { convertPipelineToResource } from 'src/lib/ResourceConverter';
+import { V2beta1Pipeline } from '../apisv2beta1/pipeline';
+import Buttons from '../lib/Buttons';
+import { PageProps } from '../pages/Page';
+import MD2Tabs from '../atoms/MD2Tabs';
+import Toolbar, { ToolbarActionMap } from '../components/Toolbar';
+import { PipelineTabsHeaders, PipelineTabsTooltips } from '../pages/PrivateAndSharedPipelines';
+import { BuildInfoContext } from '../lib/BuildInfo';
+import { convertPipelineToResource } from '../lib/ResourceConverter';
 
 enum NamespacedAndSharedTab {
   NAMESPACED = 0,

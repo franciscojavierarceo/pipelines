@@ -16,14 +16,14 @@
 
 import * as React from 'react';
 import { useQuery } from 'react-query';
-import { ErrorBoundary } from 'src/atoms/ErrorBoundary';
-import { commonCss, padding } from 'src/Css';
+import { ErrorBoundary } from '../../atoms/ErrorBoundary';
+import { commonCss, padding } from '../../Css';
 import {
   getArtifactTypes,
   getOutputLinkedArtifactsInExecution,
   LinkedArtifact,
-} from 'src/mlmd/MlmdUtils';
-import { ArtifactType, Execution } from 'src/third_party/mlmd';
+} from '../../mlmd/MlmdUtils';
+import { ArtifactType, Execution } from '../../third_party/mlmd';
 import Banner from '../Banner';
 import { MetricsVisualizations } from '../viewers/MetricsVisualizations';
 import { ExecutionTitle } from './ExecutionTitle';

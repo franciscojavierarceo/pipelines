@@ -16,7 +16,7 @@
 
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { ListRequest } from 'src/lib/Apis';
+import { ListRequest } from '../lib/Apis';
 import {
   Api,
   ArtifactCustomProperties,
@@ -24,20 +24,20 @@ import {
   getArtifactCreationTime,
   getArtifactTypes,
   getResourcePropertyViaFallBack,
-} from 'src/mlmd/library';
-import { Artifact, ArtifactType, GetArtifactsRequest } from 'src/third_party/mlmd';
-import { ListOperationOptions } from 'src/third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
+} from '../mlmd/library';
+import { Artifact, ArtifactType, GetArtifactsRequest } from '../third_party/mlmd';
+import { ListOperationOptions } from '../third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
 import { classes } from 'typestyle';
-import { ArtifactLink } from 'src/components/ArtifactLink';
+import { ArtifactLink } from '../components/ArtifactLink';
 import CustomTable, {
   Column,
   CustomRendererProps,
   ExpandState,
   Row,
-} from 'src/components/CustomTable';
-import { RoutePageFactory } from 'src/components/Router';
-import { ToolbarProps } from 'src/components/Toolbar';
-import { commonCss, padding } from 'src/Css';
+} from '../components/CustomTable';
+import { RoutePageFactory } from '../components/Router';
+import { ToolbarProps } from '../components/Toolbar';
+import { commonCss, padding } from '../Css';
 import {
   CollapsedAndExpandedRows,
   getExpandedRow,
@@ -45,8 +45,8 @@ import {
   groupRows,
   rowFilterFn,
   serviceErrorToString,
-} from 'src/lib/Utils';
-import { Page } from 'src/pages/Page';
+} from '../lib/Utils';
+import { Page } from './Page';
 
 interface ArtifactListProps {
   isGroupView: boolean;

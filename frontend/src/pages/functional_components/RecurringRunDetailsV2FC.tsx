@@ -16,19 +16,19 @@
 
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
-import Buttons, { ButtonKeys } from 'src/lib/Buttons';
-import DetailsTable from 'src/components/DetailsTable';
-import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from 'src/apisv2beta1/recurringrun';
-import { V2beta1Experiment } from 'src/apisv2beta1/experiment';
-import { Apis } from 'src/lib/Apis';
-import { PageProps } from 'src/pages/Page';
-import { RoutePage, RouteParams } from 'src/components/Router';
-import { Breadcrumb, ToolbarProps } from 'src/components/Toolbar';
+import Buttons, { ButtonKeys } from '../../lib/Buttons';
+import DetailsTable from '../../components/DetailsTable';
+import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from '../../apisv2beta1/recurringrun';
+import { V2beta1Experiment } from '../../apisv2beta1/experiment';
+import { Apis } from '../../lib/Apis';
+import { PageProps } from '../Page';
+import { RoutePage, RouteParams } from '../../components/Router';
+import { Breadcrumb, ToolbarProps } from '../../components/Toolbar';
 import { classes } from 'typestyle';
-import { commonCss, padding } from 'src/Css';
-import { KeyValue } from 'src/lib/StaticGraphParser';
-import { formatDateString, enabledDisplayStringV2, errorToMessage } from 'src/lib/Utils';
-import { triggerDisplayString } from 'src/lib/TriggerUtils';
+import { commonCss, padding } from '../../Css';
+import { KeyValue } from '../../lib/StaticGraphParser';
+import { formatDateString, enabledDisplayStringV2, errorToMessage } from '../../lib/Utils';
+import { triggerDisplayString } from '../../lib/TriggerUtils';
 
 export function RecurringRunDetailsV2FC(props: PageProps) {
   const { updateBanner, updateToolbar } = props;

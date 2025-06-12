@@ -17,14 +17,14 @@
 import Markdown from 'markdown-to-jsx';
 import * as React from 'react';
 import { classes, cssRaw } from 'typestyle';
-import { V2beta1Filter, V2beta1PredicateOperation } from 'src/apisv2beta1/filter';
-import { AutoLink } from 'src/atoms/ExternalLink';
-import { RoutePageFactory } from 'src/components/Router';
-import { ToolbarProps } from 'src/components/Toolbar';
-import SAMPLE_CONFIG from 'src/config/sample_config_from_backend.json';
-import { commonCss, padding } from 'src/Css';
-import { Apis } from 'src/lib/Apis';
-import Buttons from 'src/lib/Buttons';
+import { V2beta1Filter, V2beta1PredicateOperation } from '../apisv2beta1/filter';
+import { AutoLink } from '../atoms/ExternalLink';
+import { RoutePageFactory } from '../components/Router';
+import { ToolbarProps } from '../components/Toolbar';
+import SAMPLE_CONFIG from '../config/sample_config_from_backend.json';
+import { commonCss, padding } from '../Css';
+import { Apis } from '../lib/Apis';
+import Buttons from '../lib/Buttons';
 import { Page } from './Page';
 
 const DEMO_PIPELINES: string[] = SAMPLE_CONFIG;

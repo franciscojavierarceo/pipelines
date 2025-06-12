@@ -16,8 +16,8 @@
 
 import * as JsYaml from 'js-yaml';
 import React from 'react';
-import { Apis, JSONObject } from 'src/lib/Apis';
-import { serviceErrorToString } from 'src/lib/Utils';
+import { Apis, JSONObject } from '../lib/Apis';
+import { serviceErrorToString } from '../lib/Utils';
 import Banner from './Banner';
 import Editor from './Editor';
 

@@ -23,7 +23,7 @@ import { classes, stylesheet } from 'typestyle';
 import { color, commonCss, fonts, padding } from './Css';
 import { CSSProperties } from 'typestyle/lib/types';
 import { getResourcePropertyViaFallBack } from './Utils';
-import { Artifact } from 'src/third_party/mlmd';
+import { Artifact } from '../third_party/mlmd';
 import { ArtifactProperties, ArtifactCustomProperties } from './Api';
 import { ArtifactHelpers } from './MlmdUtils';
 

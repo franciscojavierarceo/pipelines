@@ -18,7 +18,7 @@ import { CircularProgress } from '@material-ui/core';
 import React, { Component } from 'react';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
-import { Api, getArtifactTypes } from 'src/mlmd/library';
+import { Api, getArtifactTypes } from '../mlmd/library';
 import {
   ExecutionHelpers,
   EXECUTION_KEY_CACHED_EXECUTION_ID,
@@ -26,7 +26,7 @@ import {
   getContextByExecution,
   getLinkedArtifactsByEvents,
   KFP_V2_RUN_CONTEXT_TYPE,
-} from 'src/mlmd/MlmdUtils';
+} from '../mlmd/MlmdUtils';
 import {
   ArtifactType,
   Context,
@@ -37,7 +37,7 @@ import {
   GetEventsByExecutionIDsResponse,
   GetExecutionsByIDRequest,
   GetExecutionTypesByIDRequest,
-} from 'src/third_party/mlmd';
+} from '../third_party/mlmd';
 import { classes, stylesheet } from 'typestyle';
 import { ResourceInfo, ResourceType } from '../components/ResourceInfo';
 import { RoutePage, RoutePageFactory, RouteParams } from '../components/Router';

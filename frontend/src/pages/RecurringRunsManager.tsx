@@ -15,17 +15,17 @@
  */
 
 import * as React from 'react';
-import BusyButton from 'src/atoms/BusyButton';
-import CustomTable, { Column, Row, CustomRendererProps } from 'src/components/CustomTable';
-import Toolbar, { ToolbarActionMap } from 'src/components/Toolbar';
-import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from 'src/apisv2beta1/recurringrun';
-import { Apis, JobSortKeys, ListRequest } from 'src/lib/Apis';
-import { DialogProps, RoutePage, RouteParams } from 'src/components/Router';
+import BusyButton from '../atoms/BusyButton';
+import CustomTable, { Column, Row, CustomRendererProps } from '../components/CustomTable';
+import Toolbar, { ToolbarActionMap } from '../components/Toolbar';
+import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from '../apisv2beta1/recurringrun';
+import { Apis, JobSortKeys, ListRequest } from '../lib/Apis';
+import { DialogProps, RoutePage, RouteParams } from '../components/Router';
 import { Link } from 'react-router-dom';
 import { RouteComponentProps } from 'react-router';
 import { SnackbarProps } from '@material-ui/core/Snackbar';
-import { commonCss } from 'src/Css';
-import { logger, formatDateString, errorToMessage } from 'src/lib/Utils';
+import { commonCss } from '../Css';
+import { logger, formatDateString, errorToMessage } from '../lib/Utils';
 
 export interface RecurringRunListProps extends RouteComponentProps {
   experimentId: string;

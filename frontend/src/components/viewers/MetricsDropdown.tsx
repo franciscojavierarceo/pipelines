@@ -15,34 +15,34 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { color, commonCss, fontsize, zIndex } from 'src/Css';
+import { color, commonCss, fontsize, zIndex } from '../../Css';
 import { classes, stylesheet } from 'typestyle';
-import { LinkedArtifact, getArtifactName } from 'src/mlmd/MlmdUtils';
+import { LinkedArtifact, getArtifactName } from '../../mlmd/MlmdUtils';
 import TwoLevelDropdown, {
   DropdownItem,
   DropdownSubItem,
   SelectedItem,
-} from 'src/components/TwoLevelDropdown';
+} from '../TwoLevelDropdown';
 import {
   ConfusionMatrixSection,
   getHtmlViewerConfig,
   getMarkdownViewerConfig,
-} from 'src/components/viewers/MetricsVisualizations';
-import PlotCard from 'src/components/PlotCard';
-import { ViewerConfig } from 'src/components/viewers/Viewer';
+} from './MetricsVisualizations';
+import PlotCard from '../PlotCard';
+import { ViewerConfig } from './Viewer';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Banner from 'src/components/Banner';
-import { SelectedArtifact } from 'src/pages/CompareV2';
+import Banner from '../Banner';
+import { SelectedArtifact } from '../../pages/CompareV2';
 import { useQuery } from 'react-query';
-import { errorToMessage, logger } from 'src/lib/Utils';
-import { getExecutionDisplayName } from 'src/mlmd/MlmdUtils';
+import { errorToMessage, logger } from '../../lib/Utils';
+import { getExecutionDisplayName } from '../../mlmd/MlmdUtils';
 import {
   metricsTypeToString,
   ExecutionArtifact,
   MetricsType,
   RunArtifact,
   compareCss,
-} from 'src/lib/v2/CompareUtils';
+} from '../../lib/v2/CompareUtils';
 
 const css = stylesheet({
   leftCell: {

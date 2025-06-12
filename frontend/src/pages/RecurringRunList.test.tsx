@@ -15,14 +15,14 @@
  */
 
 import * as React from 'react';
-import * as Utils from 'src/lib/Utils';
+import * as Utils from '../lib/Utils';
 import RecurringRunList, { RecurringRunListProps } from './RecurringRunList';
-import TestUtils from 'src/TestUtils';
+import TestUtils from '../TestUtils';
 import produce from 'immer';
-import { Apis, JobSortKeys, ListRequest } from 'src/lib/Apis';
+import { Apis, JobSortKeys, ListRequest } from '../lib/Apis';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { range } from 'lodash';
-import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from 'src/apisv2beta1/recurringrun';
+import { V2beta1RecurringRun, V2beta1RecurringRunStatus } from '../apisv2beta1/recurringrun';
 
 class RecurringRunListTest extends RecurringRunList {
   public _loadRecurringRuns(request: ListRequest): Promise<string> {
@@ -106,43 +106,357 @@ describe('RecurringRunList', () => {
     const { container } = render(<RecurringRunList {...generateProps()} />);
     expect(container.firstChild).toMatchInlineSnapshot(`
       <div>
-        <CustomTable
-          columns={
-            Array [
-              Object {
-                "customRenderer": [Function],
-                "flex": 1.5,
-                "label": "Recurring Run Name",
-                "sortKey": "name",
-              },
-              Object {
-                "customRenderer": [Function],
-                "flex": 0.5,
-                "label": "Status",
-              },
-              Object {
-                "customRenderer": [Function],
-                "flex": 1,
-                "label": "Trigger",
-              },
-              Object {
-                "customRenderer": [Function],
-                "flex": 1,
-                "label": "Experiment",
-              },
-              Object {
-                "flex": 1,
-                "label": "Created at",
-                "sortKey": "created_at",
-              },
-            ]
-          }
-          emptyMessage="No available recurring runs found."
-          filterLabel="Filter recurring runs"
-          initialSortColumn="created_at"
-          reload={[Function]}
-          rows={Array []}
-        />
+        <div
+          class="pageOverflowHidden"
+        >
+          <div>
+            <div
+              class="MuiFormControl-root-1 filterBox"
+              spellcheck="false"
+              style="height: 48px; max-width: 100%; width: 100%;"
+            >
+              <label
+                class="MuiFormLabel-root-16 MuiInputLabel-root-5 noMargin MuiInputLabel-formControl-10 MuiInputLabel-animated-13 MuiInputLabel-shrink-12 MuiInputLabel-outlined-15"
+                data-shrink="true"
+                for="tableFilterBox"
+              >
+                Filter recurring runs
+              </label>
+              <div
+                class="MuiInputBase-root-36 MuiOutlinedInput-root-23 noLeftPadding MuiInputBase-formControl-37 MuiInputBase-adornedStart-40 MuiOutlinedInput-adornedStart-26"
+              >
+                <fieldset
+                  aria-hidden="true"
+                  class="MuiPrivateNotchedOutline-root-53 MuiOutlinedInput-notchedOutline-30 filterBorderRadius"
+                  style="padding-left: 8px;"
+                >
+                  <legend
+                    class="MuiPrivateNotchedOutline-legend-54"
+                    style="width: 0px;"
+                  >
+                    <span>
+                      ​
+                    </span>
+                  </legend>
+                </fieldset>
+                <div
+                  class="MuiInputAdornment-root-55 MuiInputAdornment-positionEnd-58"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root-60"
+                    focusable="false"
+                    role="presentation"
+                    style="color: rgb(128, 134, 139); padding-right: 16px;"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"
+                    />
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                  </svg>
+                </div>
+                <input
+                  aria-invalid="false"
+                  class="MuiInputBase-input-46 MuiOutlinedInput-input-31 MuiInputBase-inputAdornedStart-51 MuiOutlinedInput-inputAdornedStart-34"
+                  id="tableFilterBox"
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="header"
+          >
+            <div
+              class="columnName cell selectionToggle"
+            >
+              <span
+                class="MuiButtonBase-root-85 MuiIconButton-root-79 MuiPrivateSwitchBase-root-75 MuiCheckbox-root-69 MuiCheckbox-colorPrimary-73"
+              >
+                <span
+                  class="MuiIconButton-label-84"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root-60"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"
+                    />
+                  </svg>
+                  <input
+                    class="MuiPrivateSwitchBase-input-78"
+                    data-indeterminate="false"
+                    type="checkbox"
+                    value=""
+                  />
+                </span>
+                <span
+                  class="MuiTouchRipple-root-125"
+                />
+              </span>
+            </div>
+            <div
+              class="columnName"
+              style="width: 30%;"
+              title="Recurring Run Name"
+            >
+              <span
+                class="MuiButtonBase-root-85 MuiTableSortLabel-root-96 ellipsis"
+                role="button"
+                tabindex="0"
+                title="Sort"
+              >
+                Recurring Run Name
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root-60 MuiTableSortLabel-icon-98 MuiTableSortLabel-iconDirectionDesc-99"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="columnName"
+              style="width: 10%;"
+              title="Status"
+            >
+              <span
+                class="MuiButtonBase-root-85 MuiTableSortLabel-root-96 ellipsis"
+                role="button"
+                tabindex="0"
+                title="Cannot sort by this column"
+              >
+                Status
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root-60 MuiTableSortLabel-icon-98 MuiTableSortLabel-iconDirectionDesc-99"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="columnName"
+              style="width: 20%;"
+              title="Trigger"
+            >
+              <span
+                class="MuiButtonBase-root-85 MuiTableSortLabel-root-96 ellipsis"
+                role="button"
+                tabindex="0"
+                title="Cannot sort by this column"
+              >
+                Trigger
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root-60 MuiTableSortLabel-icon-98 MuiTableSortLabel-iconDirectionDesc-99"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="columnName"
+              style="width: 20%;"
+              title="Experiment"
+            >
+              <span
+                class="MuiButtonBase-root-85 MuiTableSortLabel-root-96 ellipsis"
+                role="button"
+                tabindex="0"
+                title="Cannot sort by this column"
+              >
+                Experiment
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root-60 MuiTableSortLabel-icon-98 MuiTableSortLabel-iconDirectionDesc-99"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
+                  />
+                </svg>
+              </span>
+            </div>
+            <div
+              class="columnName"
+              style="width: 20%;"
+              title="Created at"
+            >
+              <span
+                class="MuiButtonBase-root-85 MuiTableSortLabel-root-96 MuiTableSortLabel-active-97 ellipsis"
+                role="button"
+                tabindex="0"
+                title="Sort"
+              >
+                Created at
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root-60 MuiTableSortLabel-icon-98 MuiTableSortLabel-iconDirectionDesc-99"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M20 12l-1.41-1.41L13 16.17V4h-2v12.17l-5.58-5.59L4 12l8 8 8-8z"
+                  />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div
+            class="scrollContainer"
+            style="min-height: 60px;"
+          >
+            <div
+              class="busyOverlay"
+            />
+            <div
+              class="MuiCircularProgress-root-132 MuiCircularProgress-colorPrimary-135 MuiCircularProgress-indeterminate-134 absoluteCenter"
+              role="progressbar"
+              style="width: 25px; height: 25px; z-index: 2;"
+            >
+              <svg
+                class="MuiCircularProgress-svg-137"
+                viewBox="22 22 44 44"
+              >
+                <circle
+                  class="MuiCircularProgress-circle-138 MuiCircularProgress-circleIndeterminate-140"
+                  cx="44"
+                  cy="44"
+                  fill="none"
+                  r="20.2"
+                  stroke-width="3.6"
+                />
+              </svg>
+            </div>
+          </div>
+          <div
+            class="footer"
+          >
+            <span
+              class=""
+            >
+              Rows per page:
+            </span>
+            <div
+              class="MuiFormControl-root-1 verticalAlignInitial rowsPerPage"
+            >
+              <div
+                class="MuiInputBase-root-36 MuiInput-root-108 MuiInputBase-formControl-37 MuiInput-formControl-109"
+              >
+                <div
+                  class="MuiSelect-root-101"
+                >
+                  <div
+                    aria-haspopup="true"
+                    aria-pressed="false"
+                    class="MuiSelect-select-102 MuiSelect-selectMenu-105 MuiInputBase-input-46 MuiInput-input-116"
+                    role="button"
+                    tabindex="0"
+                  >
+                    10
+                  </div>
+                  <input
+                    type="hidden"
+                    value="10"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root-60 MuiSelect-icon-107"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M7 10l5 5 5-5z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <button
+              class="MuiButtonBase-root-85 MuiButtonBase-disabled-86 MuiIconButton-root-79 MuiIconButton-disabled-83"
+              disabled=""
+              tabindex="-1"
+              type="button"
+            >
+              <span
+                class="MuiIconButton-label-84"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root-60"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+                  />
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                </svg>
+              </span>
+            </button>
+            <button
+              class="MuiButtonBase-root-85 MuiIconButton-root-79"
+              tabindex="0"
+              type="button"
+            >
+              <span
+                class="MuiIconButton-label-84"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root-60"
+                  focusable="false"
+                  role="presentation"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+                  />
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                </svg>
+              </span>
+              <span
+                class="MuiTouchRipple-root-125"
+              />
+            </button>
+          </div>
+        </div>
       </div>
     `);
   });

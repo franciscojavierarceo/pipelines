@@ -36,8 +36,8 @@ import { logger } from '../lib/Utils';
 import { debounce } from 'lodash';
 import { InputAdornment } from '@material-ui/core';
 import { CustomTableRow } from './CustomTableRow';
-import { V2beta1Filter, V2beta1PredicateOperation } from 'src/apisv2beta1/filter';
-import { ApiFilter, PredicateOp } from 'src/apis/filter';
+import { V2beta1Filter, V2beta1PredicateOperation } from '../apisv2beta1/filter';
+import { ApiFilter, PredicateOp } from '../apis/filter';
 
 export enum ExpandState {
   COLLAPSED,

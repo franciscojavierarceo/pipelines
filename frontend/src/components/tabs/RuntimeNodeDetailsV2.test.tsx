@@ -16,13 +16,13 @@
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import React from 'react';
-import { Apis } from 'src/lib/Apis';
-import { testBestPractices } from 'src/TestUtils';
-import { CommonTestWrapper } from 'src/TestWrapper';
-import { NodeMlmdInfo } from 'src/pages/RunDetailsV2';
-import { RuntimeNodeDetailsV2 } from 'src/components/tabs/RuntimeNodeDetailsV2';
-import { Execution, Value } from 'src/third_party/mlmd';
-import TestUtils from 'src/TestUtils';
+import { Apis } from '../../lib/Apis';
+import { testBestPractices } from '../../TestUtils';
+import { CommonTestWrapper } from '../../TestWrapper';
+import { NodeMlmdInfo } from '../../pages/RunDetailsV2';
+import { RuntimeNodeDetailsV2 } from './RuntimeNodeDetailsV2';
+import { Execution, Value } from '../../third_party/mlmd';
+import TestUtils from '../../TestUtils';
 import fs from 'fs';
 import jsyaml from 'js-yaml';
 

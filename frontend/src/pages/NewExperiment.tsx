@@ -15,23 +15,23 @@
  */
 
 import * as React from 'react';
-import BusyButton from 'src/atoms/BusyButton';
+import BusyButton from '../atoms/BusyButton';
 import Button from '@material-ui/core/Button';
-import Input from 'src/atoms/Input';
-import { V2beta1Experiment } from 'src/apisv2beta1/experiment';
-import { Apis } from 'src/lib/Apis';
-import { Page, PageProps } from 'src/pages/Page';
-import { RoutePage, QUERY_PARAMS } from 'src/components/Router';
+import Input from '../atoms/Input';
+import { V2beta1Experiment } from '../apisv2beta1/experiment';
+import { Apis } from '../lib/Apis';
+import { Page, PageProps } from './Page';
+import { RoutePage, QUERY_PARAMS } from '../components/Router';
 import { TextFieldProps } from '@material-ui/core/TextField';
-import { ToolbarProps } from 'src/components/Toolbar';
-import { URLParser } from 'src/lib/URLParser';
+import { ToolbarProps } from '../components/Toolbar';
+import { URLParser } from '../lib/URLParser';
 import { classes, stylesheet } from 'typestyle';
-import { commonCss, padding, fontsize } from 'src/Css';
-import { logger, errorToMessage } from 'src/lib/Utils';
-import { NamespaceContext } from 'src/lib/KubeflowClient';
-import { getLatestVersion } from 'src/pages/NewRunV2';
-import { NewExperimentFC } from 'src/pages/functional_components/NewExperimentFC';
-import { FeatureKey, isFeatureEnabled } from 'src/features';
+import { commonCss, padding, fontsize } from '../Css';
+import { logger, errorToMessage } from '../lib/Utils';
+import { NamespaceContext } from '../lib/KubeflowClient';
+import { getLatestVersion } from './NewRunV2';
+import { NewExperimentFC } from './functional_components/NewExperimentFC';
+import { FeatureKey, isFeatureEnabled } from '../features';
 
 interface NewExperimentState {
   description: string;

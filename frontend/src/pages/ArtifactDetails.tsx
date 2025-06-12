@@ -20,13 +20,13 @@ import {
   getResourceProperty,
   LineageResource,
   LineageView,
-} from 'src/mlmd/library';
+} from '../mlmd/library';
 import {
   ArtifactType,
   Artifact,
   GetArtifactsByIDRequest,
   GetArtifactTypesByIDRequest,
-} from 'src/third_party/mlmd';
+} from '../third_party/mlmd';
 import { CircularProgress } from '@material-ui/core';
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
@@ -38,7 +38,7 @@ import { ToolbarProps } from '../components/Toolbar';
 import { commonCss, padding } from '../Css';
 import { logger, serviceErrorToString, titleCase } from '../lib/Utils';
 import { Page, PageProps } from './Page';
-import { ArtifactHelpers } from 'src/mlmd/MlmdUtils';
+import { ArtifactHelpers } from '../mlmd/MlmdUtils';
 
 export enum ArtifactDetailsTab {
   OVERVIEW = 0,

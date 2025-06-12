@@ -23,8 +23,8 @@ import ReactFlow, {
   OnLoadParams,
   ReactFlowProvider,
 } from 'react-flow-renderer';
-import { NodeTypeNames, NODE_TYPES } from 'src/lib/v2/StaticFlow';
-import { Execution } from 'src/third_party/mlmd';
+import { NodeTypeNames, NODE_TYPES } from '../../lib/v2/StaticFlow';
+import { Execution } from '../../third_party/mlmd';
 
 interface WrappedExecutionNodeProps {
   id: string;

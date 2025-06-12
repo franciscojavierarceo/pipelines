@@ -101,20 +101,12 @@ describe('RunList', () => {
   }
 
   function getMountedInstance(): RunList {
-    tree = render(
-      <CommonTestWrapper>
-        <RunList {...generateProps()} />
-      </CommonTestWrapper>
-    );
+    tree = TestUtils.renderWithRouter(<RunList {...generateProps()} />);
     return tree.container.querySelector('div') as any;
   }
 
   function getShallowInstance(): RunList {
-    tree = render(
-      <CommonTestWrapper>
-        <RunList {...generateProps()} />
-      </CommonTestWrapper>
-    );
+    tree = TestUtils.renderWithRouter(<RunList {...generateProps()} />);
     return tree.container.querySelector('div') as any;
   }
 
@@ -138,21 +130,23 @@ describe('RunList', () => {
   });
 
   it('renders the empty experience', () => {
-    expect(TestUtils.renderWithRouter(<RunList {...generateProps()} />)).toMatchSnapshot();
+    tree = TestUtils.renderWithRouter(<RunList {...generateProps()} />);
+    expect(tree.container).toMatchSnapshot();
   });
 
   describe('in archived state', () => {
     it('renders the empty experience', () => {
       const props = generateProps();
       props.storageState = V2beta1RunStorageState.ARCHIVED;
-      expect(TestUtils.renderWithRouter(<RunList {...props} />)).toMatchSnapshot();
+      tree = TestUtils.renderWithRouter(<RunList {...props} />);
+      expect(tree.container).toMatchSnapshot();
     });
 
     it('loads runs whose storage state is not ARCHIVED when storage state equals AVAILABLE', async () => {
       mockNRuns(1, {});
       const props = generateProps();
       props.storageState = V2beta1RunStorageState.AVAILABLE;
-      tree = TestUtils.renderWithRouter(<RunList {...props} />);
+      tree = render(<RunList {...props} />);
       await (tree.container.querySelector('div') as any)._loadRuns({});
       expect(Apis.runServiceApiV2.listRuns).toHaveBeenLastCalledWith(
         undefined,
@@ -178,7 +172,7 @@ describe('RunList', () => {
       mockNRuns(1, {});
       const props = generateProps();
       props.storageState = V2beta1RunStorageState.ARCHIVED;
-      tree = TestUtils.renderWithRouter(<RunList {...props} />);
+      tree = render(<RunList {...props} />);
       await (tree.container.querySelector('div') as any)._loadRuns({});
       expect(Apis.runServiceApiV2.listRuns).toHaveBeenLastCalledWith(
         undefined,
@@ -204,7 +198,7 @@ describe('RunList', () => {
       mockNRuns(1, {});
       const props = generateProps();
       props.storageState = V2beta1RunStorageState.ARCHIVED;
-      tree = TestUtils.renderWithRouter(<RunList {...props} />);
+      tree = render(<RunList {...props} />);
       await (tree.container.querySelector('div') as any)._loadRuns({
         filter: encodeURIComponent(
           JSON.stringify({
@@ -257,7 +251,7 @@ describe('RunList', () => {
   it('reloads the run when refresh is called', async () => {
     mockNRuns(0, {});
     const props = generateProps();
-    tree = TestUtils.renderWithRouter(<RunList {...props} />);
+    tree = render(<RunList {...props} />);
     await (tree.container.querySelector('div') as any).refresh();
     expect(Apis.runServiceApiV2.listRuns).toHaveBeenCalledTimes(2);
     expect(Apis.runServiceApiV2.listRuns).toHaveBeenLastCalledWith(

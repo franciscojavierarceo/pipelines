@@ -25,7 +25,7 @@ import {
   triggerDisplayString,
   parseTrigger,
 } from './TriggerUtils';
-import { TriggerSchedule } from 'src/lib/TriggerUtils';
+import { TriggerSchedule } from './TriggerUtils';
 
 describe('TriggerUtils', () => {
   describe('getPeriodInSeconds', () => {

@@ -16,19 +16,19 @@
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
-import { CommonTestWrapper } from 'src/TestWrapper';
-import { testBestPractices } from 'src/TestUtils';
-import { Artifact, Event } from 'src/third_party/mlmd';
-import { LinkedArtifact } from 'src/mlmd/MlmdUtils';
+import { CommonTestWrapper } from '../../TestWrapper';
+import { testBestPractices } from '../../TestUtils';
+import { Artifact, Event } from '../../third_party/mlmd';
+import { LinkedArtifact } from '../../mlmd/MlmdUtils';
 import { Struct, Value } from 'google-protobuf/google/protobuf/struct_pb';
 import {
   ConfidenceMetricsFilter,
   ConfidenceMetricsSection,
   ConfidenceMetricsSectionProps,
 } from './MetricsVisualizations';
-import { FullArtifactPath, FullArtifactPathMap, RocCurveColorMap } from 'src/lib/v2/CompareUtils';
-import { lineColors } from 'src/components/viewers/ROCCurve';
-import TestUtils from 'src/TestUtils';
+import { FullArtifactPath, FullArtifactPathMap, RocCurveColorMap } from '../../lib/v2/CompareUtils';
+import { lineColors } from './ROCCurve';
+import TestUtils from '../../TestUtils';
 import * as rocCurveHelper from './ROCCurveHelper';
 
 testBestPractices();

@@ -17,10 +17,10 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import React from 'react';
-import { Apis } from 'src/lib/Apis';
-import { Api } from 'src/mlmd/library';
-import { testBestPractices } from 'src/TestUtils';
-import { CommonTestWrapper } from 'src/TestWrapper';
+import { Apis } from '../../lib/Apis';
+import { Api } from '../../mlmd/library';
+import { testBestPractices } from '../../TestUtils';
+import { CommonTestWrapper } from '../../TestWrapper';
 import {
   Artifact,
   Event,
@@ -28,7 +28,7 @@ import {
   GetArtifactsByIDResponse,
   GetEventsByExecutionIDsResponse,
   Value,
-} from 'src/third_party/mlmd';
+} from '../../third_party/mlmd';
 import InputOutputTab from './InputOutputTab';
 
 const executionName = 'fake-execution';

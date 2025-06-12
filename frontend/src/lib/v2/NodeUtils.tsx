@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { PipelineSpec } from 'src/generated/pipeline_spec';
+import { PipelineSpec } from '../../generated/pipeline_spec';
 
 export function getComponentSpec(pipelineSpec: PipelineSpec, layers: string[], taskKey: string) {
   let currentDag = pipelineSpec.root?.dag;

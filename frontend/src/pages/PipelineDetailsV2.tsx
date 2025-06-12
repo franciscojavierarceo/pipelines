@@ -15,15 +15,15 @@
  */
 import React, { MouseEvent as ReactMouseEvent, useState } from 'react';
 import { FlowElement } from 'react-flow-renderer';
-import { V2beta1Pipeline, V2beta1PipelineVersion } from 'src/apisv2beta1/pipeline';
-import MD2Tabs from 'src/atoms/MD2Tabs';
-import { FlowElementDataBase } from 'src/components/graph/Constants';
-import { PipelineVersionCard } from 'src/components/navigators/PipelineVersionCard';
-import { PipelineSpecTabContent } from 'src/components/PipelineSpecTabContent';
-import SidePanel from 'src/components/SidePanel';
-import { StaticNodeDetailsV2 } from 'src/components/tabs/StaticNodeDetailsV2';
-import { PipelineFlowElement } from 'src/lib/v2/StaticFlow';
-import { commonCss, padding } from 'src/Css';
+import { V2beta1Pipeline, V2beta1PipelineVersion } from '../apisv2beta1/pipeline';
+import MD2Tabs from '../atoms/MD2Tabs';
+import { FlowElementDataBase } from '../components/graph/Constants';
+import { PipelineVersionCard } from '../components/navigators/PipelineVersionCard';
+import { PipelineSpecTabContent } from '../components/PipelineSpecTabContent';
+import SidePanel from '../components/SidePanel';
+import { StaticNodeDetailsV2 } from '../components/tabs/StaticNodeDetailsV2';
+import { PipelineFlowElement } from '../lib/v2/StaticFlow';
+import { commonCss, padding } from '../Css';
 import DagCanvas from './v2/DagCanvas';
 import { Edge, Node } from 'react-flow-renderer/dist/types';
 

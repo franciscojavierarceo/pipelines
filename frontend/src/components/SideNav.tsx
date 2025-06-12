@@ -36,9 +36,9 @@ import PipelinesIcon from '../icons/pipelines';
 import { BuildInfo } from '../lib/Apis';
 import { Deployments, KFP_FLAGS } from '../lib/Flags';
 import { LocalStorage, LocalStorageKey } from '../lib/LocalStorage';
-import { GkeMetadataContext, GkeMetadata } from 'src/lib/GkeMetadata';
+import { GkeMetadataContext, GkeMetadata } from '../lib/GkeMetadata';
 import { Alarm } from '@material-ui/icons';
-import { BuildInfoContext } from 'src/lib/BuildInfo';
+import { BuildInfoContext } from '../lib/BuildInfo';
 
 export const tailwindcss = {
   sideNavItem: 'flex flex-row flex-shrink-0',

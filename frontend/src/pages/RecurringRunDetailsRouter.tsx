@@ -17,15 +17,15 @@
 import React from 'react';
 import * as JsYaml from 'js-yaml';
 import { useQuery } from 'react-query';
-import { V2beta1RecurringRun } from 'src/apisv2beta1/recurringrun';
-import { RouteParams } from 'src/components/Router';
-import { Apis } from 'src/lib/Apis';
-import * as WorkflowUtils from 'src/lib/v2/WorkflowUtils';
+import { V2beta1RecurringRun } from '../apisv2beta1/recurringrun';
+import { RouteParams } from '../components/Router';
+import { Apis } from '../lib/Apis';
+import * as WorkflowUtils from '../lib/v2/WorkflowUtils';
 import { PageProps } from './Page';
 import RecurringRunDetails from './RecurringRunDetails';
 import RecurringRunDetailsV2 from './RecurringRunDetailsV2';
-import { RecurringRunDetailsV2FC } from 'src/pages/functional_components/RecurringRunDetailsV2FC';
-import { FeatureKey, isFeatureEnabled } from 'src/features';
+import { RecurringRunDetailsV2FC } from './functional_components/RecurringRunDetailsV2FC';
+import { FeatureKey, isFeatureEnabled } from '../features';
 
 // This is a router to determine whether to show V1 or V2 recurring run details page.
 export default function RecurringRunDetailsRouter(props: PageProps) {

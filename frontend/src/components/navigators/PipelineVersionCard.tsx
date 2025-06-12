@@ -21,10 +21,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Select from '@material-ui/core/Select';
 import React, { useState } from 'react';
-import { V2beta1Pipeline, V2beta1PipelineVersion } from 'src/apisv2beta1/pipeline';
-import { Description } from 'src/components/Description';
-import { commonCss } from 'src/Css';
-import { formatDateString } from 'src/lib/Utils';
+import { V2beta1Pipeline, V2beta1PipelineVersion } from '../../apisv2beta1/pipeline';
+import { Description } from '../Description';
+import { commonCss } from '../../Css';
+import { formatDateString } from '../../lib/Utils';
 
 interface PipelineVersionCardProps {
   pipeline: V2beta1Pipeline | null;

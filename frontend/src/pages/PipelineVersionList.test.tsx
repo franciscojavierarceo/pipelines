@@ -70,46 +70,46 @@ describe('PipelineVersionList', () => {
 
   it('renders an empty list with empty state message', () => {
     tree = render(<PipelineVersionList {...generateProps()} />);
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline version', async () => {
     const props = generateProps();
     tree = render(<PipelineVersionList {...props} />);
     await listPipelineVersionsSpy;
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline version with description', async () => {
     const props = generateProps();
     tree = render(<PipelineVersionList {...props} />);
     await listPipelineVersionsSpy;
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline version without created date', async () => {
     const props = generateProps();
     tree = render(<PipelineVersionList {...props} />);
     await listPipelineVersionsSpy;
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline version with error', async () => {
     const props = generateProps();
     tree = render(<PipelineVersionList {...props} />);
     await listPipelineVersionsSpy;
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('calls Apis to list pipeline versions, sorted by creation time in descending order', async () => {
     tree = await mountWithNPipelineVersions(2);
     expect(listPipelineVersionsSpy).toHaveBeenCalled();
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('calls Apis to list pipeline versions, sorted by pipeline version name in descending order', async () => {
     tree = await mountWithNPipelineVersions(3);
     expect(listPipelineVersionsSpy).toHaveBeenCalled();
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 });

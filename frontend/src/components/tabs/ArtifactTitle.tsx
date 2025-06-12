@@ -16,9 +16,9 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { commonCss } from 'src/Css';
-import { ArtifactHelpers } from 'src/mlmd/MlmdUtils';
-import { Artifact } from 'src/third_party/mlmd';
+import { commonCss } from '../../Css';
+import { ArtifactHelpers } from '../../mlmd/MlmdUtils';
+import { Artifact } from '../../third_party/mlmd';
 import { RoutePageFactory } from '../Router';
 
 interface ArtifactTitleProps {

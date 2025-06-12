@@ -15,11 +15,11 @@
  */
 
 import React, { useState } from 'react';
-import MD2Tabs from 'src/atoms/MD2Tabs';
-import { commonCss, padding } from 'src/Css';
+import MD2Tabs from '../atoms/MD2Tabs';
+import { commonCss, padding } from '../Css';
 import { classes } from 'typestyle';
-import { PageProps } from 'src/pages/Page';
-import ExecutionList from 'src/pages/ExecutionList';
+import { PageProps } from './Page';
+import ExecutionList from './ExecutionList';
 
 function ExecutionListSwitcher(props: PageProps) {
   const [selectedTab, setSelectedTab] = useState(0);

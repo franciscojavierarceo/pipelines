@@ -16,14 +16,14 @@
 
 import { render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
-import { CommonTestWrapper } from 'src/TestWrapper';
-import { Apis } from 'src/lib/Apis';
+import { CommonTestWrapper } from '../TestWrapper';
+import { Apis } from '../lib/Apis';
 import { PageProps } from './Page';
-import { QUERY_PARAMS } from 'src/components/Router';
-import { ApiRunDetail } from 'src/apis/run';
+import { QUERY_PARAMS } from '../components/Router';
+import { ApiRunDetail } from '../apis/run';
 import Compare from './Compare';
-import * as features from 'src/features';
-import TestUtils, { testBestPractices } from 'src/TestUtils';
+import * as features from '../features';
+import TestUtils, { testBestPractices } from '../TestUtils';
 
 testBestPractices();
 describe('Switch between v1 and v2 Run Comparison pages', () => {

@@ -25,9 +25,9 @@ import { KeyValue } from './StaticGraphParser';
 import { hasFinished, NodePhase, statusToBgColor, parseNodePhase } from './StatusUtils';
 import { parseTaskDisplayNameByNodeId } from './ParserUtils';
 import { isS3Endpoint } from './AwsHelper';
-import { Execution } from 'src/third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
+import { Execution } from '../third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
 import { isV2Pipeline } from './v2/WorkflowUtils';
-import { ExecutionHelpers } from 'src/mlmd/MlmdUtils';
+import { ExecutionHelpers } from '../mlmd/MlmdUtils';
 
 export enum StorageService {
   GCS = 'gcs',

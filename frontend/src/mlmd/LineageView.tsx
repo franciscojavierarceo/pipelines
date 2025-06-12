@@ -48,7 +48,7 @@ import {
   GetEventsByExecutionIDsRequest,
   GetExecutionsByIDRequest,
   MetadataStoreServicePromiseClient,
-} from 'src/third_party/mlmd';
+} from '../third_party/mlmd';
 import { RefObject } from 'react';
 import { getArtifactTypes, getExecutionTypes } from './LineageApi';
 import { getExecutionTypeName, getTypeName } from './Utils';

@@ -12,18 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 import jsyaml from 'js-yaml';
-import { FeatureKey, isFeatureEnabled } from 'src/features';
+import { FeatureKey, isFeatureEnabled } from '../../features';
 import {
   ComponentSpec,
   PipelineDeploymentConfig,
   PipelineDeploymentConfig_ExecutorSpec,
   PipelineSpec,
   PlatformSpec,
-} from 'src/generated/pipeline_spec';
-import * as StaticGraphParser from 'src/lib/StaticGraphParser';
-import { convertFlowElements } from 'src/lib/v2/StaticFlow';
-import * as WorkflowUtils from 'src/lib/v2/WorkflowUtils';
-import { Workflow } from 'src/third_party/mlmd/argo_template';
+} from '../../generated/pipeline_spec';
+import * as StaticGraphParser from '../StaticGraphParser';
+import { convertFlowElements } from './StaticFlow';
+import * as WorkflowUtils from './WorkflowUtils';
+import { Workflow } from '../../third_party/mlmd/argo_template';
 
 // This key is used to retrieve the platform-agnostic pipeline definition
 export const PIPELINE_SPEC_TEMPLATE_KEY = 'pipeline_spec';

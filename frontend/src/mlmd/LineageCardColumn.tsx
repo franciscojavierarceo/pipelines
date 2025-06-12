@@ -20,7 +20,7 @@ import { classes, stylesheet } from 'typestyle';
 import { LineageCard } from './LineageCard';
 import { LineageCardType, LineageRow } from './LineageTypes';
 import { CARD_OFFSET, EdgeCanvas } from './EdgeCanvas';
-import { Artifact } from 'src/third_party/mlmd';
+import { Artifact } from '../third_party/mlmd';
 import { ControlledEdgeCanvas } from './ControlledEdgeCanvas';
 import { CARD_ROW_HEIGHT } from './LineageCss';
 

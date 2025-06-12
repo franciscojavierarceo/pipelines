@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { PipelineSpec } from 'src/generated/pipeline_spec';
-import { testBestPractices } from 'src/TestUtils';
+import { PipelineSpec } from '../../generated/pipeline_spec';
+import { testBestPractices } from '../../TestUtils';
 import { convertFlowElements } from './StaticFlow';
 import fs from 'fs';
 import jsyaml from 'js-yaml';

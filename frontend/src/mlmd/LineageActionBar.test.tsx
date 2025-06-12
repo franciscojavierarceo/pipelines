@@ -18,7 +18,7 @@ import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { LineageActionBar, LineageActionBarProps, LineageActionBarState } from './LineageActionBar';
 import { buildTestModel, testModel } from './TestUtils';
-import { Artifact } from 'src/third_party/mlmd';
+import { Artifact } from '../third_party/mlmd';
 
 describe('LineageActionBar', () => {
   let tree: ShallowWrapper;

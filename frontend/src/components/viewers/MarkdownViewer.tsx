@@ -19,7 +19,7 @@ import Viewer, { ViewerConfig } from './Viewer';
 import { cssRaw } from 'typestyle';
 import Markdown from 'markdown-to-jsx';
 import Banner from '../Banner';
-import { ExternalLink } from 'src/atoms/ExternalLink';
+import { ExternalLink } from '../../atoms/ExternalLink';
 
 cssRaw(`
 .markdown-viewer h1,

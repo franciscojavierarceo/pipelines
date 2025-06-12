@@ -15,8 +15,8 @@
  */
 import { Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import * as React from 'react';
-import { getMetadataValue } from 'src/mlmd/library';
-import { Artifact, Execution } from 'src/third_party/mlmd';
+import { getMetadataValue } from '../mlmd/library';
+import { Artifact, Execution } from '../third_party/mlmd';
 import { stylesheet } from 'typestyle';
 import { color, commonCss } from '../Css';
 import { ArtifactLink } from './ArtifactLink';

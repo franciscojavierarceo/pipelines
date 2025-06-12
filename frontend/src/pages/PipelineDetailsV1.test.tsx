@@ -18,11 +18,11 @@ import * as JsYaml from 'js-yaml';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { graphlib } from 'dagre';
 import * as React from 'react';
-import { testBestPractices } from 'src/TestUtils';
+import { testBestPractices } from '../TestUtils';
 import PipelineDetailsV1, { PipelineDetailsV1Props } from './PipelineDetailsV1';
-import { color } from 'src/Css';
-import { Constants } from 'src/lib/Constants';
-import { SelectedNodeInfo } from 'src/lib/StaticGraphParser';
+import { color } from '../Css';
+import { Constants } from '../lib/Constants';
+import { SelectedNodeInfo } from '../lib/StaticGraphParser';
 
 testBestPractices();
 describe('PipelineDetailsV1', () => {

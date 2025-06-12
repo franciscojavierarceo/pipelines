@@ -17,8 +17,8 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { V2beta1Pipeline, V2beta1PipelineVersion } from 'src/apisv2beta1/pipeline';
-import { testBestPractices } from 'src/TestUtils';
+import { V2beta1Pipeline, V2beta1PipelineVersion } from '../../apisv2beta1/pipeline';
+import { testBestPractices } from '../../TestUtils';
 import { PipelineVersionCard } from './PipelineVersionCard';
 
 const OLD_VERSION_NAME = 'old version';

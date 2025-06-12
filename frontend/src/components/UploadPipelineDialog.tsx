@@ -30,7 +30,7 @@ import { padding, commonCss, zIndex, color } from '../Css';
 import { stylesheet, classes } from 'typestyle';
 import { ExternalLink } from '../atoms/ExternalLink';
 import PrivateSharedSelector from './PrivateSharedSelector';
-import { BuildInfoContext } from 'src/lib/BuildInfo';
+import { BuildInfoContext } from '../lib/BuildInfo';
 
 const css = stylesheet({
   dropOverlay: {

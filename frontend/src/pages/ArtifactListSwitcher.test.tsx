@@ -16,7 +16,7 @@
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
-import { Api } from 'src/mlmd/library';
+import { Api } from '../mlmd/library';
 import {
   Artifact,
   ArtifactType,
@@ -24,12 +24,12 @@ import {
   GetArtifactsResponse,
   GetArtifactTypesResponse,
   Value,
-} from 'src/third_party/mlmd';
-import { RoutePage } from 'src/components/Router';
-import { testBestPractices } from 'src/TestUtils';
-import ArtifactListSwitcher from 'src/pages/ArtifactListSwitcher';
-import { PageProps } from 'src/pages/Page';
-import { CommonTestWrapper } from 'src/TestWrapper';
+} from '../third_party/mlmd';
+import { RoutePage } from '../components/Router';
+import { testBestPractices } from '../TestUtils';
+import ArtifactListSwitcher from './ArtifactListSwitcher';
+import { PageProps } from './Page';
+import { CommonTestWrapper } from '../TestWrapper';
 
 testBestPractices();
 

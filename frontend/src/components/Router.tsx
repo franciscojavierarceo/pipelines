@@ -22,36 +22,36 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Snackbar, { SnackbarProps } from '@material-ui/core/Snackbar';
 import * as React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import Compare from 'src/pages/Compare';
-import FrontendFeatures from 'src/pages/FrontendFeatures';
-import RunDetailsRouter from 'src/pages/RunDetailsRouter';
+import Compare from '../pages/Compare';
+import FrontendFeatures from '../pages/FrontendFeatures';
+import RunDetailsRouter from '../pages/RunDetailsRouter';
 import { classes, stylesheet } from 'typestyle';
-import Banner, { BannerProps } from 'src/components/Banner';
-import { commonCss } from 'src/Css';
-import { Deployments, KFP_FLAGS } from 'src/lib/Flags';
-import Page404 from 'src/pages/404';
+import Banner, { BannerProps } from './Banner';
+import { commonCss } from '../Css';
+import { Deployments, KFP_FLAGS } from '../lib/Flags';
+import Page404 from '../pages/404';
 import AllExperimentsAndArchive, {
   AllExperimentsAndArchiveTab,
-} from 'src/pages/AllExperimentsAndArchive';
-import AllRecurringRunsList from 'src/pages/AllRecurringRunsList';
-import AllRunsAndArchive, { AllRunsAndArchiveTab } from 'src/pages/AllRunsAndArchive';
-import ArtifactDetails from 'src/pages/ArtifactDetails';
-import ArtifactListSwitcher from 'src/pages/ArtifactListSwitcher';
-import ExecutionDetails from 'src/pages/ExecutionDetails';
-import ExecutionListSwitcher from 'src/pages/ExecutionListSwitcher';
-import ExperimentDetails from 'src/pages/ExperimentDetails';
-import { GettingStarted } from 'src/pages/GettingStarted';
-import NewExperiment from 'src/pages/NewExperiment';
-import NewPipelineVersion from 'src/pages/NewPipelineVersion';
-import NewRunSwitcher from 'src/pages/NewRunSwitcher';
-import PipelineDetails from 'src/pages/PipelineDetails';
+} from '../pages/AllExperimentsAndArchive';
+import AllRecurringRunsList from '../pages/AllRecurringRunsList';
+import AllRunsAndArchive, { AllRunsAndArchiveTab } from '../pages/AllRunsAndArchive';
+import ArtifactDetails from '../pages/ArtifactDetails';
+import ArtifactListSwitcher from '../pages/ArtifactListSwitcher';
+import ExecutionDetails from '../pages/ExecutionDetails';
+import ExecutionListSwitcher from '../pages/ExecutionListSwitcher';
+import ExperimentDetails from '../pages/ExperimentDetails';
+import { GettingStarted } from '../pages/GettingStarted';
+import NewExperiment from '../pages/NewExperiment';
+import NewPipelineVersion from '../pages/NewPipelineVersion';
+import NewRunSwitcher from '../pages/NewRunSwitcher';
+import PipelineDetails from '../pages/PipelineDetails';
 import PrivateAndSharedPipelines, {
   PrivateAndSharedTab,
-} from 'src/pages/PrivateAndSharedPipelines';
-import RecurringRunDetailsRouter from 'src/pages/RecurringRunDetailsRouter';
+} from '../pages/PrivateAndSharedPipelines';
+import RecurringRunDetailsRouter from '../pages/RecurringRunDetailsRouter';
 import SideNav from './SideNav';
 import Toolbar, { ToolbarProps } from './Toolbar';
-import { BuildInfoContext } from 'src/lib/BuildInfo';
+import { BuildInfoContext } from '../lib/BuildInfo';
 
 export type RouteConfig = {
   path: string;

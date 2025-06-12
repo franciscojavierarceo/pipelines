@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { logger } from 'src/lib/Utils';
-import { NodeStatus } from 'src/third_party/mlmd/argo_template';
-import { V2beta1RuntimeState } from 'src/apisv2beta1/run';
+import { logger } from './Utils';
+import { NodeStatus } from '../third_party/mlmd/argo_template';
+import { V2beta1RuntimeState } from '../apisv2beta1/run';
 
 export const statusBgColors = {
   error: '#fce8e6',

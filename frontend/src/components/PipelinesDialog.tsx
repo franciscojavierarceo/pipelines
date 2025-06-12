@@ -30,7 +30,7 @@ import { PageProps } from '../pages/Page';
 import MD2Tabs from '../atoms/MD2Tabs';
 import Toolbar, { ToolbarActionMap } from '../components/Toolbar';
 import { PipelineTabsHeaders, PipelineTabsTooltips } from '../pages/PrivateAndSharedPipelines';
-import { BuildInfoContext } from 'src/lib/BuildInfo';
+import { BuildInfoContext } from '../lib/BuildInfo';
 
 enum NamespacedAndSharedTab {
   NAMESPACED = 0,

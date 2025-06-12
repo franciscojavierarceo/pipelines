@@ -17,7 +17,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { Api } from 'src/mlmd/library';
+import { Api } from '../mlmd/library';
 import {
   Artifact,
   ArtifactType,
@@ -25,13 +25,13 @@ import {
   GetArtifactsResponse,
   GetArtifactTypesResponse,
   Value,
-} from 'src/third_party/mlmd';
-import { ListOperationOptions } from 'src/third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
-import { RoutePage } from 'src/components/Router';
-import TestUtils from 'src/TestUtils';
-import { ArtifactList } from 'src/pages/ArtifactList';
-import { PageProps } from 'src/pages/Page';
-import { testBestPractices } from 'src/TestUtils';
+} from '../third_party/mlmd';
+import { ListOperationOptions } from '../third_party/mlmd/generated/ml_metadata/proto/metadata_store_pb';
+import { RoutePage } from '../components/Router';
+import TestUtils from '../TestUtils';
+import { ArtifactList } from './ArtifactList';
+import { PageProps } from './Page';
+import { testBestPractices } from '../TestUtils';
 
 testBestPractices();
 

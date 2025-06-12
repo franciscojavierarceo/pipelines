@@ -22,7 +22,7 @@ import PipelineList from './PipelineList';
 import { RoutePage } from '../components/Router';
 import { NamespaceContext } from '../lib/KubeflowClient';
 import { commonCss, padding } from '../Css';
-import { BuildInfoContext } from 'src/lib/BuildInfo';
+import { BuildInfoContext } from '../lib/BuildInfo';
 
 export enum PrivateAndSharedTab {
   PRIVATE = 0,

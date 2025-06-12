@@ -16,11 +16,11 @@
 
 import React from 'react';
 import { GettingStarted } from './GettingStarted';
-import TestUtils, { diffHTML } from 'src/TestUtils';
+import TestUtils, { diffHTML } from '../TestUtils';
 import { render } from '@testing-library/react';
 import { PageProps } from './Page';
-import { Apis } from 'src/lib/Apis';
-import { V2beta1ListPipelinesResponse } from 'src/apisv2beta1/pipeline';
+import { Apis } from '../lib/Apis';
+import { V2beta1ListPipelinesResponse } from '../apisv2beta1/pipeline';
 
 const PATH_BACKEND_CONFIG = '../../../backend/src/apiserver/config/sample_config.json';
 const PATH_FRONTEND_CONFIG = 'src/config/sample_config_from_backend.json';

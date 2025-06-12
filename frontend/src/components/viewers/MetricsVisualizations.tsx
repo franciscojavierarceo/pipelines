@@ -18,26 +18,26 @@ import HelpIcon from '@material-ui/icons/Help';
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { Array as ArrayRunType, Failure, Number, Record, String, ValidationError } from 'runtypes';
-import IconWithTooltip from 'src/atoms/IconWithTooltip';
-import { color, commonCss, padding } from 'src/Css';
-import { Apis, ListRequest } from 'src/lib/Apis';
-import { OutputArtifactLoader } from 'src/lib/OutputArtifactLoader';
-import WorkflowParser, { StoragePath } from 'src/lib/WorkflowParser';
-import { getMetadataValue } from 'src/mlmd/library';
+import IconWithTooltip from '../../atoms/IconWithTooltip';
+import { color, commonCss, padding } from '../../Css';
+import { Apis, ListRequest } from '../../lib/Apis';
+import { OutputArtifactLoader } from '../../lib/OutputArtifactLoader';
+import WorkflowParser, { StoragePath } from '../../lib/WorkflowParser';
+import { getMetadataValue } from '../../mlmd/library';
 import {
   filterArtifactsByType,
   filterLinkedArtifactsByType,
   getArtifactName,
   getStoreSessionInfoFromArtifact,
   LinkedArtifact,
-} from 'src/mlmd/MlmdUtils';
-import { Artifact, ArtifactType, Execution } from 'src/third_party/mlmd';
+} from '../../mlmd/MlmdUtils';
+import { Artifact, ArtifactType, Execution } from '../../third_party/mlmd';
 import Banner from '../Banner';
 import CustomTable, {
   Column,
   CustomRendererProps,
   Row as TableRow,
-} from 'src/components/CustomTable';
+} from '../CustomTable';
 import PlotCard from '../PlotCard';
 import ConfusionMatrix, { ConfusionMatrixConfig } from './ConfusionMatrix';
 import { HTMLViewerConfig } from './HTMLViewer';
@@ -48,8 +48,8 @@ import { PlotType, ViewerConfig } from './Viewer';
 import { componentMap } from './ViewerContainer';
 import Tooltip from '@material-ui/core/Tooltip';
 import { Link } from 'react-router-dom';
-import { RoutePage, RouteParams } from 'src/components/Router';
-import { ApiFilter, PredicateOp } from 'src/apis/filter';
+import { RoutePage, RouteParams } from '../Router';
+import { ApiFilter, PredicateOp } from '../../apis/filter';
 import {
   FullArtifactPath,
   FullArtifactPathMap,
@@ -57,8 +57,8 @@ import {
   mlmdDisplayName,
   NameId,
   RocCurveColorMap,
-} from 'src/lib/v2/CompareUtils';
-import { logger } from 'src/lib/Utils';
+} from '../../lib/v2/CompareUtils';
+import { logger } from '../../lib/Utils';
 import { stylesheet } from 'typestyle';
 import { buildRocCurveConfig, validateConfidenceMetrics } from './ROCCurveHelper';
 import { isEqual } from 'lodash';

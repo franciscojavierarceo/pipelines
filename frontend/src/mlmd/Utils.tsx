@@ -21,7 +21,7 @@ import {
   ExecutionProperties,
 } from './Api';
 import { ArtifactTypeMap, ExecutionTypeMap } from './LineageApi';
-import { Artifact, Execution, Value } from 'src/third_party/mlmd';
+import { Artifact, Execution, Value } from '../third_party/mlmd';
 import { LineageTypedResource } from './LineageTypes';
 import { Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import { ArtifactHelpers, ExecutionHelpers } from './MlmdUtils';

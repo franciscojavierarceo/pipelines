@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import * as JsYaml from 'js-yaml';
 import { useQuery } from 'react-query';
-import { QUERY_PARAMS } from 'src/components/Router';
-import { Apis } from 'src/lib/Apis';
-import { NamespaceContext } from 'src/lib/KubeflowClient';
-import { URLParser } from 'src/lib/URLParser';
+import { QUERY_PARAMS } from '../components/Router';
+import { Apis } from '../lib/Apis';
+import { NamespaceContext } from '../lib/KubeflowClient';
+import { URLParser } from '../lib/URLParser';
 import { NewRun } from './NewRun';
 import NewRunV2 from './NewRunV2';
 import { PageProps } from './Page';
-import { isTemplateV2 } from 'src/lib/v2/WorkflowUtils';
-import { V2beta1Pipeline, V2beta1PipelineVersion } from 'src/apisv2beta1/pipeline';
-import { V2beta1Run } from 'src/apisv2beta1/run';
-import { V2beta1RecurringRun } from 'src/apisv2beta1/recurringrun';
-import { V2beta1Experiment } from 'src/apisv2beta1/experiment';
+import { isTemplateV2 } from '../lib/v2/WorkflowUtils';
+import { V2beta1Pipeline, V2beta1PipelineVersion } from '../apisv2beta1/pipeline';
+import { V2beta1Run } from '../apisv2beta1/run';
+import { V2beta1RecurringRun } from '../apisv2beta1/recurringrun';
+import { V2beta1Experiment } from '../apisv2beta1/experiment';
 
 function NewRunSwitcher(props: PageProps) {
   const namespace = React.useContext(NamespaceContext);

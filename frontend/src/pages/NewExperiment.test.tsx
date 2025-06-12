@@ -21,7 +21,7 @@ import { render, screen, fireEvent, RenderResult } from '@testing-library/react'
 import { PageProps } from './Page';
 import { Apis } from '../lib/Apis';
 import { RoutePage, QUERY_PARAMS } from '../components/Router';
-import { ApiResourceType, ApiRelationship } from 'src/apis/experiment';
+import { ApiResourceType, ApiRelationship } from '../apis/experiment';
 
 describe('NewExperiment', () => {
   let renderResult: RenderResult;

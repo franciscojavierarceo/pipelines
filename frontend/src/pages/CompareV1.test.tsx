@@ -28,7 +28,7 @@ import { OutputArtifactLoader } from '../lib/OutputArtifactLoader';
 import { Workflow } from '../../third_party/argo-ui/argo_template';
 import { ButtonKeys } from '../lib/Buttons';
 import { Router } from 'react-router-dom';
-import { NamespaceContext } from 'src/lib/KubeflowClient';
+import { NamespaceContext } from '../lib/KubeflowClient';
 import { METRICS_SECTION_NAME, OVERVIEW_SECTION_NAME, PARAMS_SECTION_NAME } from './Compare';
 
 const CompareV1 = TEST_ONLY.CompareV1;

@@ -17,11 +17,11 @@
 import { render, waitFor } from '@testing-library/react';
 import { Struct } from 'google-protobuf/google/protobuf/struct_pb';
 import React from 'react';
-import { OutputArtifactLoader } from 'src/lib/OutputArtifactLoader';
-import * as mlmdUtils from 'src/mlmd/MlmdUtils';
-import { testBestPractices } from 'src/TestUtils';
-import { CommonTestWrapper } from 'src/TestWrapper';
-import { Artifact, ArtifactType, Event, Execution, Value } from 'src/third_party/mlmd';
+import { OutputArtifactLoader } from '../../lib/OutputArtifactLoader';
+import * as mlmdUtils from '../../mlmd/MlmdUtils';
+import { testBestPractices } from '../../TestUtils';
+import { CommonTestWrapper } from '../../TestWrapper';
+import { Artifact, ArtifactType, Event, Execution, Value } from '../../third_party/mlmd';
 import { ConfusionMatrixConfig } from '../viewers/ConfusionMatrix';
 import { HTMLViewerConfig } from '../viewers/HTMLViewer';
 import { MarkdownViewerConfig } from '../viewers/MarkdownViewer';

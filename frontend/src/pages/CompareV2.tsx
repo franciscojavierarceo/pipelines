@@ -16,15 +16,15 @@
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
-import { V2beta1Run } from 'src/apisv2beta1/run';
-import Separator from 'src/atoms/Separator';
-import CollapseButtonSingle from 'src/components/CollapseButtonSingle';
-import { QUERY_PARAMS, RoutePage } from 'src/components/Router';
-import { commonCss, padding, zIndex } from 'src/Css';
-import { Apis } from 'src/lib/Apis';
-import Buttons from 'src/lib/Buttons';
-import { URLParser } from 'src/lib/URLParser';
-import { errorToMessage, logger } from 'src/lib/Utils';
+import { V2beta1Run } from '../apisv2beta1/run';
+import Separator from '../atoms/Separator';
+import CollapseButtonSingle from '../components/CollapseButtonSingle';
+import { QUERY_PARAMS, RoutePage } from '../components/Router';
+import { commonCss, padding, zIndex } from '../Css';
+import { Apis } from '../lib/Apis';
+import Buttons from '../lib/Buttons';
+import { URLParser } from '../lib/URLParser';
+import { errorToMessage, logger } from '../lib/Utils';
 import { classes, stylesheet } from 'typestyle';
 import {
   filterLinkedArtifactsByType,
@@ -34,18 +34,18 @@ import {
   getExecutionsFromContext,
   getKfpV2RunContext,
   LinkedArtifact,
-} from 'src/mlmd/MlmdUtils';
-import { Artifact, ArtifactType, Event, Execution } from 'src/third_party/mlmd';
+} from '../mlmd/MlmdUtils';
+import { Artifact, ArtifactType, Event, Execution } from '../third_party/mlmd';
 import { PageProps } from './Page';
 import RunList from './RunList';
 import { METRICS_SECTION_NAME, OVERVIEW_SECTION_NAME, PARAMS_SECTION_NAME } from './Compare';
-import { SelectedItem } from 'src/components/TwoLevelDropdown';
-import MD2Tabs from 'src/atoms/MD2Tabs';
+import { SelectedItem } from '../components/TwoLevelDropdown';
+import MD2Tabs from '../atoms/MD2Tabs';
 import {
   ConfidenceMetricsFilter,
   ConfidenceMetricsSection,
-} from 'src/components/viewers/MetricsVisualizations';
-import CompareTable, { CompareTableProps } from 'src/components/CompareTable';
+} from '../components/viewers/MetricsVisualizations';
+import CompareTable, { CompareTableProps } from '../components/CompareTable';
 import {
   compareCss,
   ExecutionArtifact,
@@ -59,13 +59,13 @@ import {
   RocCurveColorMap,
   RunArtifact,
   RunArtifactData,
-} from 'src/lib/v2/CompareUtils';
-import { NamespaceContext, useNamespaceChangeEvent } from 'src/lib/KubeflowClient';
+} from '../lib/v2/CompareUtils';
+import { NamespaceContext, useNamespaceChangeEvent } from '../lib/KubeflowClient';
 import { Redirect } from 'react-router-dom';
-import MetricsDropdown from 'src/components/viewers/MetricsDropdown';
+import MetricsDropdown from '../components/viewers/MetricsDropdown';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { lineColors } from 'src/components/viewers/ROCCurve';
-import Hr from 'src/atoms/Hr';
+import { lineColors } from '../components/viewers/ROCCurve';
+import Hr from '../atoms/Hr';
 
 const css = stylesheet({
   outputsRow: {

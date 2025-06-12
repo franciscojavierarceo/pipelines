@@ -20,8 +20,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import * as React from 'react';
-import { commonCss, padding } from 'src/Css';
-import { getFeatureList, initFeatures, saveFeatures } from 'src/features';
+import { commonCss, padding } from '../Css';
+import { getFeatureList, initFeatures, saveFeatures } from '../features';
 import { classes } from 'typestyle';
 
 interface FrontendFeaturesProps {}

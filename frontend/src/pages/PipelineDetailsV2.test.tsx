@@ -17,9 +17,9 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
-import { CommonTestWrapper } from 'src/TestWrapper';
-import { mockResizeObserver, testBestPractices } from 'src/TestUtils';
-import { V2beta1Pipeline, V2beta1PipelineVersion } from 'src/apisv2beta1/pipeline';
+import { CommonTestWrapper } from '../TestWrapper';
+import { mockResizeObserver, testBestPractices } from '../TestUtils';
+import { V2beta1Pipeline, V2beta1PipelineVersion } from '../apisv2beta1/pipeline';
 import PipelineDetailsV2 from './PipelineDetailsV2';
 import fs from 'fs';
 

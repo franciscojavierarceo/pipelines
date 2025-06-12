@@ -17,12 +17,12 @@
 import React from 'react';
 import * as JsYaml from 'js-yaml';
 import { useQuery } from 'react-query';
-import { V2beta1Run } from 'src/apisv2beta1/run';
-import { RouteParams } from 'src/components/Router';
-import { Apis } from 'src/lib/Apis';
-import * as WorkflowUtils from 'src/lib/v2/WorkflowUtils';
-import EnhancedRunDetails, { RunDetailsProps } from 'src/pages/RunDetails';
-import { RunDetailsV2 } from 'src/pages/RunDetailsV2';
+import { V2beta1Run } from '../apisv2beta1/run';
+import { RouteParams } from '../components/Router';
+import { Apis } from '../lib/Apis';
+import * as WorkflowUtils from '../lib/v2/WorkflowUtils';
+import EnhancedRunDetails, { RunDetailsProps } from './RunDetails';
+import { RunDetailsV2 } from './RunDetailsV2';
 
 // This is a router to determine whether to show V1 or V2 run detail page.
 export default function RunDetailsRouter(props: RunDetailsProps) {

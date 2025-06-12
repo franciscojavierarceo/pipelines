@@ -16,8 +16,8 @@
 
 import { render, screen } from '@testing-library/react';
 import React from 'react';
-import { testBestPractices } from 'src/TestUtils';
-import { CommonTestWrapper } from 'src/TestWrapper';
+import { testBestPractices } from '../../TestUtils';
+import { CommonTestWrapper } from '../../TestWrapper';
 import { StaticNodeDetailsV2 } from './StaticNodeDetailsV2';
 import fs from 'fs';
 
