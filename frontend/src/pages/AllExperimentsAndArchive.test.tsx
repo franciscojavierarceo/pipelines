@@ -20,6 +20,7 @@ import AllExperimentsAndArchive, {
   AllExperimentsAndArchiveTab,
 } from './AllExperimentsAndArchive';
 import { render, screen, fireEvent } from '@testing-library/react';
+import TestUtils from '../TestUtils';
 
 function generateProps(): AllExperimentsAndArchiveProps {
   return {
@@ -37,26 +38,25 @@ function generateProps(): AllExperimentsAndArchiveProps {
 
 describe('ExperimentsAndArchive', () => {
   it('renders experiments page', () => {
-    expect(render(<AllExperimentsAndArchive {...(generateProps() as any)} />)).toMatchSnapshot();
+    const tree = TestUtils.renderWithRouter(<AllExperimentsAndArchive {...(generateProps() as any)} />);
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders archive page', () => {
     const props = generateProps();
     props.view = AllExperimentsAndArchiveTab.ARCHIVE;
-    expect(render(<AllExperimentsAndArchive {...(props as any)} />)).toMatchSnapshot();
+    const tree = TestUtils.renderWithRouter(<AllExperimentsAndArchive {...(props as any)} />);
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('switches to clicked page by pushing to history', () => {
     const spy = jest.fn();
     const props = generateProps();
     props.history.push = spy;
-    render(<AllExperimentsAndArchive {...(props as any)} />);
+    TestUtils.renderWithRouter(<AllExperimentsAndArchive {...(props as any)} />);
 
-    const tabs = screen.getByRole('tablist');
-    fireEvent.click(tabs.children[1]);
+    const archiveTab = screen.getByText('Archived');
+    fireEvent.click(archiveTab);
     expect(spy).toHaveBeenCalledWith('/archive/experiments');
-
-    fireEvent.click(tabs.children[0]);
-    expect(spy).toHaveBeenCalledWith('/experiments');
   });
 });

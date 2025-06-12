@@ -18,6 +18,7 @@ import * as React from 'react';
 import Page404 from './404';
 import { PageProps } from './Page';
 import { render } from '@testing-library/react';
+import TestUtils from '../TestUtils';
 
 describe('404', () => {
   function generateProps(): PageProps {
@@ -34,6 +35,7 @@ describe('404', () => {
   }
 
   it('renders a 404 page', () => {
-    expect(render(<Page404 {...generateProps()} />)).toMatchSnapshot();
+    const tree = TestUtils.renderWithRouter(<Page404 {...generateProps()} />);
+    expect(tree.container).toMatchSnapshot();
   });
 });

@@ -49,24 +49,24 @@ describe('ArchivedExperiemnts', () => {
   });
 
   it('renders archived experiments', () => {
-    const { container: renderedContainer } = render(<ArchivedExperiments {...generateProps()} />);
+    const { container: renderedContainer } = TestUtils.renderWithRouter(<ArchivedExperiments {...generateProps()} />);
     container = renderedContainer;
     expect(container).toMatchSnapshot();
   });
 
   it('removes error banner on unmount', () => {
-    const { unmount } = render(<ArchivedExperiments {...generateProps()} />);
+    const { unmount } = TestUtils.renderWithRouter(<ArchivedExperiments {...generateProps()} />);
     unmount();
     expect(updateBannerSpy).toHaveBeenCalledWith({});
   });
 
   it('refreshes the experiment list when refresh button is clicked', async () => {
-    render(<ArchivedExperiments {...generateProps()} />);
+    TestUtils.renderWithRouter(<ArchivedExperiments {...generateProps()} />);
     await TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.REFRESH).action();
   });
 
   it('shows a list of archived experiments', () => {
-    render(<ArchivedExperiments {...generateProps()} />);
+    TestUtils.renderWithRouter(<ArchivedExperiments {...generateProps()} />);
     const experimentList = screen.getByTestId('experiment-list');
     expect(experimentList).toHaveAttribute('data-storage-state', V2beta1ExperimentStorageState.ARCHIVED.toString());
   });

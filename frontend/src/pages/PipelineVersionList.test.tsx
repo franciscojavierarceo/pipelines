@@ -69,34 +69,34 @@ describe('PipelineVersionList', () => {
   });
 
   it('renders an empty list with empty state message', () => {
-    tree = render(<PipelineVersionList {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineVersionList {...generateProps()} />);
     expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline version', async () => {
     const props = generateProps();
-    tree = render(<PipelineVersionList {...props} />);
+    tree = TestUtils.renderWithRouter(<PipelineVersionList {...props} />);
     await listPipelineVersionsSpy;
     expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline version with description', async () => {
     const props = generateProps();
-    tree = render(<PipelineVersionList {...props} />);
+    tree = TestUtils.renderWithRouter(<PipelineVersionList {...props} />);
     await listPipelineVersionsSpy;
     expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline version without created date', async () => {
     const props = generateProps();
-    tree = render(<PipelineVersionList {...props} />);
+    tree = TestUtils.renderWithRouter(<PipelineVersionList {...props} />);
     await listPipelineVersionsSpy;
     expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline version with error', async () => {
     const props = generateProps();
-    tree = render(<PipelineVersionList {...props} />);
+    tree = TestUtils.renderWithRouter(<PipelineVersionList {...props} />);
     await listPipelineVersionsSpy;
     expect(tree.container).toMatchSnapshot();
   });

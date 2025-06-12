@@ -21,6 +21,7 @@ import { RoutePage } from '../components/Router';
 import { ButtonKeys } from '../lib/Buttons';
 import { AllRunsList } from './AllRunsList';
 import { PageProps } from './Page';
+import TestUtils from '../TestUtils';
 
 describe('AllRunsList', () => {
   const updateBannerSpy = jest.fn();
@@ -43,7 +44,7 @@ describe('AllRunsList', () => {
   function renderComponent(
     propsPatch: Partial<PageProps & { namespace?: string }> = {},
   ): void {
-    renderResult = render(<AllRunsList {...props} {...propsPatch} />);
+    renderResult = TestUtils.renderWithRouter(<AllRunsList {...props} {...propsPatch} />);
     // Necessary since the component calls updateToolbar with the toolbar props,
     // then expects to get them back in props
     component = renderResult.container.querySelector('[data-testid="all-runs-list"]') as any;
@@ -54,7 +55,7 @@ describe('AllRunsList', () => {
     }
     if (component && component.getInitialToolbarState) {
       _toolbarProps = component.getInitialToolbarState();
-      renderResult.rerender(<AllRunsList {...props} {...propsPatch} toolbarProps={_toolbarProps} />);
+      renderResult = TestUtils.renderWithRouter(<AllRunsList {...props} {...propsPatch} toolbarProps={_toolbarProps} />);
     }
     updateToolbarSpy.mockClear();
   }

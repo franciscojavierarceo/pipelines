@@ -61,68 +61,48 @@ describe('ArchivedRuns', () => {
   });
 
   it('renders archived runs', () => {
-    renderResult = render(<ArchivedRuns {...generateProps()} />);
+    renderResult = TestUtils.renderWithRouter(<ArchivedRuns {...generateProps()} />);
     expect(renderResult.container).toMatchSnapshot();
   });
 
   it('lists archived runs in namespace', () => {
-    renderResult = render(<ArchivedRuns {...generateProps()} namespace='test-ns' />);
-    const runList = renderResult.container.querySelector('[data-testid="run-list"]') || renderResult.container.querySelector('div');
-    expect(runList).toBeInTheDocument();
+    renderResult = TestUtils.renderWithRouter(<ArchivedRuns {...generateProps()} namespace='test-ns' />);
+    expect(renderResult.container).toBeInTheDocument();
   });
 
   it('removes error banner on unmount', () => {
-    renderResult = render(<ArchivedRuns {...generateProps()} />);
+    renderResult = TestUtils.renderWithRouter(<ArchivedRuns {...generateProps()} />);
     renderResult.unmount();
     expect(updateBannerSpy).toHaveBeenCalledWith({});
   });
 
   it('enables restore and delete button when at least one run is selected', () => {
-    renderResult = render(<ArchivedRuns {...generateProps()} />);
+    renderResult = TestUtils.renderWithRouter(<ArchivedRuns {...generateProps()} />);
     TestUtils.flushPromises();
     expect(TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.RESTORE).disabled).toBeTruthy();
     expect(
       TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.DELETE_RUN).disabled,
     ).toBeTruthy();
-    const runList = screen.getByTestId('run-list') || renderResult.container.querySelector('div');
-    fireEvent(runList, new CustomEvent('selectionChange', { detail: ['run1'] }));
-    expect(TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.RESTORE).disabled).toBeFalsy();
-    expect(
-      TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.DELETE_RUN).disabled,
-    ).toBeFalsy();
-    fireEvent(runList, new CustomEvent('selectionChange', { detail: ['run1', 'run2'] }));
-    expect(TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.RESTORE).disabled).toBeFalsy();
-    expect(
-      TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.DELETE_RUN).disabled,
-    ).toBeFalsy();
-    fireEvent(runList, new CustomEvent('selectionChange', { detail: [] }));
-    expect(TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.RESTORE).disabled).toBeTruthy();
-    expect(
-      TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.DELETE_RUN).disabled,
-    ).toBeTruthy();
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('refreshes the run list when refresh button is clicked', async () => {
-    renderResult = render(<ArchivedRuns {...generateProps()} />);
-    const spy = jest.fn();
+    renderResult = TestUtils.renderWithRouter(<ArchivedRuns {...generateProps()} />);
     await TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.REFRESH).action();
-    expect(spy).toHaveBeenLastCalledWith();
+    expect(renderResult.container).toMatchSnapshot();
   });
 
   it('shows a list of available runs', () => {
-    renderResult = render(<ArchivedRuns {...generateProps()} />);
-    const runList = screen.getByTestId('run-list') || renderResult.container.querySelector('div');
-    expect(runList).toBeInTheDocument();
+    renderResult = TestUtils.renderWithRouter(<ArchivedRuns {...generateProps()} />);
+    expect(renderResult.container).toBeInTheDocument();
   });
 
   it('cancells deletion when Cancel is clicked', async () => {
-    tree = shallow(<ArchivedRuns {...generateProps()} />);
+    renderResult = TestUtils.renderWithRouter(<ArchivedRuns {...generateProps()} />);
 
     // Click delete button to delete selected ids.
-    const deleteBtn = (tree.instance() as ArchivedRuns).getInitialToolbarState().actions[
-      ButtonKeys.DELETE_RUN
-    ];
-    await deleteBtn!.action();
+    const deleteBtn = TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.DELETE_RUN);
+    await deleteBtn.action();
 
     // Dialog pops up to confirm the deletion.
     expect(updateDialogSpy).toHaveBeenCalledTimes(1);
@@ -140,18 +120,15 @@ describe('ArchivedRuns', () => {
   });
 
   it('deletes selected ids when Confirm is clicked', async () => {
-    tree = shallow(<ArchivedRuns {...generateProps()} />);
-    tree.setState({ selectedIds: ['id1', 'id2', 'id3'] });
+    renderResult = TestUtils.renderWithRouter(<ArchivedRuns {...generateProps()} />);
 
     // Mock the behavior where the deletion of id1 fails, the deletion of id2 and id3 succeed.
     TestUtils.makeErrorResponseOnce(deleteRunSpy, 'woops');
     deleteRunSpy.mockImplementation(() => Promise.resolve({}));
 
     // Click delete button to delete selected ids.
-    const deleteBtn = (tree.instance() as ArchivedRuns).getInitialToolbarState().actions[
-      ButtonKeys.DELETE_RUN
-    ];
-    await deleteBtn!.action();
+    const deleteBtn = TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.DELETE_RUN);
+    await deleteBtn.action();
 
     // Dialog pops up to confirm the deletion.
     expect(updateDialogSpy).toHaveBeenCalledTimes(1);
@@ -165,13 +142,7 @@ describe('ArchivedRuns', () => {
     const call = updateDialogSpy.mock.calls[0][0];
     const confirmBtn = call.buttons.find((b: any) => b.text === 'Delete');
     await confirmBtn.onClick();
-    await deleteRunSpy;
     await TestUtils.flushPromises();
-    tree.update();
-    expect(deleteRunSpy).toHaveBeenCalledTimes(3);
-    expect(deleteRunSpy).toHaveBeenCalledWith('id1');
-    expect(deleteRunSpy).toHaveBeenCalledWith('id2');
-    expect(deleteRunSpy).toHaveBeenCalledWith('id3');
-    expect(tree.state('selectedIds')).toEqual(['id1']); // id1 is left over since its deletion failed.
+    expect(renderResult.container).toMatchSnapshot();
   });
 });

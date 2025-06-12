@@ -100,7 +100,7 @@ describe('RecurringRunsManager', () => {
       />
     ));
     
-    tree = render(<TestComponent {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<TestComponent {...generateProps()} />);
     await componentRef!._loadRuns({});
     expect(listRecurringRunsSpy).toHaveBeenCalledTimes(1);
     expect(listRecurringRunsSpy).toHaveBeenLastCalledWith(
@@ -130,7 +130,7 @@ describe('RecurringRunsManager', () => {
       />
     ));
     
-    tree = render(<TestComponent {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<TestComponent {...generateProps()} />);
     await componentRef!._loadRuns({});
     expect(listRecurringRunsSpy).toHaveBeenCalledTimes(1);
     expect(updateDialogSpy).toHaveBeenLastCalledWith(
@@ -143,23 +143,59 @@ describe('RecurringRunsManager', () => {
   });
 
   it('calls API to enable run', async () => {
-    tree = shallow(<TestRecurringRunsManager {...generateProps()} />);
-    await (tree.instance() as TestRecurringRunsManager)._setEnabledState('test-run', true);
+    let componentRef: TestRecurringRunsManager | null = null;
+    const TestComponent = React.forwardRef<TestRecurringRunsManager>((props, ref) => (
+      <TestRecurringRunsManager
+        {...props}
+        ref={(instance: TestRecurringRunsManager) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = TestUtils.renderWithRouter(<TestComponent {...generateProps()} />);
+    await componentRef!._setEnabledState('test-run', true);
     expect(enableRecurringRunSpy).toHaveBeenCalledTimes(1);
     expect(enableRecurringRunSpy).toHaveBeenLastCalledWith('test-run');
   });
 
   it('calls API to disable run', async () => {
-    tree = shallow(<TestRecurringRunsManager {...generateProps()} />);
-    await (tree.instance() as TestRecurringRunsManager)._setEnabledState('test-run', false);
+    let componentRef: TestRecurringRunsManager | null = null;
+    const TestComponent = React.forwardRef<TestRecurringRunsManager>((props, ref) => (
+      <TestRecurringRunsManager
+        {...props}
+        ref={(instance: TestRecurringRunsManager) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = TestUtils.renderWithRouter(<TestComponent {...generateProps()} />);
+    await componentRef!._setEnabledState('test-run', false);
     expect(disableRecurringRunSpy).toHaveBeenCalledTimes(1);
     expect(disableRecurringRunSpy).toHaveBeenLastCalledWith('test-run');
   });
 
   it('shows error if enable API call fails', async () => {
-    tree = shallow(<TestRecurringRunsManager {...generateProps()} />);
+    let componentRef: TestRecurringRunsManager | null = null;
+    const TestComponent = React.forwardRef<TestRecurringRunsManager>((props, ref) => (
+      <TestRecurringRunsManager
+        {...props}
+        ref={(instance: TestRecurringRunsManager) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = TestUtils.renderWithRouter(<TestComponent {...generateProps()} />);
     TestUtils.makeErrorResponseOnce(enableRecurringRunSpy, 'cannot enable');
-    await (tree.instance() as TestRecurringRunsManager)._setEnabledState('test-run', true);
+    await componentRef!._setEnabledState('test-run', true);
     expect(updateDialogSpy).toHaveBeenCalledTimes(1);
     expect(updateDialogSpy).toHaveBeenLastCalledWith(
       expect.objectContaining({

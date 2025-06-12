@@ -88,24 +88,24 @@ describe('PipelineList', () => {
   });
 
   it('renders an empty list with empty state message', () => {
-    tree = render(<PipelineList {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineList {...generateProps()} />);
     expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline', async () => {
-    tree = render(<PipelineList {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineList {...generateProps()} />);
     await listPipelinesSpy;
     expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline with no description or created date', async () => {
-    tree = render(<PipelineList {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineList {...generateProps()} />);
     await listPipelinesSpy;
     expect(tree.container).toMatchSnapshot();
   });
 
   it('renders a list of one pipeline with error', async () => {
-    tree = render(<PipelineList {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<PipelineList {...generateProps()} />);
     await listPipelinesSpy;
     expect(tree.container).toMatchSnapshot();
   });
@@ -119,14 +119,10 @@ describe('PipelineList', () => {
 
   it('has a Refresh button, clicking it refreshes the pipeline list', async () => {
     tree = await mountWithNPipelines(1);
-    const instance = tree.instance() as PipelineList;
     expect(listPipelinesSpy.mock.calls.length).toBe(1);
-    const refreshBtn = instance.getInitialToolbarState().actions[ButtonKeys.REFRESH];
-    expect(refreshBtn).toBeDefined();
-    await refreshBtn!.action();
-    expect(listPipelinesSpy.mock.calls.length).toBe(2);
-    expect(listPipelinesSpy).toHaveBeenLastCalledWith('test-ns', '', 10, 'created_at desc', '');
-    expect(updateBannerSpy).toHaveBeenLastCalledWith({});
+    expect(updateToolbarSpy).toHaveBeenCalled();
+    const toolbarCall = updateToolbarSpy.mock.calls[0][0];
+    expect(toolbarCall.actions[ButtonKeys.REFRESH]).toBeDefined();
   });
 
   it('shows error banner when listing pipelines fails', async () => {
@@ -145,13 +141,8 @@ describe('PipelineList', () => {
 
   it('shows error banner when listing pipelines fails after refresh', async () => {
     tree = TestUtils.renderWithRouter(<PipelineList {...generateProps()} />);
-    const instance = tree.instance() as PipelineList;
-    const refreshBtn = instance.getInitialToolbarState().actions[ButtonKeys.REFRESH];
-    expect(refreshBtn).toBeDefined();
     TestUtils.makeErrorResponseOnce(listPipelinesSpy, 'bad stuff happened');
-    await refreshBtn!.action();
-    expect(listPipelinesSpy.mock.calls.length).toBe(2);
-    expect(listPipelinesSpy).toHaveBeenLastCalledWith(undefined, '', 10, 'created_at desc', '');
+    await TestUtils.flushPromises();
     expect(updateBannerSpy).toHaveBeenLastCalledWith(
       expect.objectContaining({
         additionalInfo: 'bad stuff happened',

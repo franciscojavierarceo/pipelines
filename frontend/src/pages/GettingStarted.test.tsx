@@ -61,7 +61,7 @@ describe('GettingStarted page', () => {
   });
 
   it('initially renders documentation', () => {
-    const { container } = render(<GettingStarted {...generateProps()} />);
+    const { container } = TestUtils.renderWithRouter(<GettingStarted {...generateProps()} />);
     expect(container).toMatchSnapshot();
   });
 
@@ -74,7 +74,7 @@ describe('GettingStarted page', () => {
       };
       return Promise.resolve(response);
     });
-    const { container } = render(<GettingStarted {...generateProps()} />);
+    const { container } = TestUtils.renderWithRouter(<GettingStarted {...generateProps()} />);
     const base = container.innerHTML;
     await TestUtils.flushPromises();
     expect(pipelineListSpy.mock.calls).toMatchSnapshot();
@@ -130,7 +130,7 @@ describe('GettingStarted page', () => {
         });
       },
     );
-    const { container } = render(<GettingStarted {...generateProps()} />);
+    const { container } = TestUtils.renderWithRouter(<GettingStarted {...generateProps()} />);
     const base = container.innerHTML;
     await TestUtils.flushPromises();
     expect(diffHTML({ base, update: container.innerHTML })).toMatchInlineSnapshot(`

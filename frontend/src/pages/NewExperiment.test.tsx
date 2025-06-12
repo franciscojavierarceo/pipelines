@@ -25,6 +25,7 @@ import { ApiResourceType, ApiRelationship } from '../apis/experiment';
 
 describe('NewExperiment', () => {
   let renderResult: RenderResult;
+  let tree: any;
   const createExperimentSpy = jest.spyOn(Apis.experimentServiceApiV2, 'createExperiment');
   const historyPushSpy = jest.fn();
   const updateDialogSpy = jest.fn();
@@ -213,9 +214,10 @@ describe('NewExperiment', () => {
 
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.pipelineId}=${pipelineId}`;
-    tree = shallow(<NewExperiment {...(props as any)} />);
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(props as any)} />);
 
-    (tree.instance() as any).handleChange('experimentName')({
+    const nameInput = screen.getByDisplayValue('') as HTMLInputElement;
+    fireEvent.change(nameInput, {
       target: { value: 'experiment-name' },
     });
 
@@ -235,9 +237,10 @@ describe('NewExperiment', () => {
   });
 
   it('shows snackbar confirmation after experiment is created', async () => {
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
 
-    (tree.instance() as any).handleChange('experimentName')({
+    const nameInput = screen.getByDisplayValue('') as HTMLInputElement;
+    fireEvent.change(nameInput, {
       target: { value: 'experiment-name' },
     });
 
@@ -257,9 +260,10 @@ describe('NewExperiment', () => {
     // tslint:disable-next-line:no-console
     console.error = jest.spyOn(console, 'error').mockImplementation();
 
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
 
-    (tree.instance() as any).handleChange('experimentName')({
+    const nameInput = screen.getByDisplayValue('') as HTMLInputElement;
+    fireEvent.change(nameInput, {
       target: { value: 'experiment-name' },
     });
 
@@ -269,7 +273,7 @@ describe('NewExperiment', () => {
     await createExperimentSpy;
     await TestUtils.flushPromises();
 
-    expect(tree.state()).toHaveProperty('isbeingCreated', false);
+    expect(createBtn).not.toHaveAttribute('busy');
   });
 
   it('shows error dialog when creation fails', async () => {
@@ -277,9 +281,10 @@ describe('NewExperiment', () => {
     // tslint:disable-next-line:no-console
     console.error = jest.spyOn(console, 'error').mockImplementation();
 
-    tree = shallow(<NewExperiment {...(generateProps() as any)} />);
+    renderResult = TestUtils.renderWithRouter(<NewExperiment {...(generateProps() as any)} />);
 
-    (tree.instance() as any).handleChange('experimentName')({
+    const nameInput = screen.getByDisplayValue('') as HTMLInputElement;
+    fireEvent.change(nameInput, {
       target: { value: 'experiment-name' },
     });
 

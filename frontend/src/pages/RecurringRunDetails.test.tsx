@@ -244,7 +244,7 @@ describe('RecurringRunDetails', () => {
 
   it('shows enabled Disable, and disabled Enable buttons if the run is disabled', async () => {
     fullTestJob.enabled = false;
-    tree = shallow(<RecurringRunDetails {...generateProps()} />);
+    renderResult = TestUtils.renderWithRouter(<RecurringRunDetails {...generateProps()} />);
     await TestUtils.flushPromises();
     expect(updateToolbarSpy).toHaveBeenCalledTimes(2);
     const enableBtn = TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.ENABLE_RECURRING_RUN);
@@ -260,7 +260,7 @@ describe('RecurringRunDetails', () => {
 
   it('shows enabled Disable, and disabled Enable buttons if the run is undefined', async () => {
     fullTestJob.enabled = undefined;
-    tree = shallow(<RecurringRunDetails {...generateProps()} />);
+    renderResult = TestUtils.renderWithRouter(<RecurringRunDetails {...generateProps()} />);
     await TestUtils.flushPromises();
     expect(updateToolbarSpy).toHaveBeenCalledTimes(2);
     const enableBtn = TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.ENABLE_RECURRING_RUN);

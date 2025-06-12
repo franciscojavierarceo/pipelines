@@ -101,43 +101,41 @@ describe('NewPipelineVersion', () => {
 
   describe('switching between creating pipeline and creating pipeline version', () => {
     it('creates pipeline is default when landing from pipeline list page', () => {
-      tree = render(<TestNewPipelineVersion {...generateProps()} />);
+      tree = TestUtils.renderWithRouter(<TestNewPipelineVersion {...generateProps()} />);
 
-      // When landing from pipeline list page, the default is to create pipeline
-      expect(tree.state('newPipeline')).toBe(true);
+      expect(screen.getByTestId('createNewPipelineBtn')).toBeChecked();
 
       // Switch to create pipeline version
       fireEvent.change(screen.getByTestId('createPipelineVersionUnderExistingPipelineBtn'));
-      expect(tree.state('newPipeline')).toBe(false);
+      expect(screen.getByTestId('createPipelineVersionUnderExistingPipelineBtn')).toBeChecked();
 
       // Switch back
       fireEvent.change(screen.getByTestId('createNewPipelineBtn'));
-      expect(tree.state('newPipeline')).toBe(true);
+      expect(screen.getByTestId('createNewPipelineBtn')).toBeChecked();
     });
 
     it('creates pipeline version is default when landing from pipeline details page', () => {
-      tree = render(
+      tree = TestUtils.renderWithRouter(
         <TestNewPipelineVersion
           {...generateProps(`?${QUERY_PARAMS.pipelineId}=${MOCK_PIPELINE.pipeline_id}`)}
         />,
       );
 
-      // When landing from pipeline list page, the default is to create pipeline
-      expect(tree.state('newPipeline')).toBe(false);
+      expect(screen.getByTestId('createPipelineVersionUnderExistingPipelineBtn')).toBeChecked();
 
       // Switch to create pipeline version
       fireEvent.change(screen.getByTestId('createNewPipelineBtn'));
-      expect(tree.state('newPipeline')).toBe(true);
+      expect(screen.getByTestId('createNewPipelineBtn')).toBeChecked();
 
       // Switch back
       fireEvent.change(screen.getByTestId('createPipelineVersionUnderExistingPipelineBtn'));
-      expect(tree.state('newPipeline')).toBe(false);
+      expect(screen.getByTestId('createPipelineVersionUnderExistingPipelineBtn')).toBeChecked();
     });
   });
 
   describe('creating version under an existing pipeline', () => {
     it('does not include any action buttons in the toolbar', async () => {
-      tree = render(
+      tree = TestUtils.renderWithRouter(
         <TestNewPipelineVersion
           {...generateProps(`?${QUERY_PARAMS.pipelineId}=${MOCK_PIPELINE.pipeline_id}`)}
         />,
@@ -477,7 +475,7 @@ describe('NewPipelineVersion', () => {
     });
 
     it('allows updating pipeline version name', async () => {
-      render(
+      TestUtils.renderWithRouter(
         <TestNewPipelineVersion
           {...generateProps(`?${QUERY_PARAMS.pipelineId}=${MOCK_PIPELINE.pipeline_id}`)}
         />,

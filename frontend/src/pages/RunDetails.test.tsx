@@ -210,7 +210,7 @@ describe('RunDetails', () => {
   });
 
   it('shows success run status in page title', async () => {
-    tree = render(<RunDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
     const lastCall = updateToolbarSpy.mock.calls[2][0];
@@ -219,7 +219,7 @@ describe('RunDetails', () => {
 
   it('shows failure run status in page title', async () => {
     testRun.run!.status = 'Failed';
-    tree = render(<RunDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
     const lastCall = updateToolbarSpy.mock.calls[2][0];
@@ -227,7 +227,7 @@ describe('RunDetails', () => {
   });
 
   it('has a clone button, clicking it navigates to new run page', async () => {
-    tree = render(<RunDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
     const cloneBtn = TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.CLONE_RUN);
@@ -240,10 +240,10 @@ describe('RunDetails', () => {
   });
 
   it('clicking the clone button when the page is half-loaded navigates to new run page with run id', async () => {
-    tree = shallow(<RunDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<RunDetails {...generateProps()} />);
     // Intentionally don't wait until all network requests finish.
-    const instance = tree.instance() as RunDetails;
-    const cloneBtn = instance.getInitialToolbarState().actions[ButtonKeys.CLONE_RUN];
+    await TestUtils.flushPromises();
+    const cloneBtn = TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.CLONE_RUN);
     expect(cloneBtn).toBeDefined();
     await cloneBtn!.action();
     expect(historyPushSpy).toHaveBeenCalledTimes(1);
@@ -253,18 +253,17 @@ describe('RunDetails', () => {
   });
 
   it('has a retry button', async () => {
-    tree = shallow(<RunDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<RunDetails {...generateProps()} />);
     await getRunSpy;
     await TestUtils.flushPromises();
-    const instance = tree.instance() as RunDetails;
-    const retryBtn = instance.getInitialToolbarState().actions[ButtonKeys.RETRY];
+    const retryBtn = TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.RETRY);
     expect(retryBtn).toBeDefined();
   });
 
   it('shows retry confirmation dialog when retry button is clicked', async () => {
-    tree = shallow(<RunDetails {...generateProps()} />);
-    const instance = tree.instance() as RunDetails;
-    const retryBtn = instance.getInitialToolbarState().actions[ButtonKeys.RETRY];
+    tree = TestUtils.renderWithRouter(<RunDetails {...generateProps()} />);
+    await TestUtils.flushPromises();
+    const retryBtn = TestUtils.getToolbarButton(updateToolbarSpy, ButtonKeys.RETRY);
     await retryBtn!.action();
     expect(updateDialogSpy).toHaveBeenCalledTimes(1);
     expect(updateDialogSpy).toHaveBeenLastCalledWith(
@@ -1779,7 +1778,7 @@ describe('RunDetails', () => {
           },
         },
       });
-      const tree = render(<RunDetails {...generateProps()} />);
+      const tree = TestUtils.renderWithRouter(<RunDetails {...generateProps()} />);
       await getRunSpy;
       await TestUtils.flushPromises();
       expect(tree.getByTestId('graph')).toMatchInlineSnapshot(`

@@ -15,6 +15,7 @@
  */
 
 import { render, screen, fireEvent } from '@testing-library/react';
+import TestUtils from '../TestUtils';
 import * as React from 'react';
 import { RoutePage } from '../components/Router';
 import { ButtonKeys } from '../lib/Buttons';
@@ -49,7 +50,7 @@ describe('AllRecurringRunsList', () => {
   function renderComponent(
     propsPatch: Partial<PageProps & { namespace?: string }> = {},
   ): void {
-    const result = render(<AllRecurringRunsList {...generateProps()} {...propsPatch} />);
+    const result = TestUtils.renderWithRouter(<AllRecurringRunsList {...generateProps()} {...propsPatch} />);
     container = result.container;
     updateToolbarSpy.mockClear();
   }

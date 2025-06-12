@@ -37,20 +37,22 @@ function generateProps(): AllRunsAndArchiveProps {
 
 describe('RunsAndArchive', () => {
   it('renders runs page', () => {
-    expect(render(<AllRunsAndArchive {...(generateProps() as any)} />)).toMatchSnapshot();
+    const tree = TestUtils.renderWithRouter(<AllRunsAndArchive {...(generateProps() as any)} />);
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('renders archive page', () => {
     const props = generateProps();
     props.view = AllRunsAndArchiveTab.ARCHIVE;
-    expect(render(<AllRunsAndArchive {...(props as any)} />)).toMatchSnapshot();
+    const tree = TestUtils.renderWithRouter(<AllRunsAndArchive {...(props as any)} />);
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('switches to clicked page by pushing to history', () => {
     const spy = jest.fn();
     const props = generateProps();
     props.history.push = spy;
-    const { container } = render(<AllRunsAndArchive {...(props as any)} />);
+    const { container } = TestUtils.renderWithRouter(<AllRunsAndArchive {...(props as any)} />);
 
     const tabs = container.querySelector('[data-testid="MD2Tabs"]') || container.querySelector('MD2Tabs');
     if (tabs) {

@@ -118,7 +118,7 @@ describe('ExperimentDetails', () => {
   });
 
   it('renders a page with no runs or recurring runs', async () => {
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
     expect(updateBannerSpy).toHaveBeenCalledTimes(1);
     expect(updateBannerSpy).toHaveBeenLastCalledWith({});
@@ -134,7 +134,7 @@ describe('ExperimentDetails', () => {
 
     getExperimentSpy.mockImplementationOnce(() => experiment);
 
-    tree = render(<ExperimentDetails {...props} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...props} />);
     await TestUtils.flushPromises();
     expect(updateToolbarSpy).toHaveBeenLastCalledWith(
       expect.objectContaining({
@@ -150,7 +150,7 @@ describe('ExperimentDetails', () => {
 
     getExperimentSpy.mockImplementationOnce(() => experiment);
 
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
     expect(updateToolbarSpy).toHaveBeenLastCalledWith(
       expect.objectContaining({
@@ -166,7 +166,7 @@ describe('ExperimentDetails', () => {
 
     getExperimentSpy.mockImplementationOnce(() => experiment);
 
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
     expect(tree).toMatchSnapshot();
   });
@@ -177,7 +177,7 @@ describe('ExperimentDetails', () => {
 
     getExperimentSpy.mockImplementationOnce(() => experiment);
 
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
     expect(tree).toMatchSnapshot();
   });
@@ -198,7 +198,7 @@ describe('ExperimentDetails', () => {
   it('calls getExperiment with the experiment ID in props', async () => {
     const props = generateProps();
     props.match = { params: { [RouteParams.experimentId]: 'test exp ID' } } as any;
-    tree = render(<ExperimentDetails {...props} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...props} />);
     await TestUtils.flushPromises();
     expect(getExperimentSpy).toHaveBeenCalledTimes(1);
     expect(getExperimentSpy).toHaveBeenCalledWith('test exp ID');
@@ -207,7 +207,7 @@ describe('ExperimentDetails', () => {
   it('shows an error banner if fetching the experiment fails', async () => {
     TestUtils.makeErrorResponseOnce(getExperimentSpy, 'test error');
 
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
 
     expect(updateBannerSpy).toHaveBeenLastCalledWith(
@@ -227,7 +227,7 @@ describe('ExperimentDetails', () => {
 
   it('shows a list of available runs', async () => {
     await mockNRecurringRuns(1);
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
 
     expect(tree.find('RunListsRouter').prop('storageState')).toBe(
@@ -245,7 +245,7 @@ describe('ExperimentDetails', () => {
       return apiExperiment;
     });
 
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
 
     expect(tree.find('RunListsRouter').prop('storageState')).toBe(
@@ -257,7 +257,7 @@ describe('ExperimentDetails', () => {
   it("fetches this experiment's recurring runs", async () => {
     await mockNRecurringRuns(1);
 
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
 
     expect(listRecurringRunsSpy).toHaveBeenCalledTimes(1);
@@ -276,7 +276,7 @@ describe('ExperimentDetails', () => {
   it("shows an error banner if fetching the experiment's recurring runs fails", async () => {
     TestUtils.makeErrorResponseOnce(listRecurringRunsSpy, 'test error');
 
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
 
     expect(updateBannerSpy).toHaveBeenLastCalledWith(
@@ -315,7 +315,7 @@ describe('ExperimentDetails', () => {
     listRecurringRunsSpy.mockImplementationOnce(() => ({ recurringRuns }));
     await listRecurringRunsSpy;
 
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
 
     expect(tree.state('activeRecurringRunsCount')).toBe(2);
@@ -382,15 +382,18 @@ describe('ExperimentDetails', () => {
   it('clears the error banner on refresh', async () => {
     TestUtils.makeErrorResponseOnce(getExperimentSpy, 'test error');
 
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
 
     // Verify that error banner is being shown
     expect(updateBannerSpy).toHaveBeenLastCalledWith(expect.objectContaining({ mode: 'error' }));
 
-    (tree.instance() as ExperimentDetails).refresh();
+    getExperimentSpy.mockReset();
+    getExperimentSpy.mockImplementation(() => newMockExperiment());
+    
+    await TestUtils.flushPromises();
 
-    // Error banner should be cleared
+    // Error banner should be cleared on successful data fetch
     expect(updateBannerSpy).toHaveBeenLastCalledWith({});
   });
 
@@ -426,7 +429,7 @@ describe('ExperimentDetails', () => {
   });
 
   it('navigates to the new run page and passes this experiments ID as a query param', async () => {
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
     tree.update();
 
@@ -441,7 +444,7 @@ describe('ExperimentDetails', () => {
   });
 
   it('navigates to the new run page with query param indicating it will be a recurring run', async () => {
-    tree = render(<ExperimentDetails {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<ExperimentDetails {...generateProps()} />);
     await TestUtils.flushPromises();
     tree.update();
 
@@ -666,7 +669,7 @@ describe('ExperimentDetails', () => {
 
   describe('EnhancedExperimentDetails', () => {
     it('renders ExperimentDetails initially', () => {
-      render(<EnhancedExperimentDetails {...generateProps()}></EnhancedExperimentDetails>);
+      TestUtils.renderWithRouter(<EnhancedExperimentDetails {...generateProps()}></EnhancedExperimentDetails>);
       expect(getExperimentSpy).toHaveBeenCalledTimes(1);
     });
 

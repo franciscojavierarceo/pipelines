@@ -101,13 +101,39 @@ describe('RunList', () => {
   }
 
   function getMountedInstance(): RunList {
-    tree = TestUtils.renderWithRouter(<RunList {...generateProps()} />);
-    return tree.container.querySelector('div') as any;
+    const props = generateProps();
+    let componentRef: RunList | null = null;
+    const TestComponent = React.forwardRef<RunList>((props, ref) => (
+      <RunList
+        {...props}
+        ref={(instance: RunList) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
+    return componentRef!;
   }
 
   function getShallowInstance(): RunList {
-    tree = TestUtils.renderWithRouter(<RunList {...generateProps()} />);
-    return tree.container.querySelector('div') as any;
+    const props = generateProps();
+    let componentRef: RunList | null = null;
+    const TestComponent = React.forwardRef<RunList>((props, ref) => (
+      <RunList
+        {...props}
+        ref={(instance: RunList) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
+    return componentRef!;
   }
 
   beforeEach(() => {
@@ -146,8 +172,20 @@ describe('RunList', () => {
       mockNRuns(1, {});
       const props = generateProps();
       props.storageState = V2beta1RunStorageState.AVAILABLE;
-      tree = render(<RunList {...props} />);
-      await (tree.container.querySelector('div') as any)._loadRuns({});
+      let componentRef: RunList | null = null;
+      const TestComponent = React.forwardRef<RunList>((props, ref) => (
+        <RunList
+          {...props}
+          ref={(instance: RunList) => {
+            componentRef = instance;
+            if (typeof ref === 'function') ref(instance);
+            else if (ref) ref.current = instance;
+          }}
+        />
+      ));
+      
+      tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
+      await componentRef!._loadRuns({});
       expect(Apis.runServiceApiV2.listRuns).toHaveBeenLastCalledWith(
         undefined,
         undefined,
@@ -172,8 +210,20 @@ describe('RunList', () => {
       mockNRuns(1, {});
       const props = generateProps();
       props.storageState = V2beta1RunStorageState.ARCHIVED;
-      tree = render(<RunList {...props} />);
-      await (tree.container.querySelector('div') as any)._loadRuns({});
+      let componentRef: RunList | null = null;
+      const TestComponent = React.forwardRef<RunList>((props, ref) => (
+        <RunList
+          {...props}
+          ref={(instance: RunList) => {
+            componentRef = instance;
+            if (typeof ref === 'function') ref(instance);
+            else if (ref) ref.current = instance;
+          }}
+        />
+      ));
+      
+      tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
+      await componentRef!._loadRuns({});
       expect(Apis.runServiceApiV2.listRuns).toHaveBeenLastCalledWith(
         undefined,
         undefined,
@@ -198,8 +248,20 @@ describe('RunList', () => {
       mockNRuns(1, {});
       const props = generateProps();
       props.storageState = V2beta1RunStorageState.ARCHIVED;
-      tree = render(<RunList {...props} />);
-      await (tree.container.querySelector('div') as any)._loadRuns({
+      let componentRef: RunList | null = null;
+      const TestComponent = React.forwardRef<RunList>((props, ref) => (
+        <RunList
+          {...props}
+          ref={(instance: RunList) => {
+            componentRef = instance;
+            if (typeof ref === 'function') ref(instance);
+            else if (ref) ref.current = instance;
+          }}
+        />
+      ));
+      
+      tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
+      await componentRef!._loadRuns({
         filter: encodeURIComponent(
           JSON.stringify({
             predicates: [{ key: 'k', op: 'op', string_value: 'val' }],
@@ -251,8 +313,20 @@ describe('RunList', () => {
   it('reloads the run when refresh is called', async () => {
     mockNRuns(0, {});
     const props = generateProps();
-    tree = render(<RunList {...props} />);
-    await (tree.container.querySelector('div') as any).refresh();
+    let componentRef: RunList | null = null;
+    const TestComponent = React.forwardRef<RunList>((props, ref) => (
+      <RunList
+        {...props}
+        ref={(instance: RunList) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
+    await componentRef!.refresh();
     expect(Apis.runServiceApiV2.listRuns).toHaveBeenCalledTimes(2);
     expect(Apis.runServiceApiV2.listRuns).toHaveBeenLastCalledWith(
       undefined,
@@ -291,8 +365,20 @@ describe('RunList', () => {
       'bad stuff happened',
     );
     const props = generateProps();
-    tree = render(<RunList {...props} />);
-    await (tree.container.querySelector('div') as any)._loadRuns({});
+    let componentRef: RunList | null = null;
+    const TestComponent = React.forwardRef<RunList>((props, ref) => (
+      <RunList
+        {...props}
+        ref={(instance: RunList) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
+    await componentRef!._loadRuns({});
     expect(props.onError).toHaveBeenLastCalledWith(
       'Error: failed to fetch runs.',
       new Error('bad stuff happened'),
@@ -363,8 +449,20 @@ describe('RunList', () => {
     mockNRuns(1, {});
     const props = generateProps();
     props.experimentIdMask = 'experiment1';
-    tree = render(<RunList {...props} />);
-    await (tree.container.querySelector('div') as any)._loadRuns({});
+    let componentRef: RunList | null = null;
+    const TestComponent = React.forwardRef<RunList>((props, ref) => (
+      <RunList
+        {...props}
+        ref={(instance: RunList) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
+    await componentRef!._loadRuns({});
     expect(props.onError).not.toHaveBeenCalled();
     expect(Apis.runServiceApiV2.listRuns).toHaveBeenLastCalledWith(
       undefined,
@@ -380,8 +478,20 @@ describe('RunList', () => {
     mockNRuns(1, {});
     const props = generateProps();
     props.namespaceMask = 'namespace1';
-    tree = render(<RunList {...props} />);
-    await (tree.container.querySelector('div') as any)._loadRuns({});
+    let componentRef: RunList | null = null;
+    const TestComponent = React.forwardRef<RunList>((props, ref) => (
+      <RunList
+        {...props}
+        ref={(instance: RunList) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
+    await componentRef!._loadRuns({});
     expect(props.onError).not.toHaveBeenCalled();
     expect(Apis.runServiceApiV2.listRuns).toHaveBeenLastCalledWith(
       'namespace1',
@@ -397,8 +507,20 @@ describe('RunList', () => {
     mockNRuns(5, {});
     const props = generateProps();
     props.runIdListMask = ['run1', 'run2'];
-    tree = render(<RunList {...props} />);
-    await (tree.container.querySelector('div') as any)._loadRuns({});
+    let componentRef: RunList | null = null;
+    const TestComponent = React.forwardRef<RunList>((props, ref) => (
+      <RunList
+        {...props}
+        ref={(instance: RunList) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
+    await componentRef!._loadRuns({});
     expect(props.onError).not.toHaveBeenCalled();
     expect(Apis.runServiceApiV2.listRuns).not.toHaveBeenCalled();
     expect(Apis.runServiceApiV2.getRun).toHaveBeenCalledTimes(2);
@@ -410,8 +532,20 @@ describe('RunList', () => {
     mockNRuns(5, {});
     const props = generateProps();
     props.runIdListMask = ['filterRun1', 'filterRun2', 'notincluded'];
-    tree = render(<RunList {...props} />);
-    await (tree.container.querySelector('div') as any)._loadRuns({
+    let componentRef: RunList | null = null;
+    const TestComponent = React.forwardRef<RunList>((props, ref) => (
+      <RunList
+        {...props}
+        ref={(instance: RunList) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
+    await componentRef!._loadRuns({
       filter: encodeURIComponent(
         JSON.stringify({
           predicates: [
@@ -424,7 +558,7 @@ describe('RunList', () => {
         } as V2beta1Filter),
       ),
     });
-    expect((tree.container.querySelector('div') as any).state.runs).toMatchObject([
+    expect(componentRef!.state.runs).toMatchObject([
       {
         run: { display_name: 'run with id: filterRun1', run_id: 'filterRun1' },
       },
@@ -438,8 +572,20 @@ describe('RunList', () => {
     mockNRuns(5, {});
     const props = generateProps();
     props.runIdListMask = ['filterRun1', 'filterRun2', 'notincluded1'];
-    tree = render(<RunList {...props} />);
-    await (tree.container.querySelector('div') as any)._loadRuns({
+    let componentRef: RunList | null = null;
+    const TestComponent = React.forwardRef<RunList>((props, ref) => (
+      <RunList
+        {...props}
+        ref={(instance: RunList) => {
+          componentRef = instance;
+          if (typeof ref === 'function') ref(instance);
+          else if (ref) ref.current = instance;
+        }}
+      />
+    ));
+    
+    tree = TestUtils.renderWithRouter(<TestComponent {...props} />);
+    await componentRef!._loadRuns({
       filter: encodeURIComponent(
         JSON.stringify({
           predicates: [
@@ -453,7 +599,7 @@ describe('RunList', () => {
         } as V2beta1Filter),
       ),
     });
-    expect((tree.container.querySelector('div') as any).state.runs).toMatchObject([
+    expect(componentRef!.state.runs).toMatchObject([
       {
         run: { display_name: 'run with id: filterRun1', run_id: 'filterRun1' },
       },
@@ -532,14 +678,16 @@ describe('RunList', () => {
   });
 
   it('renders run name as link to its details page', () => {
+    const componentRef = getMountedInstance();
     expect(
-      getMountedInstance()._nameCustomRenderer({ value: 'test run', id: 'run-id' }),
+      componentRef._nameCustomRenderer({ value: 'test run', id: 'run-id' }),
     ).toMatchSnapshot();
   });
 
   it('renders pipeline name as link to its details page', () => {
+    const componentRef = getMountedInstance();
     expect(
-      getMountedInstance()._pipelineVersionCustomRenderer({
+      componentRef._pipelineVersionCustomRenderer({
         id: 'run-id',
         value: { displayName: 'test pipeline', pipelineId: 'pipeline-id', usePlaceholder: false },
       }),
@@ -547,8 +695,9 @@ describe('RunList', () => {
   });
 
   it('handles no pipeline id given', () => {
+    const componentRef = getMountedInstance();
     expect(
-      getMountedInstance()._pipelineVersionCustomRenderer({
+      componentRef._pipelineVersionCustomRenderer({
         id: 'run-id',
         value: { displayName: 'test pipeline', usePlaceholder: false },
       }),
@@ -556,8 +705,9 @@ describe('RunList', () => {
   });
 
   it('shows "View pipeline" button if pipeline is embedded in run', () => {
+    const componentRef = getMountedInstance();
     expect(
-      getMountedInstance()._pipelineVersionCustomRenderer({
+      componentRef._pipelineVersionCustomRenderer({
         id: 'run-id',
         value: { displayName: 'test pipeline', pipelineId: 'pipeline-id', usePlaceholder: true },
       }),
@@ -565,8 +715,9 @@ describe('RunList', () => {
   });
 
   it('handles no pipeline name', () => {
+    const componentRef = getMountedInstance();
     expect(
-      getMountedInstance()._pipelineVersionCustomRenderer({
+      componentRef._pipelineVersionCustomRenderer({
         id: 'run-id',
         value: { /* no displayName */ usePlaceholder: true },
       }),
@@ -574,8 +725,9 @@ describe('RunList', () => {
   });
 
   it('renders pipeline name as link to its details page', () => {
+    const componentRef = getMountedInstance();
     expect(
-      getMountedInstance()._recurringRunCustomRenderer({
+      componentRef._recurringRunCustomRenderer({
         id: 'run-id',
         value: { id: 'recurring-run-id' },
       }),
@@ -601,8 +753,9 @@ describe('RunList', () => {
   });
 
   it('renders status as icon', () => {
+    const componentRef = getShallowInstance();
     expect(
-      getShallowInstance()._statusCustomRenderer({
+      componentRef._statusCustomRenderer({
         value: V2beta1RuntimeState.SUCCEEDED,
         id: 'run-id',
       }),

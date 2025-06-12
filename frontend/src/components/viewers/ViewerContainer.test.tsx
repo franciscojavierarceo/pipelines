@@ -16,19 +16,20 @@
 
 import * as React from 'react';
 import { render } from '@testing-library/react';
+import TestUtils from '../../TestUtils';
 import ViewerContainer from './ViewerContainer';
 import { PlotType } from './Viewer';
 
 describe('ViewerContainer', () => {
   it('does not break on empty configs', () => {
-    const tree = render(<ViewerContainer configs={[]} />);
-    expect(tree).toMatchSnapshot();
+    const tree = TestUtils.renderWithRouter(<ViewerContainer configs={[]} />);
+    expect(tree.container).toMatchSnapshot();
   });
 
   Object.keys(PlotType).map(type =>
     it('renders a viewer of type ' + type, () => {
-      const tree = render(<ViewerContainer configs={[{ type: PlotType[type] }]} />);
-      expect(tree).toMatchSnapshot();
+      const tree = TestUtils.renderWithRouter(<ViewerContainer configs={[{ type: PlotType[type] }]} />);
+      expect(tree.container).toMatchSnapshot();
     }),
   );
 });

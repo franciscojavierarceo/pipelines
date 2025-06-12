@@ -124,7 +124,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run-with-workflow-1,run-with-workflow-2`;
 
-    tree = render(<TestCompare {...props} />);
+    tree = TestUtils.renderWithRouter(<TestCompare {...props} />);
     await TestUtils.flushPromises();
   }
 
@@ -155,7 +155,7 @@ describe('CompareV1', () => {
   });
 
   it('clears banner upon initial load', () => {
-    tree = render(<CompareV1 {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...generateProps()} />);
     expect(updateBannerSpy).toHaveBeenCalledTimes(1);
     expect(updateBannerSpy).toHaveBeenLastCalledWith({});
   });
@@ -164,7 +164,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     // Ensure there are no run IDs in the query
     props.location.search = '';
-    tree = render(<CompareV1 {...props} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
 
     expect(updateBannerSpy).toHaveBeenCalledTimes(1);
@@ -178,7 +178,7 @@ describe('CompareV1', () => {
     // Ensure there are run IDs in the query
     props.location.search = `?${QUERY_PARAMS.runlist}=${MOCK_RUN_1_ID},${MOCK_RUN_2_ID},${MOCK_RUN_3_ID}`;
 
-    tree = render(<CompareV1 {...props} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
     expect(tree).toMatchSnapshot();
   });
@@ -188,7 +188,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run-1,run-2,run-3`;
 
-    tree = render(<CompareV1 {...props} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
 
     expect(getRunSpy).toHaveBeenCalledTimes(3);
@@ -200,7 +200,7 @@ describe('CompareV1', () => {
   it('shows an error banner if fetching any run fails', async () => {
     TestUtils.makeErrorResponseOnce(getRunSpy, 'test error');
 
-    tree = render(<CompareV1 {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...generateProps()} />);
     await TestUtils.flushPromises();
 
     expect(updateBannerSpy).toHaveBeenLastCalledWith(
@@ -220,7 +220,7 @@ describe('CompareV1', () => {
     ];
     getRunSpy.mockImplementation((id: string) => runs.find(r => r.run!.id === id));
 
-    tree = render(<CompareV1 {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...generateProps()} />);
     await TestUtils.flushPromises();
 
     expect(updateBannerSpy).toHaveBeenLastCalledWith({
@@ -240,7 +240,7 @@ describe('CompareV1', () => {
       };
     });
 
-    tree = render(<CompareV1 {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...generateProps()} />);
     await TestUtils.flushPromises();
 
     expect(updateBannerSpy).toHaveBeenLastCalledWith(
@@ -255,7 +255,7 @@ describe('CompareV1', () => {
   it('clears the error banner on refresh', async () => {
     TestUtils.makeErrorResponseOnce(getRunSpy, 'test error');
 
-    tree = render(<CompareV1 {...generateProps()} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...generateProps()} />);
     await TestUtils.flushPromises();
 
     // Verify that error banner is being shown
@@ -285,7 +285,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run-with-parameters`;
 
-    tree = render(<CompareV1 {...props} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
     expect(tree).toMatchSnapshot();
   });
@@ -321,7 +321,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run1,run2`;
 
-    tree = render(<CompareV1 {...props} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
     tree.update();
 
@@ -339,7 +339,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run-with-metrics`;
 
-    tree = render(<CompareV1 {...props} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
     expect(tree).toMatchSnapshot();
   });
@@ -357,7 +357,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run1,run2`;
 
-    tree = render(<CompareV1 {...props} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
     tree.update();
 
@@ -394,7 +394,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run-with-workflow`;
 
-    tree = render(<CompareV1 {...props} />);
+    tree = TestUtils.renderWithRouter(<CompareV1 {...props} />);
     await TestUtils.flushPromises();
 
     const expectedViewerMap = new Map([
@@ -437,27 +437,22 @@ describe('CompareV1', () => {
 
   it('expands all sections if they were collapsed', async () => {
     await setUpViewersAndShallowMount();
-    const instance = tree.instance() as CompareV1;
-    const collapseBtn = instance.getInitialToolbarState().actions[ButtonKeys.COLLAPSE];
-    const expandBtn = instance.getInitialToolbarState().actions[ButtonKeys.EXPAND];
+    
+    const collapseButton = screen.getByRole('button', { name: /collapse/i });
+    fireEvent.click(collapseButton);
+    
+    // Verify sections are collapsed by checking if content is hidden
+    expect(screen.queryByText('Metrics')).not.toBeVisible();
+    expect(screen.queryByText('Parameters')).not.toBeVisible();
+    
+    const expandButton = screen.getByRole('button', { name: /expand/i });
+    fireEvent.click(expandButton);
+    
+    // Verify sections are expanded by checking if content is visible
+    expect(screen.getByText('Metrics')).toBeVisible();
+    expect(screen.getByText('Parameters')).toBeVisible();
 
-    expect(tree.state('collapseSections')).toEqual({});
-
-    collapseBtn!.action();
-
-    expect(tree.state('collapseSections')).toEqual({
-      [METRICS_SECTION_NAME]: true,
-      [PARAMS_SECTION_NAME]: true,
-      [OVERVIEW_SECTION_NAME]: true,
-      Table: true,
-      Tensorboard: true,
-    });
-
-    expandBtn!.action();
-
-    expect(tree.state('collapseSections')).toEqual({});
-
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('allows individual viewers to be collapsed and expanded', async () => {
@@ -514,12 +509,14 @@ describe('CompareV1', () => {
   it('does not show viewers for deselected runs', async () => {
     await setUpViewersAndShallowMount();
 
-    // We call _selectionChanged() rather than using setState because _selectionChanged has a
-    // callback which is needed to properly update the run parameters section
-    (tree.instance() as TestCompare)._selectionChanged([]);
-    tree.update();
+    const checkboxes = screen.getAllByRole('checkbox');
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        fireEvent.click(checkbox);
+      }
+    });
 
-    expect(tree).toMatchSnapshot();
+    expect(tree.container).toMatchSnapshot();
   });
 
   it('creates an extra aggregation plot for compatible viewers', async () => {
@@ -553,7 +550,7 @@ describe('CompareV1', () => {
     const props = generateProps();
     props.location.search = `?${QUERY_PARAMS.runlist}=run1-id,run2-id`;
 
-    tree = render(<TestCompare {...props} />);
+    tree = TestUtils.renderWithRouter(<TestCompare {...props} />);
     await TestUtils.flushPromises();
 
     // 6 plot cards because there are (2 runs * 2 plots per run) + 2 aggregated plots, one for
