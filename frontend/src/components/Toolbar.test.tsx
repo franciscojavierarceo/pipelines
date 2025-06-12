@@ -20,6 +20,7 @@ import { createBrowserHistory, createMemoryHistory } from 'history';
 import Toolbar, { ToolbarActionMap } from './Toolbar';
 import HelpIcon from '@material-ui/icons/Help';
 import InfoIcon from '@material-ui/icons/Info';
+import TestUtils from '../TestUtils';
 
 const action1 = jest.fn();
 const action2 = jest.fn();
@@ -213,7 +214,7 @@ describe('Toolbar', () => {
   });
 
   it('renders with two breadcrumbs and two actions', () => {
-    const { container } = render(
+    const { container } = TestUtils.renderWithRouter(
       <Toolbar breadcrumbs={breadcrumbs} actions={actions} pageTitle='' history={history} />,
     );
     expect(container).toMatchSnapshot();
@@ -223,7 +224,7 @@ describe('Toolbar', () => {
     // This test uses createMemoryHistory because createBroweserHistory returns a singleton, and
     // there is no way to clear its entries which this test requires.
     const emptyHistory = createMemoryHistory();
-    const { container } = render(
+    const { container } = TestUtils.renderWithRouter(
       <Toolbar breadcrumbs={breadcrumbs} actions={actions} history={emptyHistory} pageTitle='' />,
     );
     expect(container).toMatchSnapshot();
