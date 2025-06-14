@@ -29,7 +29,7 @@ import { CustomRendererProps } from 'src/components/CustomTable';
 import { Description } from 'src/components/Description';
 import { QUERY_PARAMS, RoutePage, RouteParams } from 'src/components/Router';
 import { ToolbarProps } from 'src/components/Toolbar';
-import { color, commonCss, padding, zIndex } from 'src/Css';
+import { getColors, getCommonCss, padding, zIndex } from 'src/Css';
 import { Apis, PipelineSortKeys, BuildInfo } from 'src/lib/Apis';
 import { URLParser } from 'src/lib/URLParser';
 import { errorToMessage, logger } from 'src/lib/Utils';
@@ -37,6 +37,7 @@ import { Page, PageProps } from './Page';
 import { NamespaceContext } from 'src/lib/KubeflowClient';
 import PrivateSharedSelector from 'src/components/PrivateSharedSelector';
 import { BuildInfoContext } from 'src/lib/BuildInfo';
+import { useTheme } from 'src/contexts/ThemeContext';
 import { V2beta1Pipeline, V2beta1PipelineVersion } from 'src/apisv2beta1/pipeline';
 import PipelinesDialogV2 from 'src/components/PipelinesDialogV2';
 
@@ -74,6 +75,7 @@ interface NewPipelineVersionState {
 interface NewPipelineVersionProps extends PageProps {
   buildInfo?: BuildInfo;
   namespace?: string;
+  isDark: boolean;
 }
 
 export enum ImportMethod {
@@ -81,32 +83,34 @@ export enum ImportMethod {
   URL = 'url',
 }
 
-const css = stylesheet({
-  dropOverlay: {
-    backgroundColor: color.lightGrey,
-    border: '2px dashed #aaa',
-    bottom: 0,
-    left: 0,
-    padding: '2.5em 0',
-    position: 'absolute',
-    right: 0,
-    textAlign: 'center',
-    top: 0,
-    zIndex: zIndex.DROP_ZONE_OVERLAY,
-  },
-  errorMessage: {
-    color: 'red',
-  },
-  nonEditableInput: {
-    color: color.secondaryText,
-  },
-  selectorDialog: {
-    // If screen is small, use calc(100% - 120px). If screen is big, use 1200px.
-    maxWidth: 1200, // override default maxWidth to expand this dialog further
-    minWidth: 680,
-    width: 'calc(100% - 120px)',
-  },
-});
+const createNewPipelineVersionCss = (isDark: boolean) => {
+  const colors = getColors(isDark);
+  return stylesheet({
+    dropOverlay: {
+      backgroundColor: colors.lightGrey,
+      border: `2px dashed ${colors.lowContrast}`,
+      bottom: 0,
+      left: 0,
+      padding: '2.5em 0',
+      position: 'absolute',
+      right: 0,
+      textAlign: 'center',
+      top: 0,
+      zIndex: zIndex.DROP_ZONE_OVERLAY,
+    },
+    errorMessage: {
+      color: colors.errorText,
+    },
+    nonEditableInput: {
+      color: colors.secondaryText,
+    },
+    selectorDialog: {
+      maxWidth: 1200,
+      minWidth: 680,
+      width: 'calc(100% - 120px)',
+    },
+  });
+};
 
 const descriptionCustomRenderer: React.FC<CustomRendererProps<string>> = props => {
   return <Description description={props.value || ''} forceInline={true} />;
@@ -181,12 +185,16 @@ export class NewPipelineVersion extends Page<NewPipelineVersionProps, NewPipelin
       dropzoneActive,
     } = this.state;
 
+    const { isDark } = this.props;
+    const css = createNewPipelineVersionCss(isDark);
+    const dynamicCommonCss = getCommonCss(isDark);
+    
     return (
-      <div className={classes(commonCss.page, padding(20, 'lr'))}>
-        <div className={classes(commonCss.scrollContainer, padding(20, 'lr'))}>
+      <div className={classes(dynamicCommonCss.page, padding(20, 'lr'))}>
+        <div className={classes(dynamicCommonCss.scrollContainer, padding(20, 'lr'))}>
           {/* Two subpages: one for creating version under existing pipeline and one for creating version under new pipeline */}
           <div className={classes(padding(10, 't'))}>Upload pipeline or pipeline version.</div>
-          <div className={classes(commonCss.flex, padding(10, 'b'))}>
+          <div className={classes(dynamicCommonCss.flex, padding(10, 'b'))}>
             <FormControlLabel
               id='createNewPipelineBtn'
               label='Create a new pipeline'
@@ -346,7 +354,7 @@ export class NewPipelineVersion extends Page<NewPipelineVersionProps, NewPipelin
           )}
 
           {/* Different package input field based on import method*/}
-          <div className={classes(commonCss.flex, padding(10, 'b'))}>
+          <div className={classes(dynamicCommonCss.flex, padding(10, 'b'))}>
             <FormControlLabel
               id='localPackageBtn'
               label='Upload a file'
@@ -398,7 +406,7 @@ export class NewPipelineVersion extends Page<NewPipelineVersionProps, NewPipelin
               />
             </Dropzone>
           </div>
-          <div className={classes(commonCss.flex, padding(10, 'b'))}>
+          <div className={classes(dynamicCommonCss.flex, padding(10, 'b'))}>
             <FormControlLabel
               id='remotePackageBtn'
               label='Import by url'
@@ -434,12 +442,12 @@ export class NewPipelineVersion extends Page<NewPipelineVersionProps, NewPipelin
           />
 
           {/* Create pipeline or pipeline version */}
-          <div className={commonCss.flex}>
+          <div className={dynamicCommonCss.flex}>
             <BusyButton
               id='createNewPipelineOrVersionBtn'
               disabled={!!validationError}
               busy={isbeingCreated}
-              className={commonCss.buttonAction}
+              className={dynamicCommonCss.buttonAction}
               title={'Create'}
               onClick={this._create.bind(this)}
             />
@@ -674,7 +682,7 @@ export class NewPipelineVersion extends Page<NewPipelineVersionProps, NewPipelin
       }
       this.setState({ validationError: '' });
     } catch (err) {
-      this.setState({ validationError: err.message });
+      this.setState({ validationError: (err as Error).message });
     }
   }
 
@@ -704,8 +712,9 @@ export class NewPipelineVersion extends Page<NewPipelineVersionProps, NewPipelin
 const EnhancedNewPipelineVersion: React.FC<PageProps> = props => {
   const buildInfo = React.useContext(BuildInfoContext);
   const namespace = React.useContext(NamespaceContext);
+  const { isDark } = useTheme();
 
-  return <NewPipelineVersion {...props} buildInfo={buildInfo} namespace={namespace} />;
+  return <NewPipelineVersion {...props} buildInfo={buildInfo} namespace={namespace} isDark={isDark} />;
 };
 
 export default EnhancedNewPipelineVersion;

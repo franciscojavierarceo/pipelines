@@ -31,13 +31,14 @@ import TextField, { TextFieldProps } from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
 import { ListRequest } from '../lib/Apis';
 import { classes, stylesheet } from 'typestyle';
-import { fonts, fontsize, dimension, commonCss, color, padding, zIndex } from '../Css';
+import { fonts, fontsize, dimension, createCommonCss, getColors, padding, zIndex } from '../Css';
 import { logger } from '../lib/Utils';
 import { debounce } from 'lodash';
 import { InputAdornment } from '@material-ui/core';
 import { CustomTableRow } from './CustomTableRow';
 import { V2beta1Filter, V2beta1PredicateOperation } from 'src/apisv2beta1/filter';
 import { ApiFilter, PredicateOp } from 'src/apis/filter';
+import { useTheme } from '../contexts/ThemeContext';
 
 export enum ExpandState {
   COLLAPSED,
@@ -66,121 +67,148 @@ export interface Row {
 
 const rowHeight = 40;
 
-export const css = stylesheet({
-  cell: {
-    $nest: {
-      '&:not(:nth-child(2))': {
-        color: color.inactive,
-      },
-    },
-    alignSelf: 'center',
-    borderBottom: 'initial',
-    color: color.foreground,
-    fontFamily: fonts.secondary,
-    fontSize: fontsize.base,
-    letterSpacing: 0.25,
-    marginRight: 20,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  },
-  columnName: {
-    color: '#1F1F1F',
-    fontSize: fontsize.small,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    marginRight: 20,
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  },
-  emptyMessage: {
-    padding: 20,
-    textAlign: 'center',
-  },
-  expandButton: {
-    marginRight: 10,
-    padding: 3,
-    transition: 'transform 0.3s',
-  },
-  expandButtonExpanded: {
-    transform: 'rotate(90deg)',
-  },
-  expandButtonPlaceholder: {
-    width: 54,
-  },
-  expandableContainer: {
-    transition: 'margin 0.2s',
-  },
-  expandedContainer: {
-    borderRadius: 10,
-    boxShadow: '0 1px 2px 0 rgba(60,64,67,0.30), 0 1px 3px 1px rgba(60,64,67,0.15)',
-    margin: '16px 2px',
-  },
-  expandedRow: {
-    borderBottom: '1px solid transparent !important',
-    boxSizing: 'border-box',
-    height: '40px !important',
-  },
-  filterBorderRadius: {
-    borderRadius: 8,
-  },
-  filterBox: {
-    margin: '16px 0',
-  },
-  footer: {
-    borderBottom: '1px solid ' + color.divider,
-    fontFamily: fonts.secondary,
-    height: 40,
-    textAlign: 'right',
-  },
-  header: {
-    borderBottom: 'solid 1px ' + color.divider,
-    color: color.strong,
-    display: 'flex',
-    flex: '0 0 40px',
-    lineHeight: '40px', // must declare px
-  },
-  noLeftPadding: {
-    paddingLeft: 0,
-  },
-  noMargin: {
-    margin: 0,
-  },
-  row: {
-    $nest: {
-      '&:hover': {
-        backgroundColor: '#f3f3f3',
-      },
-      '&:hover a': {
-        color: color.linkLight,
-        cursor: 'pointer',
-      },
-    },
-    borderBottom: '1px solid #ddd',
-    display: 'flex',
-    flexShrink: 0,
-    height: rowHeight,
-    outline: 'none',
-  },
-  rowsPerPage: {
-    color: color.strong,
-    height: dimension.xsmall,
-    minWidth: dimension.base,
-  },
-  selected: {
-    backgroundColor: color.activeBg,
-  },
-  selectionToggle: {
-    marginRight: 12,
-    overflow: 'initial', // Resets overflow from 'hidden'
-  },
-  verticalAlignInitial: {
-    verticalAlign: 'initial',
-  },
-});
+export const getCustomTableColors = (isDark: boolean) => {
+  const colors = getColors(isDark);
+  return {
+    cell: colors.foreground,
+    cellInactive: colors.inactive,
+    columnName: colors.strong,
+    filterIcon: colors.lowContrast,
+    header: colors.strong,
+    divider: colors.divider,
+    rowHover: isDark ? '#2a2a2a' : '#f3f3f3',
+    rowBorder: colors.divider,
+    emptyMessage: colors.foreground,
+    footer: colors.divider,
+    selected: colors.activeBg,
+    expandedShadow: isDark 
+      ? '0 1px 2px 0 rgba(0,0,0,0.50), 0 1px 3px 1px rgba(0,0,0,0.30)'
+      : '0 1px 2px 0 rgba(60,64,67,0.30), 0 1px 3px 1px rgba(60,64,67,0.15)',
+    linkHover: isDark ? '#90caf9' : colors.linkLight,
+  };
+};
 
-interface CustomTableProps {
+export const createCustomTableCss = (isDark: boolean) => {
+  const colors = getCustomTableColors(isDark);
+  return stylesheet({
+    cell: {
+      $nest: {
+        '&:not(:nth-child(2))': {
+          color: colors.cellInactive,
+        },
+      },
+      alignSelf: 'center',
+      borderBottom: 'initial',
+      color: colors.cell,
+      fontFamily: fonts.secondary,
+      fontSize: fontsize.base,
+      letterSpacing: 0.25,
+      marginRight: 20,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    },
+    columnName: {
+      color: colors.columnName,
+      fontSize: fontsize.small,
+      fontWeight: 'bold',
+      letterSpacing: 0.25,
+      marginRight: 20,
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    },
+    emptyMessage: {
+      padding: 20,
+      textAlign: 'center',
+      color: colors.emptyMessage,
+    },
+    expandButton: {
+      marginRight: 10,
+      padding: 3,
+      transition: 'transform 0.3s',
+    },
+    expandButtonExpanded: {
+      transform: 'rotate(90deg)',
+    },
+    expandButtonPlaceholder: {
+      width: 54,
+    },
+    expandableContainer: {
+      transition: 'margin 0.2s',
+    },
+    expandedContainer: {
+      borderRadius: 10,
+      boxShadow: colors.expandedShadow,
+      margin: '16px 2px',
+    },
+    expandedRow: {
+      borderBottom: '1px solid transparent !important',
+      boxSizing: 'border-box',
+      height: '40px !important',
+    },
+    filterBorderRadius: {
+      borderRadius: 8,
+    },
+    filterBox: {
+      margin: '16px 0',
+    },
+    footer: {
+      borderBottom: '1px solid ' + colors.footer,
+      fontFamily: fonts.secondary,
+      height: 40,
+      textAlign: 'right',
+    },
+    header: {
+      borderBottom: 'solid 1px ' + colors.divider,
+      color: colors.header,
+      display: 'flex',
+      flex: '0 0 40px',
+      lineHeight: '40px',
+    },
+    noLeftPadding: {
+      paddingLeft: 0,
+    },
+    noMargin: {
+      margin: 0,
+    },
+    row: {
+      $nest: {
+        '&:hover': {
+          backgroundColor: colors.rowHover,
+        },
+        '&:hover a': {
+          color: colors.linkHover,
+          cursor: 'pointer',
+        },
+      },
+      borderBottom: '1px solid ' + colors.rowBorder,
+      display: 'flex',
+      flexShrink: 0,
+      height: rowHeight,
+      outline: 'none',
+    },
+    rowsPerPage: {
+      color: colors.header,
+      height: dimension.xsmall,
+      minWidth: dimension.base,
+    },
+    selected: {
+      backgroundColor: colors.selected,
+    },
+    selectionToggle: {
+      marginRight: 12,
+      overflow: 'initial',
+    },
+    verticalAlignInitial: {
+      verticalAlign: 'initial',
+    },
+  });
+};
+
+export const css = createCustomTableCss(false);
+
+export interface CustomTableProps {
   columns: Column[];
   disablePaging?: boolean;
   disableSelection?: boolean;
@@ -200,6 +228,7 @@ interface CustomTableProps {
   toggleExpansion?: (rowId: number) => void;
   updateSelection?: (selectedIds: string[]) => void;
   useRadioButtons?: boolean;
+  isDark?: boolean;
   disableAdditionalSelection?: boolean;
 }
 
@@ -215,7 +244,7 @@ interface CustomTableState {
   tokenList: string[];
 }
 
-export default class CustomTable extends React.Component<CustomTableProps, CustomTableState> {
+class CustomTable extends React.Component<CustomTableProps, CustomTableState> {
   private _isMounted = true;
 
   private _debouncedFilterRequest = debounce(
@@ -300,9 +329,15 @@ export default class CustomTable extends React.Component<CustomTableProps, Custo
     const numSelected = (this.props.selectedIds || []).length;
     const totalFlex = this.props.columns.reduce((total, c) => (total += c.flex || 1), 0);
     const widths = this.props.columns.map(c => ((c.flex || 1) / totalFlex) * 100);
+    
+    const isDark = (this.props as any).isDark || false;
+    const dynamicCss = createCustomTableCss(isDark);
+    const colors = getCustomTableColors(isDark);
 
+    const dynamicCommonCss = createCommonCss(isDark);
+    
     return (
-      <div className={commonCss.pageOverflowHidden}>
+      <div className={dynamicCommonCss.pageOverflowHidden}>
         {/* Filter/Search bar */}
         {!this.props.noFilterBox && (
           <div>
@@ -311,19 +346,19 @@ export default class CustomTable extends React.Component<CustomTableProps, Custo
               label={this.props.filterLabel || 'Filter'}
               height={48}
               maxWidth={'100%'}
-              className={css.filterBox}
-              InputLabelProps={{ classes: { root: css.noMargin } }}
+              className={dynamicCss.filterBox}
+              InputLabelProps={{ classes: { root: dynamicCss.noMargin } }}
               onChange={this.handleFilterChange}
               value={filterString}
               variant='outlined'
               InputProps={{
                 classes: {
-                  notchedOutline: css.filterBorderRadius,
-                  root: css.noLeftPadding,
+                  notchedOutline: dynamicCss.filterBorderRadius,
+                  root: dynamicCss.noLeftPadding,
                 },
                 startAdornment: (
                   <InputAdornment position='end'>
-                    <FilterIcon style={{ color: color.lowContrast, paddingRight: 16 }} />
+                    <FilterIcon style={{ color: colors.filterIcon, paddingRight: 16 }} />
                   </InputAdornment>
                 ),
               }}
@@ -332,9 +367,8 @@ export default class CustomTable extends React.Component<CustomTableProps, Custo
         )}
 
         {/* Header */}
-        <div className={classes(css.header, this.props.disableSelection && padding(20, 'l'))}>
-          {// Called as function to avoid breaking shallow rendering tests.
-          HeaderRowSelectionSection({
+        <div className={classes(dynamicCss.header, this.props.disableSelection && padding(20, 'l'))}>
+          {HeaderRowSelectionSection({
             disableSelection: this.props.disableSelection,
             indeterminate: !!numSelected && numSelected < this.props.rows.length,
             isSelected: !!numSelected && numSelected === this.props.rows.length,
@@ -342,6 +376,7 @@ export default class CustomTable extends React.Component<CustomTableProps, Custo
             showExpandButton: !!this.props.getExpandComponent,
             useRadioButtons: this.props.useRadioButtons,
             disableAdditionalSelection: this.props.disableAdditionalSelection,
+            isDark: isDark,
           })}
           {this.props.columns.map((col, i) => {
             const isColumnSortable = !!this.props.columns[i].sortKey;
@@ -350,7 +385,7 @@ export default class CustomTable extends React.Component<CustomTableProps, Custo
               <div
                 key={i}
                 style={{ width: widths[i] + '%' }}
-                className={css.columnName}
+                className={dynamicCss.columnName}
                 title={
                   // Browser shows an info popup on hover.
                   // It helps when there's not enough space for full text.
@@ -365,7 +400,7 @@ export default class CustomTable extends React.Component<CustomTableProps, Custo
                   >
                     <TableSortLabel
                       active={isCurrentSortColumn}
-                      className={commonCss.ellipsis}
+                      className={dynamicCommonCss.ellipsis}
                       direction={isColumnSortable ? sortOrder : undefined}
                       onClick={() => this._requestSort(this.props.columns[i].sortKey)}
                     >
@@ -379,14 +414,14 @@ export default class CustomTable extends React.Component<CustomTableProps, Custo
         </div>
 
         {/* Body */}
-        <div className={commonCss.scrollContainer} style={{ minHeight: 60 }}>
+        <div className={dynamicCommonCss.scrollContainer} style={{ minHeight: 60 }}>
           {/* Busy experience */}
           {this.state.isBusy && (
             <React.Fragment>
-              <div className={commonCss.busyOverlay} />
+              <div className={dynamicCommonCss.busyOverlay} />
               <CircularProgress
                 size={25}
-                className={commonCss.absoluteCenter}
+                className={dynamicCommonCss.absoluteCenter}
                 style={{ zIndex: zIndex.BUSY_OVERLAY }}
               />
             </React.Fragment>
@@ -394,7 +429,7 @@ export default class CustomTable extends React.Component<CustomTableProps, Custo
 
           {/* Empty experience */}
           {this.props.rows.length === 0 && !!this.props.emptyMessage && !this.state.isBusy && (
-            <div className={css.emptyMessage}>{this.props.emptyMessage}</div>
+            <div className={dynamicCss.emptyMessage}>{this.props.emptyMessage}</div>
           )}
           {this.props.rows.map((row, i) => {
             if (row.otherFields.length !== this.props.columns.length) {
@@ -405,8 +440,8 @@ export default class CustomTable extends React.Component<CustomTableProps, Custo
             return (
               <div
                 className={classes(
-                  css.expandableContainer,
-                  row.expandState === ExpandState.EXPANDED && css.expandedContainer,
+                  dynamicCss.expandableContainer,
+                  row.expandState === ExpandState.EXPANDED && dynamicCss.expandedContainer,
                 )}
                 key={i}
               >
@@ -416,15 +451,14 @@ export default class CustomTable extends React.Component<CustomTableProps, Custo
                   tabIndex={-1}
                   className={classes(
                     'tableRow',
-                    css.row,
+                    dynamicCss.row,
                     this.props.disableSelection === true && padding(20, 'l'),
-                    selected && css.selected,
-                    row.expandState === ExpandState.EXPANDED && css.expandedRow,
+                    selected && dynamicCss.selected,
+                    row.expandState === ExpandState.EXPANDED && dynamicCss.expandedRow,
                   )}
                   onClick={e => this.handleClick(e, row.id)}
                 >
-                  {// Called as function to avoid breaking shallow rendering tests.
-                  BodyRowSelectionSection({
+                  {BodyRowSelectionSection({
                     disableSelection: this.props.disableSelection,
                     expandState: row.expandState,
                     isSelected: selected,
@@ -432,6 +466,7 @@ export default class CustomTable extends React.Component<CustomTableProps, Custo
                     showExpandButton: !!this.props.getExpandComponent,
                     useRadioButtons: this.props.useRadioButtons,
                     disableAdditionalSelection: this.props.disableAdditionalSelection,
+                    isDark: isDark,
                   })}
                   <CustomTableRow row={row} columns={this.props.columns} />
                 </div>
@@ -445,13 +480,13 @@ export default class CustomTable extends React.Component<CustomTableProps, Custo
 
         {/* Footer */}
         {!this.props.disablePaging && (
-          <div className={css.footer}>
+          <div className={dynamicCss.footer}>
             <span className={padding(10, 'r')}>Rows per page:</span>
             <TextField
               select={true}
               variant='standard'
-              className={css.rowsPerPage}
-              classes={{ root: css.verticalAlignInitial }}
+              className={dynamicCss.rowsPerPage}
+              classes={{ root: dynamicCss.verticalAlignInitial }}
               InputProps={{ disableUnderline: true }}
               onChange={this._requestRowsPerPage.bind(this)}
               value={pageSize}
@@ -643,6 +678,7 @@ interface SelectionSectionCommonProps {
   isSelected: boolean;
   showExpandButton: boolean;
   useRadioButtons?: boolean;
+  isDark?: boolean;
 }
 
 interface HeaderRowSelectionSectionProps extends SelectionSectionCommonProps {
@@ -658,14 +694,17 @@ const HeaderRowSelectionSection: React.FC<HeaderRowSelectionSectionProps> = ({
   showExpandButton,
   useRadioButtons,
   disableAdditionalSelection,
+  isDark = false,
 }) => {
   const nonEmpty = disableSelection !== true || showExpandButton;
   if (!nonEmpty) {
     return null;
   }
 
+  const dynamicCss = createCustomTableCss(isDark);
+
   return (
-    <div className={classes(css.columnName, css.cell, css.selectionToggle)}>
+    <div className={classes(dynamicCss.columnName, dynamicCss.cell, dynamicCss.selectionToggle)}>
       {/* If using checkboxes */}
       {disableSelection !== true && useRadioButtons !== true && (
         <Checkbox
@@ -699,39 +738,54 @@ const BodyRowSelectionSection: React.FC<BodyRowSelectionSectionProps> = ({
   showExpandButton,
   useRadioButtons,
   disableAdditionalSelection,
-}) => (
-  <>
-    {/* Expansion toggle button */}
-    {(disableSelection !== true || showExpandButton) && expandState !== ExpandState.NONE && (
-      <div className={classes(css.cell, css.selectionToggle)}>
-        {/* If using checkboxes */}
-        {disableSelection !== true && useRadioButtons !== true && (
-          <Checkbox
-            color='primary'
-            checked={isSelected}
-            disabled={!isSelected && disableAdditionalSelection}
-          />
-        )}
-        {/* If using radio buttons */}
-        {disableSelection !== true && useRadioButtons && (
-          <Radio color='primary' checked={isSelected} />
-        )}
-        {showExpandButton && (
-          <IconButton
-            className={classes(
-              css.expandButton,
-              expandState === ExpandState.EXPANDED && css.expandButtonExpanded,
-            )}
-            onClick={onExpand}
-            aria-label='Expand'
-          >
-            <ArrowRight />
-          </IconButton>
-        )}
-      </div>
-    )}
+  isDark = false,
+}) => {
+  const dynamicCss = createCustomTableCss(isDark);
 
-    {/* Placeholder for non-expandable rows */}
-    {expandState === ExpandState.NONE && <div className={css.expandButtonPlaceholder} />}
-  </>
-);
+  return (
+    <>
+      {/* Expansion toggle button */}
+      {(disableSelection !== true || showExpandButton) && expandState !== ExpandState.NONE && (
+        <div className={classes(dynamicCss.cell, dynamicCss.selectionToggle)}>
+          {/* If using checkboxes */}
+          {disableSelection !== true && useRadioButtons !== true && (
+            <Checkbox
+              color='primary'
+              checked={isSelected}
+              disabled={!isSelected && disableAdditionalSelection}
+            />
+          )}
+          {/* If using radio buttons */}
+          {disableSelection !== true && useRadioButtons && (
+            <Radio color='primary' checked={isSelected} />
+          )}
+          {showExpandButton && (
+            <IconButton
+              className={classes(
+                dynamicCss.expandButton,
+                expandState === ExpandState.EXPANDED && dynamicCss.expandButtonExpanded,
+              )}
+              onClick={onExpand}
+              aria-label='Expand'
+            >
+              <ArrowRight />
+            </IconButton>
+          )}
+        </div>
+      )}
+
+      {/* Placeholder for non-expandable rows */}
+      {expandState === ExpandState.NONE && <div className={dynamicCss.expandButtonPlaceholder} />}
+    </>
+  );
+};
+
+
+
+const CustomTableWithTheme = React.forwardRef<CustomTable, CustomTableProps>((props, ref) => {
+  const { isDark } = useTheme();
+  return <CustomTable {...props} ref={ref} isDark={isDark} />;
+});
+
+export { CustomTable };
+export default CustomTableWithTheme;

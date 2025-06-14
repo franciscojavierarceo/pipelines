@@ -61,7 +61,7 @@ interface RecurringRunListState {
 }
 
 class RecurringRunList extends React.PureComponent<RecurringRunListProps, RecurringRunListState> {
-  private _tableRef = React.createRef<CustomTable>();
+  private _tableRef = React.createRef<any>();
 
   constructor(props: any) {
     super(props);

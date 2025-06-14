@@ -56,7 +56,7 @@ interface ExperimentListState {
 }
 
 export class ExperimentList extends Page<{ namespace?: string }, ExperimentListState> {
-  private _tableRef = React.createRef<CustomTable>();
+  private _tableRef = React.createRef<any>();
 
   constructor(props: any) {
     super(props);

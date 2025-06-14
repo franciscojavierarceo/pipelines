@@ -57,7 +57,7 @@ interface ExecutionListState {
 }
 
 class ExecutionList extends Page<ExecutionListProps, ExecutionListState> {
-  private tableRef = React.createRef<CustomTable>();
+  private tableRef = React.createRef<any>();
   private api = Api.getInstance();
   private executionTypesMap: Map<number, ExecutionType>;
 

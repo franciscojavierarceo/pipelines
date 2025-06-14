@@ -67,7 +67,7 @@ const NAME_FIELDS = [
 ];
 
 export class ArtifactList extends Page<ArtifactListProps, ArtifactListState> {
-  private tableRef = React.createRef<CustomTable>();
+  private tableRef = React.createRef<any>();
   private api = Api.getInstance();
   private artifactTypesMap: Map<number, ArtifactType>;
 

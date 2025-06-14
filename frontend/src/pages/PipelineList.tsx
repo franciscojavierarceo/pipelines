@@ -56,7 +56,7 @@ const descriptionCustomRenderer: React.FC<CustomRendererProps<string>> = (
 };
 
 class PipelineList extends Page<{ namespace?: string }, PipelineListState> {
-  private _tableRef = React.createRef<CustomTable>();
+  private _tableRef = React.createRef<any>();
 
   constructor(props: any) {
     super(props);

@@ -24,7 +24,8 @@ import { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { classes, stylesheet } from 'typestyle';
 import BusyButton from '../atoms/BusyButton';
-import { color, commonCss, dimension, fonts, fontsize, spacing } from '../Css';
+import { commonCss, dimension, fonts, fontsize, spacing, getColors } from '../Css';
+import { useTheme } from '../contexts/ThemeContext';
 
 export interface ToolbarActionMap {
   [key: string]: ToolbarActionConfig;
@@ -51,65 +52,69 @@ export interface Breadcrumb {
 
 const backIconHeight = 24;
 
-const css = stylesheet({
-  actions: {
-    display: 'flex',
-    marginRight: spacing.units(-2),
-    paddingTop: 25,
-    alignItems: 'center',
-  },
-  backIcon: {
-    fontSize: backIconHeight,
-    verticalAlign: 'bottom',
-  },
-  backLink: {
-    cursor: 'pointer',
-    marginRight: 10,
-    padding: 3,
-  },
-  breadcrumbs: {
-    color: color.inactive,
-    fontFamily: fonts.secondary,
-    fontSize: fontsize.small,
-    letterSpacing: 0.25,
-    margin: '10px 37px',
-  },
-  chevron: {
-    height: 12,
-  },
-  disabled: {
-    color: '#aaa',
-  },
-  enabled: {
-    color: color.foreground,
-  },
-  link: {
-    $nest: {
-      '&:hover': {
-        background: color.lightGrey,
-      },
+const createToolbarCss = (isDark: boolean) => {
+  const colors = getColors(isDark);
+  return stylesheet({
+    actions: {
+      display: 'flex',
+      marginRight: spacing.units(-2),
+      paddingTop: 25,
+      alignItems: 'center',
     },
-    borderRadius: 3,
-    padding: 3,
-  },
-  pageName: {
-    color: color.strong,
-    fontSize: fontsize.pageTitle,
-    lineHeight: '28px',
-  },
-  root: {
-    alignItems: 'center',
-    display: 'flex',
-    flexShrink: 0,
-    height: dimension.jumbo,
-    justifyContent: 'space-between',
-  },
-  topLevelToolbar: {
-    borderBottom: `1px solid ${color.lightGrey}`,
-    paddingBottom: 15,
-    paddingLeft: 20,
-  },
-});
+    backIcon: {
+      fontSize: backIconHeight,
+      verticalAlign: 'bottom',
+    },
+    backLink: {
+      cursor: 'pointer',
+      marginRight: 10,
+      padding: 3,
+    },
+    breadcrumbs: {
+      color: colors.inactive,
+      fontFamily: fonts.secondary,
+      fontSize: fontsize.small,
+      letterSpacing: 0.25,
+      margin: '10px 37px',
+    },
+    chevron: {
+      height: 12,
+    },
+    disabled: {
+      color: '#aaa',
+    },
+    enabled: {
+      color: colors.foreground,
+    },
+    link: {
+      $nest: {
+        '&:hover': {
+          background: colors.lightGrey,
+        },
+      },
+      borderRadius: 3,
+      padding: 3,
+    },
+    pageName: {
+      color: colors.strong,
+      fontSize: fontsize.pageTitle,
+      lineHeight: '28px',
+    },
+    root: {
+      alignItems: 'center',
+      display: 'flex',
+      flexShrink: 0,
+      height: dimension.jumbo,
+      justifyContent: 'space-between',
+    },
+    topLevelToolbar: {
+      backgroundColor: colors.background,
+      borderBottom: `1px solid ${colors.divider}`,
+      paddingBottom: 15,
+      paddingLeft: 20,
+    },
+  });
+};
 
 export interface ToolbarProps {
   actions: ToolbarActionMap;
@@ -120,9 +125,14 @@ export interface ToolbarProps {
   topLevelToolbar?: boolean;
 }
 
-class Toolbar extends React.Component<ToolbarProps> {
+interface ToolbarWithThemeProps extends ToolbarProps {
+  isDark: boolean;
+}
+
+class Toolbar extends React.Component<ToolbarWithThemeProps> {
   public render(): JSX.Element | null {
-    const { actions, breadcrumbs, pageTitle, pageTitleTooltip } = { ...this.props };
+    const { actions, breadcrumbs, pageTitle, pageTitleTooltip, isDark } = { ...this.props };
+    const css = createToolbarCss(isDark);
 
     if (!actions.length && !breadcrumbs.length && !pageTitle) {
       return null;
@@ -214,4 +224,9 @@ class Toolbar extends React.Component<ToolbarProps> {
   }
 }
 
-export default Toolbar;
+const ToolbarWithTheme: React.FC<ToolbarProps> = (props) => {
+  const { isDark } = useTheme();
+  return <Toolbar {...props} isDark={isDark} />;
+};
+
+export default ToolbarWithTheme;

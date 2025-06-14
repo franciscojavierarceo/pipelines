@@ -29,8 +29,10 @@ import { RouterProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { classes, stylesheet } from 'typestyle';
 import { ExternalLinks, RoutePage, RoutePrefix } from '../components/Router';
-import { commonCss, fontsize } from '../Css';
+import { fontsize, getColors, getCommonCss } from '../Css';
 import { ThemeToggle } from './ThemeToggle';
+import { useTheme } from '../contexts/ThemeContext';
+
 import ExperimentsIcon from '../icons/experiments';
 import GitHubIcon from '../icons/GitHub-Mark-120px-plus.png';
 import PipelinesIcon from '../icons/pipelines';
@@ -45,142 +47,148 @@ export const tailwindcss = {
   sideNavItem: 'flex flex-row flex-shrink-0',
 };
 
-export const sideNavColors = {
-  bg: '#f8fafb',
-  fgActive: '#0d6de7',
-  fgActiveInvisible: 'rgb(227, 233, 237, 0)',
-  fgDefault: '#9aa0a6',
-  hover: '#f1f3f4',
-  separator: '#bdc1c6',
-  sideNavBorder: '#e8eaed',
+export const getSideNavColors = (isDark: boolean) => {
+  const colors = getColors(isDark);
+  return {
+    bg: isDark ? '#1e1e1e' : '#f8fafb',
+    fgActive: colors.theme,
+    fgActiveInvisible: isDark ? 'rgba(144, 202, 249, 0)' : 'rgb(227, 233, 237, 0)',
+    fgDefault: isDark ? '#e0e0e0' : colors.weak,
+    hover: isDark ? '#333333' : '#f1f3f4',
+    separator: colors.separator,
+    sideNavBorder: colors.divider,
+  };
 };
 
 const COLLAPSED_SIDE_NAV_SIZE = 72;
 const EXPANDED_SIDE_NAV_SIZE = 220;
 
-export const css = stylesheet({
-  active: {
-    color: sideNavColors.fgActive + ' !important',
-  },
-  button: {
-    $nest: {
-      '&::hover': {
-        backgroundColor: sideNavColors.hover,
-      },
+export const createSideNavCss = (isDark: boolean) => {
+  const sideNavColors = getSideNavColors(isDark);
+  return stylesheet({
+    active: {
+      color: sideNavColors.fgActive + ' !important',
     },
-    borderRadius: 0,
-    color: sideNavColors.fgDefault,
-    display: 'block',
-    fontSize: fontsize.medium,
-    fontWeight: 'bold',
-    height: 44,
-    marginBottom: 16,
-    maxWidth: EXPANDED_SIDE_NAV_SIZE,
-    overflow: 'hidden',
-    padding: '12px 10px 10px 26px',
-    textAlign: 'left',
-    textTransform: 'none',
-    transition: 'max-width 0.3s',
-    whiteSpace: 'nowrap',
-    width: EXPANDED_SIDE_NAV_SIZE,
-  },
-  chevron: {
-    color: sideNavColors.fgDefault,
-    marginLeft: 16,
-    padding: 6,
-    transition: 'transform 0.3s',
-  },
-  collapsedButton: {
-    maxWidth: COLLAPSED_SIDE_NAV_SIZE,
-    minWidth: COLLAPSED_SIDE_NAV_SIZE,
-    padding: '12px 10px 10px 26px',
-  },
-  collapsedChevron: {
-    transform: 'rotate(180deg)',
-  },
-  collapsedExternalLabel: {
-    // Hide text when collapsing, but do it with a transition of both height and
-    // opacity
-    height: 0,
-    opacity: 0,
-  },
-  collapsedLabel: {
-    // Hide text when collapsing, but do it with a transition
-    opacity: 0,
-  },
-  collapsedRoot: {
-    width: `${COLLAPSED_SIDE_NAV_SIZE}px !important`,
-  },
-  collapsedSeparator: {
-    margin: '20px !important',
-  },
-  envMetadata: {
-    color: sideNavColors.fgDefault,
-    marginBottom: 16,
-    marginLeft: 30,
-  },
-  icon: {
-    height: 20,
-    width: 20,
-  },
-  iconImage: {
-    opacity: 0.6, // Images are too colorful there by default, reduce their color.
-  },
-  indicator: {
-    borderBottom: '3px solid transparent',
-    borderLeft: `3px solid ${sideNavColors.fgActive}`,
-    borderTop: '3px solid transparent',
-    height: 42,
-    left: 0,
-    position: 'absolute',
-    zIndex: 1,
-  },
-  indicatorHidden: {
-    opacity: 0,
-  },
-  infoHidden: {
-    opacity: 0,
-    transition: 'opacity 0s',
-    transitionDelay: '0s',
-    // guarantees info doesn't affect layout when hidden
-    overflow: 'hidden',
-    height: 0,
-  },
-  infoVisible: {
-    opacity: 'initial',
-    transition: 'opacity 0.2s',
-    transitionDelay: '0.3s',
-    overflow: 'hidden',
-  },
-  label: {
-    fontSize: fontsize.base,
-    letterSpacing: 0.25,
-    marginLeft: 20,
-    transition: 'opacity 0.3s',
-    verticalAlign: 'super',
-  },
-  link: {
-    color: '#77abda',
-  },
-  openInNewTabIcon: {
-    height: 12,
-    marginBottom: 8,
-    marginLeft: 5,
-    width: 12,
-  },
-  root: {
-    background: sideNavColors.bg,
-    borderRight: `1px ${sideNavColors.sideNavBorder} solid`,
-    paddingTop: 15,
-    transition: 'width 0.3s',
-    width: EXPANDED_SIDE_NAV_SIZE,
-  },
-  separator: {
-    border: '0px none transparent',
-    borderTop: `1px solid ${sideNavColors.separator}`,
-    margin: 20,
-  },
-});
+    button: {
+      $nest: {
+        '&::hover': {
+          backgroundColor: sideNavColors.hover,
+        },
+      },
+      borderRadius: 0,
+      color: sideNavColors.fgDefault,
+      display: 'block',
+      fontSize: fontsize.medium,
+      fontWeight: 'bold',
+      height: 44,
+      marginBottom: 16,
+      maxWidth: EXPANDED_SIDE_NAV_SIZE,
+      overflow: 'hidden',
+      padding: '12px 10px 10px 26px',
+      textAlign: 'left',
+      textTransform: 'none',
+      transition: 'max-width 0.3s',
+      whiteSpace: 'nowrap',
+      width: EXPANDED_SIDE_NAV_SIZE,
+    },
+    chevron: {
+      color: sideNavColors.fgDefault,
+      marginLeft: 16,
+      padding: 6,
+      transition: 'transform 0.3s',
+    },
+    collapsedButton: {
+      maxWidth: COLLAPSED_SIDE_NAV_SIZE,
+      minWidth: COLLAPSED_SIDE_NAV_SIZE,
+      padding: '12px 10px 10px 26px',
+    },
+    collapsedChevron: {
+      transform: 'rotate(180deg)',
+    },
+    collapsedExternalLabel: {
+      // Hide text when collapsing, but do it with a transition of both height and
+      // opacity
+      height: 0,
+      opacity: 0,
+    },
+    collapsedLabel: {
+      // Hide text when collapsing, but do it with a transition
+      opacity: 0,
+    },
+    collapsedRoot: {
+      width: `${COLLAPSED_SIDE_NAV_SIZE}px !important`,
+    },
+    collapsedSeparator: {
+      margin: '20px !important',
+    },
+    envMetadata: {
+      color: sideNavColors.fgDefault,
+      marginBottom: 16,
+      marginLeft: 30,
+    },
+    icon: {
+      height: 20,
+      width: 20,
+    },
+    iconImage: {
+      opacity: 0.6, // Images are too colorful there by default, reduce their color.
+    },
+    indicator: {
+      borderBottom: '3px solid transparent',
+      borderLeft: `3px solid ${sideNavColors.fgActive}`,
+      borderTop: '3px solid transparent',
+      height: 42,
+      left: 0,
+      position: 'absolute',
+      zIndex: 1,
+    },
+    indicatorHidden: {
+      opacity: 0,
+    },
+    infoHidden: {
+      opacity: 0,
+      transition: 'opacity 0s',
+      transitionDelay: '0s',
+      // guarantees info doesn't affect layout when hidden
+      overflow: 'hidden',
+      height: 0,
+    },
+    infoVisible: {
+      opacity: 'initial',
+      transition: 'opacity 0.2s',
+      transitionDelay: '0.3s',
+      overflow: 'hidden',
+    },
+    label: {
+      fontSize: fontsize.base,
+      letterSpacing: 0.25,
+      marginLeft: 20,
+      transition: 'opacity 0.3s',
+      verticalAlign: 'super',
+    },
+    link: {
+      color: sideNavColors.fgActive,
+    },
+    openInNewTabIcon: {
+      height: 12,
+      marginBottom: 8,
+      marginLeft: 5,
+      width: 12,
+    },
+    root: {
+      background: sideNavColors.bg,
+      borderRight: `1px ${sideNavColors.sideNavBorder} solid`,
+      paddingTop: 15,
+      transition: 'width 0.3s',
+      width: EXPANDED_SIDE_NAV_SIZE,
+    },
+    separator: {
+      border: '0px none transparent',
+      borderTop: `1px solid ${sideNavColors.separator}`,
+      margin: 20,
+    },
+  });
+};
 
 interface DisplayBuildInfo {
   commitHash: string;
@@ -204,7 +212,11 @@ interface SideNavState {
   manualCollapseState: boolean;
 }
 
-export class SideNav extends React.Component<SideNavInternalProps, SideNavState> {
+interface SideNavWithThemeProps extends SideNavInternalProps {
+  isDark: boolean;
+}
+
+class SideNavInternal extends React.Component<SideNavWithThemeProps, SideNavState> {
   private _isMounted = true;
   private readonly _AUTO_COLLAPSE_WIDTH = 800;
   private readonly _HUB_ADDRESS = '/hub/';
@@ -235,7 +247,10 @@ export class SideNav extends React.Component<SideNavInternalProps, SideNavState>
     const page = this.props.page;
     const displayBuildInfo: DisplayBuildInfo = this._getBuildInfo();
     const { collapsed } = this.state;
-    const { gkeMetadata } = this.props;
+    const { gkeMetadata, isDark } = this.props;
+    const sideNavColors = getSideNavColors(isDark);
+    const css = createSideNavCss(isDark);
+    const commonCss = getCommonCss(isDark);
     const iconColor = {
       active: sideNavColors.fgActive,
       inactive: sideNavColors.fgDefault,
@@ -527,6 +542,7 @@ export class SideNav extends React.Component<SideNavInternalProps, SideNavState>
             to={ExternalLinks.DOCUMENTATION}
             collapsed={collapsed}
             icon={className => <DescriptionIcon className={className} />}
+            isDark={isDark}
           />
           <ExternalUri
             title={'Github Repo'}
@@ -535,6 +551,7 @@ export class SideNav extends React.Component<SideNavInternalProps, SideNavState>
             icon={className => (
               <img src={GitHubIcon} className={classes(className, css.iconImage)} alt='Github' />
             )}
+            isDark={isDark}
           />
           <hr className={classes(css.separator, collapsed && css.collapsedSeparator)} />
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'space-between', paddingLeft: collapsed ? 0 : 16, paddingRight: collapsed ? 0 : 16 }}>
@@ -684,27 +701,40 @@ interface ExternalUriProps {
   icon: (className: string) => React.ReactNode;
 }
 
+interface ExternalUriWithThemeProps extends ExternalUriProps {
+  isDark: boolean;
+}
+
 // tslint:disable-next-line:variable-name
-const ExternalUri: React.FC<ExternalUriProps> = ({ title, to, collapsed, icon }) => (
-  <Tooltip
-    title={title}
-    enterDelay={300}
-    placement={'right-start'}
-    disableFocusListener={!collapsed}
-    disableHoverListener={!collapsed}
-    disableTouchListener={!collapsed}
-  >
-    <a href={to} className={commonCss.unstyled} target='_blank' rel='noopener noreferrer'>
-      <Button className={classes(css.button, collapsed && css.collapsedButton)}>
-        <div className={tailwindcss.sideNavItem}>
-          {icon(css.icon)}
-          <span className={classes(collapsed && css.collapsedLabel, css.label)}>{title}</span>
-          <OpenInNewIcon className={css.openInNewTabIcon} />
-        </div>
-      </Button>
-    </a>
-  </Tooltip>
-);
+const ExternalUri: React.FC<ExternalUriWithThemeProps> = ({ title, to, collapsed, icon, isDark }) => {
+  const css = createSideNavCss(isDark);
+  const commonCss = getCommonCss(isDark);
+  return (
+    <Tooltip
+      title={title}
+      enterDelay={300}
+      placement={'right-start'}
+      disableFocusListener={!collapsed}
+      disableHoverListener={!collapsed}
+      disableTouchListener={!collapsed}
+    >
+      <a href={to} className={commonCss.unstyled} target='_blank' rel='noopener noreferrer'>
+        <Button className={classes(css.button, collapsed && css.collapsedButton)}>
+          <div className={tailwindcss.sideNavItem}>
+            {icon(css.icon)}
+            <span className={classes(collapsed && css.collapsedLabel, css.label)}>{title}</span>
+            <OpenInNewIcon className={css.openInNewTabIcon} />
+          </div>
+        </Button>
+      </a>
+    </Tooltip>
+  );
+};
+
+export const SideNav: React.FC<SideNavInternalProps> = props => {
+  const { isDark } = useTheme();
+  return <SideNavInternal {...props} isDark={isDark} />;
+};
 
 const EnhancedSideNav: React.FC<SideNavProps> = props => {
   const gkeMetadata = React.useContext(GkeMetadataContext);

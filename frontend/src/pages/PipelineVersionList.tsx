@@ -58,7 +58,7 @@ class PipelineVersionList extends React.PureComponent<
   PipelineVersionListProps,
   PipelineVersionListState
 > {
-  private _tableRef = React.createRef<CustomTable>();
+  private _tableRef = React.createRef<any>();
 
   constructor(props: any) {
     super(props);

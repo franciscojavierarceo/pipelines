@@ -48,7 +48,7 @@ interface ExperimentListState {
 }
 
 export class ExperimentList extends React.PureComponent<ExperimentListProps, ExperimentListState> {
-  private _tableRef = React.createRef<CustomTable>();
+  private _tableRef = React.createRef<any>();
 
   constructor(props: any) {
     super(props);

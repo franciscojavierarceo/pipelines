@@ -231,8 +231,14 @@ export const createAppTheme = (isDark: boolean) => {
       },
     },
     MuiInput: {
-      input: { padding: 0 },
-      root: { padding: 0 },
+      input: { 
+        padding: 0,
+        color: colors.foreground,
+      },
+      root: { 
+        padding: 0,
+        color: colors.foreground,
+      },
     },
     MuiInputAdornment: {
       positionEnd: {
@@ -240,162 +246,196 @@ export const createAppTheme = (isDark: boolean) => {
       },
       root: { padding: 0 },
     },
-      MuiTooltip: {
-        tooltip: {
-          backgroundColor: isDark ? '#424242' : '#666',
-          color: isDark ? '#fff' : '#f1f1f1',
-          fontSize: 12,
+    MuiOutlinedInput: {
+      root: {
+        '& .MuiOutlinedInput-notchedOutline': {
+          borderColor: colors.divider,
+        },
+        '&:hover .MuiOutlinedInput-notchedOutline': {
+          borderColor: colors.theme,
         },
       },
     },
-    typography: {
-      fontFamily: fonts.main,
-      fontSize: (fontsize.base + ' !important') as any,
-      useNextVariants: true,
+    MuiTableSortLabel: {
+      root: {
+        color: colors.foreground,
+        '&:hover': {
+          color: colors.theme,
+        },
+      },
+    },
+    MuiTooltip: {
+      tooltip: {
+        backgroundColor: isDark ? '#424242' : '#666',
+        color: isDark ? '#fff' : '#f1f1f1',
+        fontSize: 12,
+      },
+    },
+  },
+  typography: {
+    fontFamily: fonts.main,
+    fontSize: (fontsize.base + ' !important') as any,
+    useNextVariants: true,
+  },
+});
+};
+
+export const theme = createAppTheme(false);
+
+export const createCommonCss = (isDark: boolean) => {
+  const colors = getColors(isDark);
+  return stylesheet({
+    absoluteCenter: {
+      left: 'calc(50% - 15px)',
+      position: 'absolute',
+      top: 'calc(50% - 15px)',
+    },
+    busyOverlay: {
+      backgroundColor: isDark ? '#000000aa' : '#ffffffaa',
+      bottom: 0,
+      left: 0,
+      position: 'absolute',
+      right: 0,
+      top: 0,
+      zIndex: zIndex.BUSY_OVERLAY,
+    },
+    buttonAction: {
+      $nest: {
+        '&:disabled': {
+          backgroundColor: colors.background,
+        },
+        '&:hover': {
+          backgroundColor: colors.themeDarker,
+        },
+      },
+      backgroundColor: colors.theme,
+      color: 'white',
+    },
+    ellipsis: {
+      display: 'block',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+    },
+    flex: {
+      alignItems: 'center !important',
+      display: 'flex !important',
+      flexShrink: 0,
+    },
+    flexColumn: {
+      display: 'flex !important',
+      flexDirection: 'column',
+    },
+    flexGrow: {
+      display: 'flex !important',
+      flexGrow: 1,
+    },
+    header: {
+      fontSize: fontsize.large,
+      fontWeight: 'bold',
+      paddingBottom: 16,
+      paddingTop: 20,
+      color: colors.foreground,
+    },
+    header2: {
+      fontSize: fontsize.medium,
+      fontWeight: 'bold',
+      paddingBottom: 16,
+      paddingTop: 20,
+      color: colors.foreground,
+    },
+    infoIcon: {
+      color: colors.lowContrast,
+      height: 16,
+      width: 16,
+    },
+    link: {
+      $nest: {
+        '&:hover': {
+          color: colors.linkLight,
+          textDecoration: 'underline',
+          cursor: 'pointer',
+        },
+      },
+      color: colors.strong,
+      cursor: 'pointer',
+      textDecoration: 'none',
+    },
+    noShrink: {
+      flexShrink: 0,
+    },
+    page: {
+      display: 'flex',
+      flexFlow: 'column',
+      flexGrow: 1,
+      overflow: 'auto',
+      backgroundColor: colors.background,
+      color: colors.foreground,
+    },
+    pageOverflowHidden: {
+      display: 'flex',
+      flexFlow: 'column',
+      flexGrow: 1,
+      overflowX: 'auto',
+      overflowY: 'hidden',
+      backgroundColor: colors.background,
+      color: colors.foreground,
+    },
+    prewrap: {
+      whiteSpace: 'pre-wrap',
+    },
+    scrollContainer: {
+      background: isDark 
+        ? `linear-gradient(#121212 30%, rgba(18,18,18,0)),
+           linear-gradient(rgba(18,18,18,0), #121212 70%) 0 100%,
+           radial-gradient(farthest-corner at 50% 0, rgba(255,255,255,.1), rgba(255,255,255,0)),
+           radial-gradient(farthest-corner at 50% 100%, rgba(255,255,255,.1), rgba(255,255,255,0)) 0 100%`
+        : `linear-gradient(white 30%, rgba(255,255,255,0)),
+           linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
+           radial-gradient(farthest-corner at 50% 0, rgba(0,0,0,.2), rgba(0,0,0,0)),
+           radial-gradient(farthest-corner at 50% 100%, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%`,
+      backgroundAttachment: 'local, local, scroll, scroll',
+      backgroundColor: colors.background,
+      backgroundRepeat: 'no-repeat',
+      backgroundSize: '100% 40px, 100% 40px, 100% 2px, 100% 2px',
+      overflow: 'auto',
+      position: 'relative',
+    },
+    textField: {
+      display: 'flex',
+      height: 40,
+      marginBottom: 20,
+      marginTop: 15,
+    },
+    unstyled: {
+      color: 'inherit',
+      outline: 'none',
+      textDecoration: 'none',
+    },
+    transitiveReductionSwitch: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+    },
+    codeEditor: {
+      $nest: {
+        '& .CodeMirror': {
+          height: '100%',
+          width: '80%',
+        },
+
+        '& .CodeMirror-gutters': {
+          backgroundColor: isDark ? '#2c2c2c' : '#f7f7f7',
+        },
+      },
+      background: isDark ? '#2c2c2c' : '#f7f7f7',
+      height: '100%',
     },
   });
 };
 
-const palette = createPalette(false);
-export const theme = createAppTheme(false);
-
-export const commonCss = stylesheet({
-  absoluteCenter: {
-    left: 'calc(50% - 15px)',
-    position: 'absolute',
-    top: 'calc(50% - 15px)',
-  },
-  busyOverlay: {
-    backgroundColor: '#ffffffaa',
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    zIndex: zIndex.BUSY_OVERLAY,
-  },
-  buttonAction: {
-    $nest: {
-      '&:disabled': {
-        backgroundColor: color.background,
-      },
-      '&:hover': {
-        backgroundColor: theme.palette.primary.dark,
-      },
-    },
-    backgroundColor: palette.primary.main,
-    color: 'white',
-  },
-  ellipsis: {
-    display: 'block',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-  },
-  flex: {
-    alignItems: 'center !important',
-    display: 'flex !important',
-    flexShrink: 0,
-  },
-  flexColumn: {
-    display: 'flex !important',
-    flexDirection: 'column',
-  },
-  flexGrow: {
-    display: 'flex !important',
-    flexGrow: 1,
-  },
-  header: {
-    fontSize: fontsize.large,
-    fontWeight: 'bold',
-    paddingBottom: 16,
-    paddingTop: 20,
-  },
-  header2: {
-    fontSize: fontsize.medium,
-    fontWeight: 'bold',
-    paddingBottom: 16,
-    paddingTop: 20,
-  },
-  infoIcon: {
-    color: color.lowContrast,
-    height: 16,
-    width: 16,
-  },
-  link: {
-    $nest: {
-      '&:hover': {
-        color: color.linkLight,
-        textDecoration: 'underline',
-        cursor: 'pointer',
-      },
-    },
-    color: color.strong,
-    cursor: 'pointer',
-    textDecoration: 'none',
-  },
-  noShrink: {
-    flexShrink: 0,
-  },
-  page: {
-    display: 'flex',
-    flexFlow: 'column',
-    flexGrow: 1,
-    overflow: 'auto',
-  },
-  pageOverflowHidden: {
-    display: 'flex',
-    flexFlow: 'column',
-    flexGrow: 1,
-    overflowX: 'auto',
-    overflowY: 'hidden',
-  },
-  prewrap: {
-    whiteSpace: 'pre-wrap',
-  },
-  scrollContainer: {
-    background: `linear-gradient(white 30%, rgba(255,255,255,0)),
-       linear-gradient(rgba(255,255,255,0), white 70%) 0 100%,
-       radial-gradient(farthest-corner at 50% 0, rgba(0,0,0,.2), rgba(0,0,0,0)),
-       radial-gradient(farthest-corner at 50% 100%, rgba(0,0,0,.2), rgba(0,0,0,0)) 0 100%`,
-    backgroundAttachment: 'local, local, scroll, scroll',
-    backgroundColor: 'white',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: '100% 40px, 100% 40px, 100% 2px, 100% 2px',
-    overflow: 'auto',
-    position: 'relative',
-  },
-  textField: {
-    display: 'flex',
-    height: 40,
-    marginBottom: 20,
-    marginTop: 15,
-  },
-  unstyled: {
-    color: 'inherit',
-    outline: 'none',
-    textDecoration: 'none',
-  },
-  transitiveReductionSwitch: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
-  codeEditor: {
-    $nest: {
-      '& .CodeMirror': {
-        height: '100%',
-        width: '80%',
-      },
-
-      '& .CodeMirror-gutters': {
-        backgroundColor: '#f7f7f7',
-      },
-    },
-    background: '#f7f7f7',
-    height: '100%',
-  },
-});
+export const commonCss = createCommonCss(false);
+export const getCommonCss = (isDark: boolean) => createCommonCss(isDark);
 
 export const tailwindcss = {
   sideNavItem: 'flex flex-row flex-shrink-0',

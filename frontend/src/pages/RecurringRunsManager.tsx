@@ -41,7 +41,7 @@ interface RecurringRunListState {
 }
 
 class RecurringRunsManager extends React.Component<RecurringRunListProps, RecurringRunListState> {
-  private _tableRef = React.createRef<CustomTable>();
+  private _tableRef = React.createRef<any>();
 
   constructor(props: any) {
     super(props);
