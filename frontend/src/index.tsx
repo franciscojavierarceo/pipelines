@@ -23,7 +23,8 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { HashRouter } from 'react-router-dom';
 import { cssRule } from 'typestyle';
 import Router from './components/Router';
-import { fonts, theme } from './Css';
+import { fonts, createAppTheme } from './Css';
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { initFeatures } from './features';
 import { Deployments, KFP_FLAGS } from './lib/Flags';
 import { GkeMetadataProvider } from './lib/GkeMetadata';
@@ -42,21 +43,32 @@ if (KFP_FLAGS.DEPLOYMENT === Deployments.KUBEFLOW) {
 }
 
 cssRule('html, body, #root', {
-  background: 'white',
-  color: 'rgba(0, 0, 0, .66)',
   display: 'flex',
   fontFamily: fonts.main,
   fontSize: 13,
   height: '100%',
   width: '100%',
+  transition: 'background-color 0.3s ease, color 0.3s ease',
+});
+
+cssRule('html.dark, html.dark body, html.dark #root', {
+  background: '#121212',
+  color: 'rgba(255, 255, 255, .87)',
+});
+
+cssRule('html:not(.dark), html:not(.dark) body, html:not(.dark) #root', {
+  background: 'white',
+  color: 'rgba(0, 0, 0, .66)',
 });
 
 initFeatures();
 
-export const queryClient = new QueryClient();
-const app = (
-  <QueryClientProvider client={queryClient}>
-    <MuiThemeProvider theme={theme}>
+const AppWithTheme: React.FC = () => {
+  const { isDark } = useTheme();
+  const muiTheme = createAppTheme(isDark);
+
+  return (
+    <MuiThemeProvider theme={muiTheme}>
       <BuildInfoProvider>
         <GkeMetadataProvider>
           <HashRouter>
@@ -65,6 +77,15 @@ const app = (
         </GkeMetadataProvider>
       </BuildInfoProvider>
     </MuiThemeProvider>
+  );
+};
+
+export const queryClient = new QueryClient();
+const app = (
+  <QueryClientProvider client={queryClient}>
+    <ThemeProvider>
+      <AppWithTheme />
+    </ThemeProvider>
     {/* <ReactQueryDevtools initialIsOpen={false} /> */}
   </QueryClientProvider>
 );

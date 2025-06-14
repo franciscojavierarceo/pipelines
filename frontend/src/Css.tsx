@@ -24,7 +24,7 @@ import { NestedCSSProperties } from 'typestyle/lib/types';
 //    a. For color: Use https://material.io/resources/color.
 // 3. Compile CSS: npm run build:tailwind
 
-export const color = {
+export const lightColors = {
   activeBg: '#eaf1fd',
   alert: '#f9ab00', // Google yellow 600
   background: '#fff',
@@ -56,6 +56,43 @@ export const color = {
   linkLight: '#5472d3',
   whiteSmoke: '#f3f3f3',
 };
+
+export const darkColors = {
+  activeBg: '#1a2332',
+  alert: '#ffa726', // Orange 400 for better contrast
+  background: '#121212', // Material Design dark surface
+  blue: '#64b5f6', // Blue 300 for dark theme
+  disabledBg: '#333',
+  divider: '#424242',
+  errorBg: '#3e2723',
+  errorText: '#f44336',
+  foreground: '#ffffff',
+  graphBg: '#1e1e1e',
+  grey: '#9e9e9e', // Grey 500
+  inactive: '#757575',
+  lightGrey: '#424242', // Grey 800 for dark theme
+  lowContrast: '#bdbdbd', // Grey 400 for better contrast
+  secondaryText: 'rgba(255, 255, 255, .7)',
+  separator: '#333333',
+  strong: '#e0e0e0', // Grey 300 for dark theme
+  success: '#66bb6a', // Green 400
+  successWeak: '#2e7d32', // Green 800 for dark theme
+  terminated: '#9e9e9e',
+  theme: '#90caf9', // Blue 200 for dark theme
+  themeDarker: '#42a5f5', // Blue 400
+  warningBg: '#3e2723',
+  warningText: '#ffb74d', // Orange 300
+  infoBg: '#1a237e',
+  infoText: '#90caf9',
+  weak: '#757575',
+  link: '#90caf9',
+  linkLight: '#bbdefb',
+  whiteSmoke: '#2c2c2c',
+};
+
+export const getColors = (isDark: boolean) => isDark ? darkColors : lightColors;
+
+export const color = lightColors;
 
 export const dimension = {
   auto: 'auto',
@@ -99,44 +136,65 @@ export const fonts = {
   secondary: '"Roboto", "Helvetica Neue", sans-serif',
 };
 
-const palette = {
-  primary: {
-    dark: color.themeDarker,
-    main: color.theme,
-  },
-  secondary: {
-    main: 'rgba(0, 0, 0, .38)',
-  },
+const createPalette = (isDark: boolean) => {
+  const colors = getColors(isDark);
+  return {
+    primary: {
+      dark: colors.themeDarker,
+      main: colors.theme,
+    },
+    secondary: {
+      main: isDark ? 'rgba(255, 255, 255, .38)' : 'rgba(0, 0, 0, .38)',
+    },
+  };
 };
 
-export const theme = createMuiTheme({
-  overrides: {
-    MuiButton: {
-      flat: {
-        fontSize: fontsize.base,
-        fontWeight: 'bold',
-        minHeight: dimension.tiny,
-        textTransform: 'none',
+export const createAppTheme = (isDark: boolean) => {
+  const colors = getColors(isDark);
+  const palette = createPalette(isDark);
+  
+  return createMuiTheme({
+    palette: {
+      type: isDark ? 'dark' : 'light',
+      primary: palette.primary,
+      secondary: palette.secondary,
+      background: {
+        default: colors.background,
+        paper: isDark ? '#1e1e1e' : '#fff',
       },
-      flatPrimary: {
-        border: '1px solid #ddd',
-        cursor: 'pointer',
-        fontSize: fontsize.base,
-        marginRight: 10,
-        textTransform: 'none',
+      text: {
+        primary: colors.foreground,
+        secondary: colors.secondaryText,
       },
-      flatSecondary: {
-        color: color.theme,
-      },
-      root: {
-        '&$disabled': {
-          backgroundColor: 'initial',
-        },
-        color: color.theme,
-        marginRight: 10,
-        padding: '0 8px',
-      },
+      divider: colors.divider,
     },
+    overrides: {
+      MuiButton: {
+        flat: {
+          fontSize: fontsize.base,
+          fontWeight: 'bold',
+          minHeight: dimension.tiny,
+          textTransform: 'none',
+        },
+        flatPrimary: {
+          border: `1px solid ${isDark ? '#555' : '#ddd'}`,
+          cursor: 'pointer',
+          fontSize: fontsize.base,
+          marginRight: 10,
+          textTransform: 'none',
+        },
+        flatSecondary: {
+          color: colors.theme,
+        },
+        root: {
+          '&$disabled': {
+            backgroundColor: 'initial',
+          },
+          color: colors.theme,
+          marginRight: 10,
+          padding: '0 8px',
+        },
+      },
     MuiDialogActions: {
       root: {
         margin: 15,
@@ -182,21 +240,24 @@ export const theme = createMuiTheme({
       },
       root: { padding: 0 },
     },
-    MuiTooltip: {
-      tooltip: {
-        backgroundColor: '#666',
-        color: '#f1f1f1',
-        fontSize: 12,
+      MuiTooltip: {
+        tooltip: {
+          backgroundColor: isDark ? '#424242' : '#666',
+          color: isDark ? '#fff' : '#f1f1f1',
+          fontSize: 12,
+        },
       },
     },
-  },
-  palette,
-  typography: {
-    fontFamily: fonts.main,
-    fontSize: (fontsize.base + ' !important') as any,
-    useNextVariants: true,
-  },
-});
+    typography: {
+      fontFamily: fonts.main,
+      fontSize: (fontsize.base + ' !important') as any,
+      useNextVariants: true,
+    },
+  });
+};
+
+const palette = createPalette(false);
+export const theme = createAppTheme(false);
 
 export const commonCss = stylesheet({
   absoluteCenter: {

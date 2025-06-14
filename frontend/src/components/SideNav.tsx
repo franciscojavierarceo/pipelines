@@ -30,6 +30,7 @@ import { Link } from 'react-router-dom';
 import { classes, stylesheet } from 'typestyle';
 import { ExternalLinks, RoutePage, RoutePrefix } from '../components/Router';
 import { commonCss, fontsize } from '../Css';
+import { ThemeToggle } from './ThemeToggle';
 import ExperimentsIcon from '../icons/experiments';
 import GitHubIcon from '../icons/GitHub-Mark-120px-plus.png';
 import PipelinesIcon from '../icons/pipelines';
@@ -536,12 +537,15 @@ export class SideNav extends React.Component<SideNavInternalProps, SideNavState>
             )}
           />
           <hr className={classes(css.separator, collapsed && css.collapsedSeparator)} />
-          <IconButton
-            className={classes(css.chevron, collapsed && css.collapsedChevron)}
-            onClick={this._toggleNavClicked.bind(this)}
-          >
-            <ChevronLeftIcon />
-          </IconButton>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: collapsed ? 'center' : 'space-between', paddingLeft: collapsed ? 0 : 16, paddingRight: collapsed ? 0 : 16 }}>
+            <ThemeToggle />
+            <IconButton
+              className={classes(css.chevron, collapsed && css.collapsedChevron)}
+              onClick={this._toggleNavClicked.bind(this)}
+            >
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
         </div>
         <div className={collapsed ? css.infoHidden : css.infoVisible}>
           {gkeMetadata.clusterName && gkeMetadata.projectId && (
